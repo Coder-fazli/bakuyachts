@@ -128,9 +128,10 @@ add_action( 'after_switch_theme', 'yr_yachts_rewrite_flush' );
 function yr_yachts_check_flush() {
 	// Delete the option to force flush after code changes
 	$version = get_option( 'yr_yachts_version', '1.0' );
-	if ( version_compare( $version, '1.1', '<' ) ) {
+	if ( version_compare( $version, '1.2', '<' ) ) {
 		delete_option( 'yr_yachts_permalinks_flushed' );
-		update_option( 'yr_yachts_version', '1.1' );
+		delete_option( 'yr_yachts_languages_fixed' ); // Force language fix
+		update_option( 'yr_yachts_version', '1.2' );
 	}
 
 	if ( ! get_option( 'yr_yachts_permalinks_flushed' ) ) {
@@ -308,6 +309,12 @@ function yr_create_demo_yachts() {
 				update_post_meta( $post_id, '_yr_yacht_badge', $yacht_data['badge'] );
 			}
 
+			// Set Polylang language (default language)
+			if ( function_exists( 'pll_set_post_language' ) && function_exists( 'pll_default_language' ) ) {
+				$default_lang = pll_default_language();
+				pll_set_post_language( $post_id, $default_lang );
+			}
+
 			// Try to set placeholder image from media library
 			$placeholder_image_id = yr_get_placeholder_image();
 			if ( $placeholder_image_id ) {
@@ -320,6 +327,41 @@ function yr_create_demo_yachts() {
 	update_option( 'yr_demo_yachts_created', true );
 }
 add_action( 'init', 'yr_create_demo_yachts' );
+
+// Fix existing yachts without language (run once)
+function yr_fix_yachts_languages() {
+	// Check if already fixed
+	if ( get_option( 'yr_yachts_languages_fixed' ) ) {
+		return;
+	}
+
+	// Only run if Polylang is active
+	if ( ! function_exists( 'pll_set_post_language' ) || ! function_exists( 'pll_default_language' ) ) {
+		return;
+	}
+
+	$default_lang = pll_default_language();
+
+	// Get all yachts
+	$yachts = get_posts( array(
+		'post_type'      => 'cpt_yachts',
+		'posts_per_page' => -1,
+		'post_status'    => 'any',
+	) );
+
+	foreach ( $yachts as $yacht ) {
+		// Check if yacht has no language assigned
+		$current_lang = pll_get_post_language( $yacht->ID );
+		if ( empty( $current_lang ) ) {
+			// Assign default language
+			pll_set_post_language( $yacht->ID, $default_lang );
+		}
+	}
+
+	// Mark as fixed
+	update_option( 'yr_yachts_languages_fixed', true );
+}
+add_action( 'admin_init', 'yr_fix_yachts_languages' );
 
 // Helper: Get or create placeholder image
 function yr_get_placeholder_image() {
