@@ -1081,6 +1081,9 @@ require_once YACHT_RENTAL_THEME_DIR . 'includes/storage.php';
 require_once YACHT_RENTAL_THEME_DIR . 'includes/lists.php';
 require_once YACHT_RENTAL_THEME_DIR . 'includes/wp.php';
 
+// Custom Post Type: Yachts
+require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-yachts.php';
+
 if ( is_admin() ) {
 	require_once YACHT_RENTAL_THEME_DIR . 'includes/tgmpa/class-tgm-plugin-activation.php';
 	require_once YACHT_RENTAL_THEME_DIR . 'includes/admin.php';
