@@ -53,11 +53,12 @@ function yr_register_yachts_cpt() {
 		'show_in_admin_bar'     => true,
 		'show_in_nav_menus'     => true,
 		'can_export'            => true,
-		'has_archive'           => 'yachts',
+		'has_archive'           => true,
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'post',
 		'show_in_rest'          => true,
+		'rewrite'               => array( 'slug' => 'yachts', 'with_front' => false ),
 	);
 
 	register_post_type( 'cpt_yachts', $args );
@@ -125,28 +126,32 @@ add_action( 'after_switch_theme', 'yr_yachts_rewrite_flush' );
 
 // Check and flush permalinks if needed (run once)
 function yr_yachts_check_flush() {
+	// Delete the option to force flush after code changes
+	$version = get_option( 'yr_yachts_version', '1.0' );
+	if ( version_compare( $version, '1.1', '<' ) ) {
+		delete_option( 'yr_yachts_permalinks_flushed' );
+		update_option( 'yr_yachts_version', '1.1' );
+	}
+
 	if ( ! get_option( 'yr_yachts_permalinks_flushed' ) ) {
 		yr_yachts_rewrite_flush();
 	}
 }
 add_action( 'admin_init', 'yr_yachts_check_flush' );
 
-// Add Polylang support
-function yr_yachts_polylang_support() {
-	if ( function_exists( 'pll_register_string' ) ) {
-		// Register CPT and Taxonomy for Polylang
-		add_filter( 'pll_get_post_types', function( $post_types ) {
-			$post_types['cpt_yachts'] = 'cpt_yachts';
-			return $post_types;
-		}, 10, 1 );
-
-		add_filter( 'pll_get_taxonomies', function( $taxonomies ) {
-			$taxonomies['yr_yacht_category'] = 'yr_yacht_category';
-			return $taxonomies;
-		}, 10, 1 );
-	}
+// Add Polylang support - Register CPT for translation
+function yr_yachts_polylang_register_cpt( $post_types, $is_settings ) {
+	$post_types['cpt_yachts'] = 'cpt_yachts';
+	return $post_types;
 }
-add_action( 'init', 'yr_yachts_polylang_support', 20 );
+add_filter( 'pll_get_post_types', 'yr_yachts_polylang_register_cpt', 10, 2 );
+
+// Add Polylang support - Register Taxonomy for translation
+function yr_yachts_polylang_register_tax( $taxonomies, $is_settings ) {
+	$taxonomies['yr_yacht_category'] = 'yr_yacht_category';
+	return $taxonomies;
+}
+add_filter( 'pll_get_taxonomies', 'yr_yachts_polylang_register_tax', 10, 2 );
 
 // Add meta box for yacht details
 function yr_yacht_meta_box() {
