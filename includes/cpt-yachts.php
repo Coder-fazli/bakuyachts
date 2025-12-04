@@ -104,6 +104,33 @@ function yr_register_yacht_category_taxonomy() {
 }
 add_action( 'init', 'yr_register_yacht_category_taxonomy', 0 );
 
+// Flush rewrite rules on activation
+function yr_yachts_rewrite_flush() {
+	// Register CPT and taxonomy first
+	yr_register_yachts_cpt();
+	yr_register_yacht_category_taxonomy();
+
+	// Then flush
+	flush_rewrite_rules();
+
+	// Mark as flushed to prevent repeated flushes
+	if ( ! get_option( 'yr_yachts_permalinks_flushed' ) ) {
+		update_option( 'yr_yachts_permalinks_flushed', true );
+	}
+}
+register_activation_hook( __FILE__, 'yr_yachts_rewrite_flush' );
+
+// Flush on theme switch
+add_action( 'after_switch_theme', 'yr_yachts_rewrite_flush' );
+
+// Check and flush permalinks if needed (run once)
+function yr_yachts_check_flush() {
+	if ( ! get_option( 'yr_yachts_permalinks_flushed' ) ) {
+		yr_yachts_rewrite_flush();
+	}
+}
+add_action( 'admin_init', 'yr_yachts_check_flush' );
+
 // Add Polylang support
 function yr_yachts_polylang_support() {
 	if ( function_exists( 'pll_register_string' ) ) {
