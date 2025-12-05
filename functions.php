@@ -488,6 +488,12 @@ if ( ! function_exists( 'yacht_rental_wp_scripts' ) ) {
 			wp_enqueue_style( 'wp-mediaelement' );
 			wp_enqueue_script( 'wp-mediaelement' );
 		}
+
+		// Swiper for single yachts
+		if ( is_singular( 'cpt_yachts' ) ) {
+			wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0' );
+			wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true );
+		}
 	}
 }
 
