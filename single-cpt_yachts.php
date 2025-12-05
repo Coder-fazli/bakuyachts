@@ -29,11 +29,6 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
 <head>
-    <?php wp_head(); ?>
-
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
     <style>
     /* === YACHT SINGLE CONTAINER === */
     .yrsp-yacht-container {
@@ -550,6 +545,11 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         }
     }
     </style>
+
+    <?php wp_head(); ?>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 
 <body <?php body_class(); ?>>
