@@ -541,83 +541,94 @@
   font-size: 36px;
   font-weight: 700;
   color: #1a2332;
-  margin: 0;
+  margin: 0 0 10px 0;
   letter-spacing: -0.5px;
 }
 
-/* Gallery Slider - 2 Column Grid Per Slide */
-.yr_gallery_section {
+.yr_yacht_rating {
+  color: #ffa500;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+/* Gallery Wrapper - Following HTML Reference EXACTLY */
+.yr_gallery_wrapper {
   margin-bottom: 40px;
   background: #f5f5f5;
 }
 
-.yr_yacht_gallery_swiper {
-  border-radius: 15px;
+.yr_gallery_row {
+  position: relative;
   overflow: hidden;
+  border-radius: 15px;
   box-shadow: 0 15px 60px rgba(0,0,0,0.25);
   background: transparent;
 }
 
-.yr_yacht_gallery_swiper .swiper-slide {
+.gallery-swiper {
+  width: 100%;
   height: 400px;
+  background: transparent;
 }
 
-.yr_slide_grid {
+.gallery-swiper .swiper-slide {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2px;
-  height: 100%;
+  padding: 0;
+  background: transparent;
 }
 
-.yr_slide_image {
+.gallery-item {
   position: relative;
   overflow: hidden;
-  background: #e5e5e5;
+  border-radius: 0;
   height: 400px;
+  background: transparent;
 }
 
-.yr_slide_image img {
+.gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.yr_slide_image:hover img {
+.gallery-item:hover img {
   transform: scale(1.1);
 }
 
-/* Swiper Navigation */
-.yr_yacht_gallery_swiper .swiper-button-next,
-.yr_yacht_gallery_swiper .swiper-button-prev {
+/* Swiper Navigation Buttons - HTML Reference Style */
+.gallery-swiper .swiper-button-next,
+.gallery-swiper .swiper-button-prev {
+  color: #fff !important;
+  background: rgba(26, 35, 50, 0.8);
   width: 45px !important;
   height: 45px !important;
-  background: rgba(26, 35, 50, 0.8);
   border-radius: 50%;
-  color: #fff !important;
   transition: all 0.3s ease;
 }
 
-.yr_yacht_gallery_swiper .swiper-button-next:hover,
-.yr_yacht_gallery_swiper .swiper-button-prev:hover {
+.gallery-swiper .swiper-button-next:hover,
+.gallery-swiper .swiper-button-prev:hover {
   background: rgba(26, 35, 50, 1);
   transform: scale(1.1);
 }
 
-.yr_yacht_gallery_swiper .swiper-button-next:after,
-.yr_yacht_gallery_swiper .swiper-button-prev:after {
+.gallery-swiper .swiper-button-next:after,
+.gallery-swiper .swiper-button-prev:after {
   font-size: 20px !important;
   font-weight: bold;
 }
 
-.yr_yacht_gallery_swiper .swiper-pagination-bullet {
+.gallery-swiper .swiper-pagination-bullet {
+  background: #1a2332 !important;
   width: 12px !important;
   height: 12px !important;
-  background: #1a2332 !important;
   opacity: 1;
 }
 
-.yr_yacht_gallery_swiper .swiper-pagination-bullet-active {
+.gallery-swiper .swiper-pagination-bullet-active {
   background: #25d366 !important;
 }
 
@@ -919,15 +930,15 @@
     font-size: 28px;
   }
 
-  .yr_yacht_gallery_swiper .swiper-slide {
+  .gallery-swiper {
     height: auto;
   }
 
-  .yr_slide_grid {
+  .gallery-swiper .swiper-slide {
     grid-template-columns: 1fr;
   }
 
-  .yr_slide_image {
+  .gallery-item {
     height: 250px;
   }
 

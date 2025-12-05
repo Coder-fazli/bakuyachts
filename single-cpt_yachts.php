@@ -36,34 +36,35 @@ while (have_posts()) : the_post();
     <div class="yr_yacht_title_section">
         <div class="yr_container_wide">
             <h1 class="yr_yacht_main_title"><?php the_title(); ?></h1>
+            <div class="yr_yacht_rating">★★★★★</div>
         </div>
     </div>
 
-    <!-- Gallery Slider -->
+    <!-- Gallery Slider (NO BOX - direct slider) -->
     <?php if (!empty($gallery_ids) && count($gallery_ids) > 0): ?>
-    <div class="yr_gallery_section">
+    <div class="yr_gallery_wrapper">
         <div class="yr_container_wide">
-            <div class="swiper yr_yacht_gallery_swiper">
-                <div class="swiper-wrapper">
-                    <?php
-                    // Group images by 2 (for 2-column grid per slide)
-                    $chunks = array_chunk($gallery_ids, 2);
-                    foreach ($chunks as $chunk):
-                    ?>
-                        <div class="swiper-slide">
-                            <div class="yr_slide_grid">
+            <div class="yr_gallery_row">
+                <div class="swiper gallery-swiper">
+                    <div class="swiper-wrapper">
+                        <?php
+                        // Group images by 2 (for 2-column grid per slide)
+                        $chunks = array_chunk($gallery_ids, 2);
+                        foreach ($chunks as $chunk):
+                        ?>
+                            <div class="swiper-slide">
                                 <?php foreach ($chunk as $image_id): ?>
-                                    <div class="yr_slide_image">
+                                    <div class="gallery-item">
                                         <?php echo wp_get_attachment_image($image_id, 'full'); ?>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
             </div>
         </div>
     </div>
@@ -186,9 +187,9 @@ while (have_posts()) : the_post();
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper
+    // Initialize Gallery Swiper
     <?php if (!empty($gallery_ids) && count($gallery_ids) > 0): ?>
-    const swiper = new Swiper('.yr_yacht_gallery_swiper', {
+    const gallerySwiper = new Swiper('.gallery-swiper', {
         slidesPerView: 1,
         spaceBetween: 0,
         loop: <?php echo count($gallery_ids) > 2 ? 'true' : 'false'; ?>,
