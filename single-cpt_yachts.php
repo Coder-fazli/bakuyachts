@@ -1,6 +1,6 @@
 <?php
 /**
- * Single Yacht Template - Standalone (No Theme Wrappers)
+ * Single Yacht Template
  * Based on yacht-single-template.html
  */
 
@@ -27,16 +27,12 @@ $offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
 $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php the_title(); ?> - <?php bloginfo('name'); ?></title>
+    <?php wp_head(); ?>
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
-    <?php wp_head(); ?>
 
     <style>
     /* === GLOBAL RESET === */
@@ -548,6 +544,25 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 </head>
 
 <body <?php body_class(); ?>>
+    <?php
+    if ( function_exists( 'wp_body_open' ) ) {
+        wp_body_open();
+    } else {
+        do_action( 'wp_body_open' );
+    }
+    ?>
+
+    <div class="body_wrap">
+        <div class="page_wrap">
+
+            <?php
+            // Include default header (not Elementor)
+            get_template_part( 'skins/default/templates/header-default' );
+            ?>
+
+            <div class="page_content_wrap">
+                <div class="content_wrap">
+                    <div class="content">
 
 <div class="yr-yacht-single-page">
 
@@ -741,6 +756,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+</div><!-- .yr-yacht-single-page -->
+
+                    </div><!-- .content -->
+                </div><!-- .content_wrap -->
+            </div><!-- .page_content_wrap -->
+
+            <?php
+            // Include default footer (not Elementor)
+            get_template_part( 'skins/default/templates/footer-default' );
+            ?>
+
+        </div><!-- .page_wrap -->
+    </div><!-- .body_wrap -->
 
 <?php wp_footer(); ?>
 
