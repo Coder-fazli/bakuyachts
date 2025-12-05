@@ -35,39 +35,17 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <style>
-    /* === GLOBAL RESET === */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        overflow-x: hidden !important;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-        line-height: 1.6 !important;
-        color: #333 !important;
-        background: #f5f5f5 !important;
-    }
-
-    /* Hide WordPress admin bar spacing */
-    body.admin-bar {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-
     /* === YACHT SINGLE CONTAINER === */
     .yrsp-yacht-container {
         max-width: 1600px !important;
         margin: 0 auto !important;
         padding: 40px 20px !important;
         background: transparent !important;
+        box-sizing: border-box !important;
+    }
+
+    .yrsp-yacht-container * {
+        box-sizing: border-box !important;
     }
 
     /* === TITLE SECTION === */
