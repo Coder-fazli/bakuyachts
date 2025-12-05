@@ -35,9 +35,6 @@ get_header();
 									<?php if ( $yacht_badge ) : ?>
 										<div class="yr_yacht_badge"><?php echo esc_html( $yacht_badge ); ?></div>
 									<?php endif; ?>
-									<?php if ( $yacht_price ) : ?>
-										<div class="yr_yacht_price_overlay"><?php echo esc_html( $yacht_price ); ?></div>
-									<?php endif; ?>
 									<a href="<?php the_permalink(); ?>">
 										<?php the_post_thumbnail( 'large' ); ?>
 									</a>
