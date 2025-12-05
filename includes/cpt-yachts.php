@@ -472,12 +472,47 @@ function yr_yacht_faq_callback( $post ) {
 }
 
 function yr_save_yacht_meta( $post_id ) {
-	if ( ! isset( $_POST['yr_yacht_meta_box_nonce'] ) ) {
+	// Check if any of our nonces are set
+	$has_nonce = isset( $_POST['yr_yacht_meta_box_nonce'] ) ||
+	             isset( $_POST['yr_yacht_gallery_nonce'] ) ||
+	             isset( $_POST['yr_yacht_pricing_nonce'] ) ||
+	             isset( $_POST['yr_yacht_contact_nonce'] ) ||
+	             isset( $_POST['yr_yacht_features_nonce'] ) ||
+	             isset( $_POST['yr_yacht_offers_nonce'] ) ||
+	             isset( $_POST['yr_yacht_faq_nonce'] );
+
+	if ( ! $has_nonce ) {
 		return;
 	}
-	if ( ! wp_verify_nonce( $_POST['yr_yacht_meta_box_nonce'], 'yr_yacht_meta_box' ) ) {
+
+	// Verify at least one nonce
+	$verified = false;
+	if ( isset( $_POST['yr_yacht_meta_box_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_meta_box_nonce'], 'yr_yacht_meta_box' ) ) {
+		$verified = true;
+	}
+	if ( isset( $_POST['yr_yacht_gallery_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_gallery_nonce'], 'yr_yacht_gallery_nonce' ) ) {
+		$verified = true;
+	}
+	if ( isset( $_POST['yr_yacht_pricing_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_pricing_nonce'], 'yr_yacht_pricing_nonce' ) ) {
+		$verified = true;
+	}
+	if ( isset( $_POST['yr_yacht_contact_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_contact_nonce'], 'yr_yacht_contact_nonce' ) ) {
+		$verified = true;
+	}
+	if ( isset( $_POST['yr_yacht_features_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_features_nonce'], 'yr_yacht_features_nonce' ) ) {
+		$verified = true;
+	}
+	if ( isset( $_POST['yr_yacht_offers_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_offers_nonce'], 'yr_yacht_offers_nonce' ) ) {
+		$verified = true;
+	}
+	if ( isset( $_POST['yr_yacht_faq_nonce'] ) && wp_verify_nonce( $_POST['yr_yacht_faq_nonce'], 'yr_yacht_faq_nonce' ) ) {
+		$verified = true;
+	}
+
+	if ( ! $verified ) {
 		return;
 	}
+
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
