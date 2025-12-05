@@ -585,8 +585,8 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     </div>
     <?php endif; ?>
 
-    <!-- Price Section -->
-    <?php if ($old_price || $new_price): ?>
+    <!-- Price Section - HIDDEN -->
+    <?php /* if ($old_price || $new_price): ?>
     <div class="yr-price-section">
         <?php if ($old_price): ?>
             <div class="yr-price-box">
@@ -606,7 +606,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
             </div>
         <?php endif; ?>
     </div>
-    <?php endif; ?>
+    <?php endif; */ ?>
 
     <!-- Description -->
     <?php if (get_the_content()): ?>
@@ -616,7 +616,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     <?php endif; ?>
 
     <!-- CTA Buttons -->
-    <?php if ($whatsapp || $phone): ?>
+    <?php if ($whatsapp): ?>
     <div class="yr-cta-buttons">
         <?php if ($whatsapp): ?>
             <a href="https://wa.me/<?php echo esc_attr(preg_replace('/[^0-9]/', '', $whatsapp)); ?>"
@@ -625,11 +625,11 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
             </a>
         <?php endif; ?>
 
-        <?php if ($phone): ?>
+        <?php /* if ($phone): ?>
             <a href="tel:<?php echo esc_attr($phone); ?>" class="yr-btn yr-btn-call">
                 <span>📞</span> CALL US
             </a>
-        <?php endif; ?>
+        <?php endif; */ ?>
     </div>
     <?php endif; ?>
 
