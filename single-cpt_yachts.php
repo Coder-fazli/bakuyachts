@@ -34,9 +34,11 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     .yrsp-yacht-container {
         max-width: 1200px !important;
         margin: 0 auto !important;
-        padding: 80px 20px 40px 20px !important;
-        background: transparent !important;
+        padding: 200px 20px 40px 20px !important;
+        background: #fff !important;
         box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
 
     .yrsp-yacht-container * {
@@ -76,7 +78,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     /* === TITLE SECTION === */
     .yrsp-title {
-        text-align: left !important;
+        text-align: center !important;
         margin-bottom: 30px !important;
     }
 
