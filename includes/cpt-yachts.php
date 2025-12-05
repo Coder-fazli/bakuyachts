@@ -571,6 +571,14 @@ function yr_save_yacht_meta( $post_id ) {
 		return;
 	}
 
+	// Make sure this is a yacht post
+	if ( 'cpt_yachts' !== get_post_type( $post_id ) ) {
+		return;
+	}
+
+	// Debug: Log save attempt
+	error_log( 'YR Save Meta: Starting save for post ID ' . $post_id );
+
 	// Basic Details
 	if ( isset( $_POST['yr_yacht_price'] ) ) {
 		update_post_meta( $post_id, '_yr_yacht_price', sanitize_text_field( $_POST['yr_yacht_price'] ) );
@@ -588,15 +596,21 @@ function yr_save_yacht_meta( $post_id ) {
 		update_post_meta( $post_id, '_yr_yacht_badge', sanitize_text_field( $_POST['yr_yacht_badge'] ) );
 	}
 
-	// Gallery
+	// Gallery - CRITICAL: Do not sanitize as text field, it's comma-separated IDs
 	if ( isset( $_POST['yr_yacht_gallery'] ) ) {
-		$gallery_value = sanitize_text_field( $_POST['yr_yacht_gallery'] );
-		update_post_meta( $post_id, '_yr_yacht_gallery', $gallery_value );
+		// Sanitize as comma-separated list of integers
+		$gallery_value = $_POST['yr_yacht_gallery'];
+		$gallery_ids = array_filter( array_map( 'absint', explode( ',', $gallery_value ) ) );
+		$clean_gallery = implode( ',', $gallery_ids );
+
+		update_post_meta( $post_id, '_yr_yacht_gallery', $clean_gallery );
 
 		// Debug log
-		error_log( 'YR Gallery Save: Post ID ' . $post_id . ' - Value: ' . $gallery_value );
+		error_log( 'YR Gallery Save SUCCESS: Post ID ' . $post_id . ' - Raw: ' . $gallery_value . ' - Clean: ' . $clean_gallery );
 	} else {
-		error_log( 'YR Gallery Save: yr_yacht_gallery not set in POST for post ID ' . $post_id );
+		// Also save empty value to clear gallery
+		delete_post_meta( $post_id, '_yr_yacht_gallery' );
+		error_log( 'YR Gallery Save: yr_yacht_gallery not set in POST for post ID ' . $post_id . ' - CLEARED' );
 	}
 
 	// Pricing
