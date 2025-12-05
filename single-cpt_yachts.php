@@ -301,22 +301,22 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     .yrsp-cta-buttons .yrsp-btn-whatsapp,
     a.yrsp-btn-whatsapp {
-        background: #25d366 !important;
-        background-image: linear-gradient(135deg, #25d366 0%, #20ba5a 100%) !important;
+        background: #28a745 !important;
+        background-image: linear-gradient(135deg, #28a745 0%, #218838 100%) !important;
         color: #ffffff !important;
         font-size: 18px !important;
         padding: 18px 60px !important;
         border-radius: 50px !important;
-        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3) !important;
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3) !important;
         border: none !important;
     }
 
     .yrsp-cta-buttons .yrsp-btn-whatsapp:hover,
     a.yrsp-btn-whatsapp:hover {
-        background: #1fb855 !important;
-        background-image: linear-gradient(135deg, #20ba5a 0%, #1ea952 100%) !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4) !important;
+        background: #218838 !important;
+        background-image: linear-gradient(135deg, #218838 0%, #1e7e34 100%) !important;
+        transform: translateY(-2px) scale(1.05) !important;
+        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4) !important;
         color: #ffffff !important;
         text-decoration: none !important;
     }
