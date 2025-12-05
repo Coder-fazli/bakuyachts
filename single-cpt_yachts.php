@@ -299,20 +299,25 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yrsp-btn-whatsapp {
-        background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%) !important;
-        color: #fff !important;
+    .yrsp-cta-buttons .yrsp-btn-whatsapp,
+    a.yrsp-btn-whatsapp {
+        background: #25d366 !important;
+        background-image: linear-gradient(135deg, #25d366 0%, #20ba5a 100%) !important;
+        color: #ffffff !important;
         font-size: 18px !important;
-        padding: 20px 70px !important;
+        padding: 18px 60px !important;
         border-radius: 50px !important;
-        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4) !important;
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3) !important;
+        border: none !important;
     }
 
-    .yrsp-btn-whatsapp:hover {
-        background: linear-gradient(135deg, #20ba5a 0%, #1ea952 100%) !important;
-        transform: translateY(-3px) scale(1.05) !important;
-        box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5) !important;
-        color: #fff !important;
+    .yrsp-cta-buttons .yrsp-btn-whatsapp:hover,
+    a.yrsp-btn-whatsapp:hover {
+        background: #1fb855 !important;
+        background-image: linear-gradient(135deg, #20ba5a 0%, #1ea952 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4) !important;
+        color: #ffffff !important;
         text-decoration: none !important;
     }
 
@@ -340,18 +345,17 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     .yrsp-features-column {
         background: #fff !important;
-        padding: 35px !important;
-        border-radius: 15px !important;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+        padding: 30px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
         transition: all 0.3s ease !important;
-        border: 2px solid transparent !important;
+        border: 1px solid #eee !important;
         margin: 0 !important;
     }
 
     .yrsp-features-column:hover {
-        transform: translateY(-5px) !important;
-        box-shadow: 0 15px 50px rgba(0,0,0,0.15) !important;
-        border-color: #25d366 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.12) !important;
+        border-color: #ddd !important;
     }
 
     .yrsp-features-column h2 {
@@ -381,10 +385,10 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     .yrsp-feature-list li {
-        padding: 12px 0 12px 40px !important;
+        padding: 6px 0 6px 35px !important;
         position: relative !important;
         font-size: 15px !important;
-        line-height: 1.7 !important;
+        line-height: 1.6 !important;
         color: #555 !important;
         transition: all 0.2s ease !important;
         margin: 0 !important;
@@ -399,18 +403,18 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         content: "✓" !important;
         position: absolute !important;
         left: 0 !important;
-        top: 10px !important;
-        width: 28px !important;
-        height: 28px !important;
-        background: linear-gradient(135deg, #25d366, #1fb855) !important;
+        top: 6px !important;
+        width: 22px !important;
+        height: 22px !important;
+        background: #25d366 !important;
         color: #fff !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         font-weight: bold !important;
-        font-size: 14px !important;
-        box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3) !important;
+        font-size: 12px !important;
+        box-shadow: none !important;
     }
 
     /* === FAQ SECTION === */
