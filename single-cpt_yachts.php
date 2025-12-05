@@ -63,20 +63,20 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     /* === YACHT SINGLE CONTAINER === */
-    .yr-yacht-single-page {
-        max-width: 1200px !important;
+    .yrsp-yacht-container {
+        max-width: 1600px !important;
         margin: 0 auto !important;
         padding: 40px 20px !important;
         background: transparent !important;
     }
 
     /* === TITLE SECTION === */
-    .yr-yacht-title {
+    .yrsp-title {
         text-align: center !important;
         margin-bottom: 30px !important;
     }
 
-    .yr-yacht-title h1 {
+    .yrsp-title h1 {
         font-size: 36px !important;
         color: #1a2332 !important;
         margin: 0 0 10px 0 !important;
@@ -85,7 +85,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         line-height: 1.2 !important;
     }
 
-    .yr-rating {
+    .yrsp-rating {
         color: #ffa500 !important;
         font-size: 20px !important;
         line-height: 1 !important;
@@ -94,12 +94,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     /* === GALLERY SLIDER === */
-    .yr-gallery-wrapper {
+    .yrsp-gallery-wrapper {
         margin: 0 0 40px 0 !important;
         padding: 0 !important;
     }
 
-    .yr-gallery-row {
+    .yrsp-gallery-row {
         position: relative !important;
         overflow: hidden !important;
         border-radius: 15px !important;
@@ -109,7 +109,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         padding: 0 !important;
     }
 
-    .yr-gallery-swiper {
+    .yrsp-gallery-swiper {
         width: 100% !important;
         height: 400px !important;
         background: transparent !important;
@@ -117,12 +117,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         padding: 0 !important;
     }
 
-    .yr-gallery-swiper .swiper-wrapper {
+    .yrsp-gallery-swiper .swiper-wrapper {
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    .yr-gallery-swiper .swiper-slide {
+    .yrsp-gallery-swiper .swiper-slide {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 2px !important;
@@ -131,7 +131,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-gallery-item {
+    .yrsp-gallery-item {
         position: relative !important;
         overflow: hidden !important;
         border-radius: 0 !important;
@@ -141,7 +141,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         padding: 0 !important;
     }
 
-    .yr-gallery-item img {
+    .yrsp-gallery-item img {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
@@ -152,13 +152,13 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         border: none !important;
     }
 
-    .yr-gallery-item:hover img {
+    .yrsp-gallery-item:hover img {
         transform: scale(1.1) !important;
     }
 
     /* Swiper Navigation */
-    .yr-gallery-swiper .swiper-button-next,
-    .yr-gallery-swiper .swiper-button-prev {
+    .yrsp-gallery-swiper .swiper-button-next,
+    .yrsp-gallery-swiper .swiper-button-prev {
         color: #fff !important;
         background: rgba(26, 35, 50, 0.8) !important;
         width: 45px !important;
@@ -167,32 +167,32 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         transition: all 0.3s ease !important;
     }
 
-    .yr-gallery-swiper .swiper-button-next:hover,
-    .yr-gallery-swiper .swiper-button-prev:hover {
+    .yrsp-gallery-swiper .swiper-button-next:hover,
+    .yrsp-gallery-swiper .swiper-button-prev:hover {
         background: rgba(26, 35, 50, 1) !important;
         transform: scale(1.1) !important;
     }
 
-    .yr-gallery-swiper .swiper-button-next:after,
-    .yr-gallery-swiper .swiper-button-prev:after {
+    .yrsp-gallery-swiper .swiper-button-next:after,
+    .yrsp-gallery-swiper .swiper-button-prev:after {
         font-size: 20px !important;
         font-weight: bold !important;
     }
 
-    .yr-gallery-swiper .swiper-pagination-bullet {
+    .yrsp-gallery-swiper .swiper-pagination-bullet {
         background: #1a2332 !important;
         width: 12px !important;
         height: 12px !important;
         opacity: 0.5 !important;
     }
 
-    .yr-gallery-swiper .swiper-pagination-bullet-active {
+    .yrsp-gallery-swiper .swiper-pagination-bullet-active {
         background: #25d366 !important;
         opacity: 1 !important;
     }
 
     /* === PRICE SECTION === */
-    .yr-price-section {
+    .yrsp-price-section {
         display: flex !important;
         gap: 20px !important;
         justify-content: center !important;
@@ -201,7 +201,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         flex-wrap: wrap !important;
     }
 
-    .yr-price-box {
+    .yrsp-price-box {
         flex: 1 !important;
         max-width: 500px !important;
         text-align: center !important;
@@ -214,12 +214,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-price-box:hover {
+    .yrsp-price-box:hover {
         transform: translateY(-5px) !important;
         box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
     }
 
-    .yr-old-price {
+    .yrsp-old-price {
         color: #ff0000 !important;
         font-size: 32px !important;
         font-weight: bold !important;
@@ -229,7 +229,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         display: inline-block !important;
     }
 
-    .yr-new-price {
+    .yrsp-new-price {
         color: #ff0000 !important;
         font-size: 32px !important;
         font-weight: bold !important;
@@ -238,7 +238,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         padding: 0 !important;
     }
 
-    .yr-price-label {
+    .yrsp-price-label {
         color: #1a2332 !important;
         font-size: 22px !important;
         font-weight: 600 !important;
@@ -248,7 +248,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     /* === DESCRIPTION === */
-    .yr-description {
+    .yrsp-description {
         text-align: center !important;
         font-size: 16px !important;
         line-height: 1.8 !important;
@@ -260,13 +260,13 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
     }
 
-    .yr-description p {
+    .yrsp-description p {
         margin: 0 !important;
         padding: 0 !important;
     }
 
     /* === CTA BUTTONS === */
-    .yr-cta-buttons {
+    .yrsp-cta-buttons {
         display: flex !important;
         gap: 20px !important;
         justify-content: center !important;
@@ -275,7 +275,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         flex-wrap: wrap !important;
     }
 
-    .yr-btn {
+    .yrsp-btn {
         padding: 18px 60px !important;
         font-size: 16px !important;
         font-weight: 700 !important;
@@ -293,12 +293,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-btn-whatsapp {
+    .yrsp-btn-whatsapp {
         background: #25d366 !important;
         color: #fff !important;
     }
 
-    .yr-btn-whatsapp:hover {
+    .yrsp-btn-whatsapp:hover {
         background: #1fb855 !important;
         transform: translateY(-3px) !important;
         box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4) !important;
@@ -306,12 +306,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         text-decoration: none !important;
     }
 
-    .yr-btn-call {
+    .yrsp-btn-call {
         background: #1a2332 !important;
         color: #fff !important;
     }
 
-    .yr-btn-call:hover {
+    .yrsp-btn-call:hover {
         background: #2d3e50 !important;
         transform: translateY(-3px) !important;
         box-shadow: 0 10px 30px rgba(26, 35, 50, 0.4) !important;
@@ -320,7 +320,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     /* === FEATURES SECTION === */
-    .yr-features-section {
+    .yrsp-features-section {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 30px !important;
@@ -328,7 +328,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         padding: 0 !important;
     }
 
-    .yr-features-column {
+    .yrsp-features-column {
         background: #fff !important;
         padding: 35px !important;
         border-radius: 15px !important;
@@ -338,13 +338,13 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-features-column:hover {
+    .yrsp-features-column:hover {
         transform: translateY(-5px) !important;
         box-shadow: 0 15px 50px rgba(0,0,0,0.15) !important;
         border-color: #25d366 !important;
     }
 
-    .yr-features-column h2 {
+    .yrsp-features-column h2 {
         font-size: 26px !important;
         color: #1a2332 !important;
         margin: 0 0 25px 0 !important;
@@ -353,7 +353,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         position: relative !important;
     }
 
-    .yr-features-column h2:after {
+    .yrsp-features-column h2:after {
         content: '' !important;
         position: absolute !important;
         left: 0 !important;
@@ -364,13 +364,13 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         border-radius: 2px !important;
     }
 
-    .yr-feature-list {
+    .yrsp-feature-list {
         list-style: none !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    .yr-feature-list li {
+    .yrsp-feature-list li {
         padding: 12px 0 12px 40px !important;
         position: relative !important;
         font-size: 15px !important;
@@ -380,12 +380,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-feature-list li:hover {
+    .yrsp-feature-list li:hover {
         color: #1a2332 !important;
         transform: translateX(5px) !important;
     }
 
-    .yr-feature-list li:before {
+    .yrsp-feature-list li:before {
         content: "✓" !important;
         position: absolute !important;
         left: 0 !important;
@@ -404,12 +404,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     /* === FAQ SECTION === */
-    .yr-faq-section {
+    .yrsp-faq-section {
         margin: 60px 0 40px 0 !important;
         padding: 0 !important;
     }
 
-    .yr-faq-title {
+    .yrsp-faq-title {
         text-align: center !important;
         font-size: 32px !important;
         color: #1a2332 !important;
@@ -418,13 +418,13 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         font-weight: 700 !important;
     }
 
-    .yr-faq-container {
+    .yrsp-faq-container {
         max-width: 900px !important;
         margin: 0 auto !important;
         padding: 0 !important;
     }
 
-    .yr-faq-item {
+    .yrsp-faq-item {
         background: #fff !important;
         margin: 0 0 15px 0 !important;
         padding: 0 !important;
@@ -434,11 +434,11 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         transition: all 0.3s ease !important;
     }
 
-    .yr-faq-item:hover {
+    .yrsp-faq-item:hover {
         box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important;
     }
 
-    .yr-faq-question {
+    .yrsp-faq-question {
         padding: 20px 25px !important;
         cursor: pointer !important;
         display: flex !important;
@@ -452,17 +452,17 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-faq-question:hover {
+    .yrsp-faq-question:hover {
         background: #f8f9fa !important;
         color: #25d366 !important;
     }
 
-    .yr-faq-question.active {
+    .yrsp-faq-question.active {
         background: #f0f9f4 !important;
         color: #25d366 !important;
     }
 
-    .yr-faq-icon {
+    .yrsp-faq-icon {
         font-size: 20px !important;
         font-weight: bold !important;
         transition: transform 0.3s ease !important;
@@ -471,11 +471,11 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         padding: 0 !important;
     }
 
-    .yr-faq-question.active .yr-faq-icon {
+    .yrsp-faq-question.active .yr-faq-icon {
         transform: rotate(45deg) !important;
     }
 
-    .yr-faq-answer {
+    .yrsp-faq-answer {
         max-height: 0 !important;
         overflow: hidden !important;
         transition: max-height 0.3s ease, padding 0.3s ease !important;
@@ -486,56 +486,56 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         margin: 0 !important;
     }
 
-    .yr-faq-answer.active {
+    .yrsp-faq-answer.active {
         max-height: 500px !important;
         padding: 15px 25px 20px 25px !important;
     }
 
-    .yr-faq-answer p {
+    .yrsp-faq-answer p {
         margin: 0 !important;
         padding: 0 !important;
     }
 
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
-        .yr-yacht-title h1 {
+        .yrsp-yacht-title h1 {
             font-size: 28px !important;
         }
 
-        .yr-gallery-swiper {
+        .yrsp-gallery-swiper {
             height: auto !important;
         }
 
-        .yr-gallery-swiper .swiper-slide {
+        .yrsp-gallery-swiper .swiper-slide {
             grid-template-columns: 1fr !important;
         }
 
-        .yr-gallery-item {
+        .yrsp-gallery-item {
             height: 250px !important;
         }
 
-        .yr-features-section {
+        .yrsp-features-section {
             grid-template-columns: 1fr !important;
         }
 
-        .yr-price-section {
+        .yrsp-price-section {
             flex-direction: column !important;
         }
 
-        .yr-cta-buttons {
+        .yrsp-cta-buttons {
             flex-direction: column !important;
         }
 
-        .yr-btn {
+        .yrsp-btn {
             width: 100% !important;
             justify-content: center !important;
         }
 
-        .yr-faq-title {
+        .yrsp-faq-title {
             font-size: 26px !important;
         }
 
-        .yr-faq-question {
+        .yrsp-faq-question {
             font-size: 15px !important;
             padding: 15px 20px !important;
         }
@@ -564,18 +564,18 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
                 <div class="content_wrap">
                     <div class="content">
 
-<div class="yr-yacht-single-page">
+<div class="yrsp-yacht-container">
 
     <!-- Title -->
-    <div class="yr-yacht-title">
+    <div class="yrsp-yacht-title">
         <h1><?php the_title(); ?></h1>
-        <div class="yr-rating">★★★★★</div>
+        <div class="yrsp-rating">★★★★★</div>
     </div>
 
     <!-- Gallery Slider -->
     <?php if (!empty($gallery_ids) && count($gallery_ids) > 0): ?>
-    <div class="yr-gallery-wrapper">
-        <div class="yr-gallery-row">
+    <div class="yrsp-gallery-wrapper">
+        <div class="yrsp-gallery-row">
             <div class="swiper yr-gallery-swiper">
                 <div class="swiper-wrapper">
                     <?php
@@ -585,7 +585,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
                     ?>
                         <div class="swiper-slide">
                             <?php foreach ($chunk as $image_id): ?>
-                                <div class="yr-gallery-item">
+                                <div class="yrsp-gallery-item">
                                     <?php echo wp_get_attachment_image($image_id, 'full'); ?>
                                 </div>
                             <?php endforeach; ?>
@@ -602,21 +602,21 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     <!-- Price Section - HIDDEN -->
     <?php /* if ($old_price || $new_price): ?>
-    <div class="yr-price-section">
+    <div class="yrsp-price-section">
         <?php if ($old_price): ?>
-            <div class="yr-price-box">
-                <span class="yr-old-price"><?php echo esc_html($old_price); ?></span>
+            <div class="yrsp-price-box">
+                <span class="yrsp-old-price"><?php echo esc_html($old_price); ?></span>
                 <?php if ($price_label): ?>
-                    <span class="yr-price-label"><?php echo esc_html($price_label); ?></span>
+                    <span class="yrsp-price-label"><?php echo esc_html($price_label); ?></span>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
 
         <?php if ($new_price): ?>
-            <div class="yr-price-box">
-                <span class="yr-new-price">NOW - <?php echo esc_html($new_price); ?></span>
+            <div class="yrsp-price-box">
+                <span class="yrsp-new-price">NOW - <?php echo esc_html($new_price); ?></span>
                 <?php if ($price_label): ?>
-                    <span class="yr-price-label"><?php echo esc_html($price_label); ?></span>
+                    <span class="yrsp-price-label"><?php echo esc_html($price_label); ?></span>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -625,23 +625,23 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     <!-- Description -->
     <?php if (get_the_content()): ?>
-    <div class="yr-description">
+    <div class="yrsp-description">
         <?php the_content(); ?>
     </div>
     <?php endif; ?>
 
     <!-- CTA Buttons -->
     <?php if ($whatsapp): ?>
-    <div class="yr-cta-buttons">
+    <div class="yrsp-cta-buttons">
         <?php if ($whatsapp): ?>
             <a href="https://wa.me/<?php echo esc_attr(preg_replace('/[^0-9]/', '', $whatsapp)); ?>"
-               class="yr-btn yr-btn-whatsapp" target="_blank">
+               class="yrsp-btn yr-btn-whatsapp" target="_blank">
                 <span>📱</span> WHATSAPP US
             </a>
         <?php endif; ?>
 
         <?php /* if ($phone): ?>
-            <a href="tel:<?php echo esc_attr($phone); ?>" class="yr-btn yr-btn-call">
+            <a href="tel:<?php echo esc_attr($phone); ?>" class="yrsp-btn yr-btn-call">
                 <span>📞</span> CALL US
             </a>
         <?php endif; */ ?>
@@ -650,13 +650,13 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     <!-- Features Section -->
     <?php if ((!empty($features) && is_array($features)) || (!empty($offers) && is_array($offers))): ?>
-    <div class="yr-features-section">
+    <div class="yrsp-features-section">
 
         <!-- Left Column: Key Features -->
         <?php if (!empty($features) && is_array($features)): ?>
-        <div class="yr-features-column">
+        <div class="yrsp-features-column">
             <h2>Key Features of <?php the_title(); ?></h2>
-            <ul class="yr-feature-list">
+            <ul class="yrsp-feature-list">
                 <?php foreach ($features as $feature): ?>
                     <?php if (!empty($feature)): ?>
                         <li><?php echo esc_html($feature); ?></li>
@@ -668,9 +668,9 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
         <!-- Right Column: We Also Offer -->
         <?php if (!empty($offers) && is_array($offers)): ?>
-        <div class="yr-features-column">
+        <div class="yrsp-features-column">
             <h2>We also Offer:</h2>
-            <ul class="yr-feature-list">
+            <ul class="yrsp-feature-list">
                 <?php foreach ($offers as $offer): ?>
                     <?php if (!empty($offer)): ?>
                         <li><?php echo esc_html($offer); ?></li>
@@ -685,18 +685,18 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     <!-- FAQ Section -->
     <?php if (!empty($faq) && is_array($faq)): ?>
-    <div class="yr-faq-section">
-        <h2 class="yr-faq-title">Frequently Asked Questions</h2>
-        <div class="yr-faq-container">
+    <div class="yrsp-faq-section">
+        <h2 class="yrsp-faq-title">Frequently Asked Questions</h2>
+        <div class="yrsp-faq-container">
 
             <?php foreach ($faq as $index => $item): ?>
                 <?php if (!empty($item['question']) && !empty($item['answer'])): ?>
-                    <div class="yr-faq-item">
-                        <div class="yr-faq-question">
+                    <div class="yrsp-faq-item">
+                        <div class="yrsp-faq-question">
                             <span><?php echo esc_html($item['question']); ?></span>
-                            <span class="yr-faq-icon">+</span>
+                            <span class="yrsp-faq-icon">+</span>
                         </div>
-                        <div class="yr-faq-answer">
+                        <div class="yrsp-faq-answer">
                             <p><?php echo esc_html($item['answer']); ?></p>
                         </div>
                     </div>
@@ -715,15 +715,15 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize gallery slider
     <?php if (!empty($gallery_ids) && count($gallery_ids) > 0): ?>
-    var yrGallerySwiper = new Swiper('.yr-gallery-swiper', {
+    var yrspGallerySwiper = new Swiper('.yrsp-gallery-swiper', {
         slidesPerView: 1,
         spaceBetween: 0,
         navigation: {
-            nextEl: '.yr-gallery-swiper .swiper-button-next',
-            prevEl: '.yr-gallery-swiper .swiper-button-prev',
+            nextEl: '.yrsp-gallery-swiper .swiper-button-next',
+            prevEl: '.yrsp-gallery-swiper .swiper-button-prev',
         },
         pagination: {
-            el: '.yr-gallery-swiper .swiper-pagination',
+            el: '.yrsp-gallery-swiper .swiper-pagination',
             clickable: true,
         },
         loop: true,
@@ -735,17 +735,17 @@ document.addEventListener('DOMContentLoaded', function() {
     <?php endif; ?>
 
     // FAQ Accordion functionality
-    var faqQuestions = document.querySelectorAll('.yr-faq-question');
+    var faqQuestions = document.querySelectorAll('.yrsp-faq-question');
     faqQuestions.forEach(function(question) {
         question.addEventListener('click', function() {
             var faqItem = this.parentElement;
             var answer = this.nextElementSibling;
 
             // Close other open items
-            document.querySelectorAll('.yr-faq-item').forEach(function(item) {
+            document.querySelectorAll('.yrsp-faq-item').forEach(function(item) {
                 if (item !== faqItem) {
-                    item.querySelector('.yr-faq-question').classList.remove('active');
-                    item.querySelector('.yr-faq-answer').classList.remove('active');
+                    item.querySelector('.yrsp-faq-question').classList.remove('active');
+                    item.querySelector('.yrsp-faq-answer').classList.remove('active');
                 }
             });
 
@@ -757,15 +757,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-</div><!-- .yr-yacht-single-page -->
+</div><!-- .yrsp-yacht-container -->
 
                     </div><!-- .content -->
                 </div><!-- .content_wrap -->
             </div><!-- .page_content_wrap -->
 
             <?php
-            // Include default footer (not Elementor)
-            get_template_part( 'skins/default/templates/footer-default' );
+            // Include custom footer (Elementor)
+            get_template_part( 'skins/default/templates/footer-custom' );
             ?>
 
         </div><!-- .page_wrap -->
