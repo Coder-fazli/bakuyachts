@@ -229,6 +229,16 @@ function yr_yacht_meta_box() {
 }
 add_action( 'add_meta_boxes', 'yr_yacht_meta_box' );
 
+// Enqueue scripts for admin
+function yr_yacht_admin_scripts( $hook ) {
+	global $post;
+	if ( ( 'post.php' === $hook || 'post-new.php' === $hook ) && isset( $post ) && 'cpt_yachts' === $post->post_type ) {
+		wp_enqueue_media();
+		wp_enqueue_script( 'jquery-ui-sortable' );
+	}
+}
+add_action( 'admin_enqueue_scripts', 'yr_yacht_admin_scripts' );
+
 function yr_yacht_meta_box_callback( $post ) {
 	wp_nonce_field( 'yr_yacht_meta_box', 'yr_yacht_meta_box_nonce' );
 
