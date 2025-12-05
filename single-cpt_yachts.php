@@ -1,512 +1,555 @@
 <?php
 /**
- * Single Yacht Template - Isolated Design
+ * Single Yacht Template - Standalone (No Theme Wrappers)
  * Based on yacht-single-template.html
  */
 
-get_header();
+// Get post data
+if ( have_posts() ) {
+    the_post();
+}
 
-while (have_posts()) : the_post();
+// Get meta data
+$gallery_ids = get_post_meta(get_the_ID(), '_yr_yacht_gallery_ids', true);
+if (!is_array($gallery_ids)) {
+    $gallery_ids = array();
+}
 
-    // Get meta data
-    $gallery_ids = get_post_meta(get_the_ID(), '_yr_yacht_gallery_ids', true);
-    if (!is_array($gallery_ids)) {
-        $gallery_ids = array();
+$old_price = get_post_meta(get_the_ID(), '_yr_yacht_old_price', true);
+$new_price = get_post_meta(get_the_ID(), '_yr_yacht_new_price', true);
+$price_label = get_post_meta(get_the_ID(), '_yr_yacht_price_label', true);
+
+$whatsapp = get_post_meta(get_the_ID(), '_yr_yacht_whatsapp', true);
+$phone = get_post_meta(get_the_ID(), '_yr_yacht_phone', true);
+
+$features = get_post_meta(get_the_ID(), '_yr_yacht_features', true);
+$offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
+$faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php the_title(); ?> - <?php bloginfo('name'); ?></title>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <?php wp_head(); ?>
+
+    <style>
+    /* === GLOBAL RESET === */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    $old_price = get_post_meta(get_the_ID(), '_yr_yacht_old_price', true);
-    $new_price = get_post_meta(get_the_ID(), '_yr_yacht_new_price', true);
-    $price_label = get_post_meta(get_the_ID(), '_yr_yacht_price_label', true);
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
 
-    $whatsapp = get_post_meta(get_the_ID(), '_yr_yacht_whatsapp', true);
-    $phone = get_post_meta(get_the_ID(), '_yr_yacht_phone', true);
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        line-height: 1.6 !important;
+        color: #333 !important;
+        background: #f5f5f5 !important;
+    }
 
-    $features = get_post_meta(get_the_ID(), '_yr_yacht_features', true);
-    $offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
-    $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
+    /* Hide WordPress admin bar spacing */
+    body.admin-bar {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
 
-    // Enqueue Swiper
-    wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0');
-    wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true);
-?>
+    /* === YACHT SINGLE CONTAINER === */
+    .yr-yacht-single-page {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 40px 20px !important;
+        background: transparent !important;
+    }
 
-<!-- ISOLATED YACHT SINGLE CONTAINER -->
-<div class="yr-single-yacht-isolated-wrapper">
-<style>
-/* === COMPLETE CSS RESET FOR YACHT SINGLE PAGE === */
-.yr-single-yacht-isolated-wrapper * {
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
+    /* === TITLE SECTION === */
+    .yr-yacht-title {
+        text-align: center !important;
+        margin-bottom: 30px !important;
+    }
 
-.yr-single-yacht-isolated-wrapper {
-    background: #f5f5f5 !important;
-    padding: 40px 20px !important;
-    margin: 0 !important;
-    width: 100% !important;
-    float: none !important;
-    clear: both !important;
-}
-
-.yr-yacht-container {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    padding: 40px 20px !important;
-    background: transparent !important;
-}
-
-/* === TITLE SECTION === */
-.yr-yacht-title {
-    text-align: center !important;
-    margin-bottom: 30px !important;
-}
-
-.yr-yacht-title h1 {
-    font-size: 36px !important;
-    color: #1a2332 !important;
-    margin-bottom: 10px !important;
-    font-weight: 700 !important;
-    line-height: 1.2 !important;
-}
-
-.yr-rating {
-    color: #ffa500 !important;
-    font-size: 20px !important;
-    line-height: 1 !important;
-}
-
-/* === GALLERY SLIDER === */
-.yr-gallery-wrapper {
-    margin-bottom: 40px !important;
-}
-
-.yr-gallery-row {
-    position: relative !important;
-    overflow: hidden !important;
-    border-radius: 15px !important;
-    box-shadow: 0 15px 60px rgba(0,0,0,0.25) !important;
-    background: transparent !important;
-}
-
-.yr-gallery-swiper {
-    width: 100% !important;
-    height: 400px !important;
-    background: transparent !important;
-}
-
-.yr-gallery-swiper .swiper-wrapper {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.yr-gallery-swiper .swiper-slide {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2px !important;
-    padding: 0 !important;
-    background: transparent !important;
-    margin: 0 !important;
-}
-
-.yr-gallery-item {
-    position: relative !important;
-    overflow: hidden !important;
-    border-radius: 0 !important;
-    height: 400px !important;
-    background: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.yr-gallery-item img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    transition: transform 0.3s ease !important;
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.yr-gallery-item:hover img {
-    transform: scale(1.1) !important;
-}
-
-/* Swiper Navigation */
-.yr-gallery-swiper .swiper-button-next,
-.yr-gallery-swiper .swiper-button-prev {
-    color: #fff !important;
-    background: rgba(26, 35, 50, 0.8) !important;
-    width: 45px !important;
-    height: 45px !important;
-    border-radius: 50% !important;
-    transition: all 0.3s ease !important;
-}
-
-.yr-gallery-swiper .swiper-button-next:hover,
-.yr-gallery-swiper .swiper-button-prev:hover {
-    background: rgba(26, 35, 50, 1) !important;
-    transform: scale(1.1) !important;
-}
-
-.yr-gallery-swiper .swiper-button-next:after,
-.yr-gallery-swiper .swiper-button-prev:after {
-    font-size: 20px !important;
-    font-weight: bold !important;
-}
-
-.yr-gallery-swiper .swiper-pagination-bullet {
-    background: #1a2332 !important;
-    width: 12px !important;
-    height: 12px !important;
-    opacity: 0.5 !important;
-}
-
-.yr-gallery-swiper .swiper-pagination-bullet-active {
-    background: #25d366 !important;
-    opacity: 1 !important;
-}
-
-/* === PRICE SECTION === */
-.yr-price-section {
-    display: flex !important;
-    gap: 20px !important;
-    justify-content: center !important;
-    margin-bottom: 30px !important;
-    flex-wrap: wrap !important;
-}
-
-.yr-price-box {
-    flex: 1 !important;
-    max-width: 500px !important;
-    text-align: center !important;
-    padding: 25px 30px !important;
-    border: none !important;
-    border-radius: 12px !important;
-    background: #fff !important;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important;
-    transition: transform 0.3s ease !important;
-}
-
-.yr-price-box:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
-}
-
-.yr-old-price {
-    color: #ff0000 !important;
-    font-size: 32px !important;
-    font-weight: bold !important;
-    text-decoration: line-through !important;
-    margin-right: 10px !important;
-    display: inline-block !important;
-}
-
-.yr-new-price {
-    color: #ff0000 !important;
-    font-size: 32px !important;
-    font-weight: bold !important;
-    display: inline-block !important;
-}
-
-.yr-price-label {
-    color: #1a2332 !important;
-    font-size: 22px !important;
-    font-weight: 600 !important;
-    display: block !important;
-    margin-top: 5px !important;
-}
-
-/* === DESCRIPTION === */
-.yr-description {
-    text-align: center !important;
-    font-size: 16px !important;
-    line-height: 1.8 !important;
-    color: #555 !important;
-    margin-bottom: 30px !important;
-    padding: 30px !important;
-    background: #fff !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
-}
-
-.yr-description p {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* === CTA BUTTONS === */
-.yr-cta-buttons {
-    display: flex !important;
-    gap: 20px !important;
-    justify-content: center !important;
-    margin-bottom: 50px !important;
-    flex-wrap: wrap !important;
-}
-
-.yr-btn {
-    padding: 18px 60px !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    text-decoration: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-}
-
-.yr-btn-whatsapp {
-    background: #25d366 !important;
-    color: #fff !important;
-}
-
-.yr-btn-whatsapp:hover {
-    background: #1fb855 !important;
-    transform: translateY(-3px) !important;
-    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4) !important;
-    color: #fff !important;
-}
-
-.yr-btn-call {
-    background: #1a2332 !important;
-    color: #fff !important;
-}
-
-.yr-btn-call:hover {
-    background: #2d3e50 !important;
-    transform: translateY(-3px) !important;
-    box-shadow: 0 10px 30px rgba(26, 35, 50, 0.4) !important;
-    color: #fff !important;
-}
-
-/* === FEATURES SECTION === */
-.yr-features-section {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 30px !important;
-    margin-top: 50px !important;
-    margin-bottom: 50px !important;
-}
-
-.yr-features-column {
-    background: #fff !important;
-    padding: 35px !important;
-    border-radius: 15px !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
-    transition: all 0.3s ease !important;
-    border: 2px solid transparent !important;
-}
-
-.yr-features-column:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.15) !important;
-    border-color: #25d366 !important;
-}
-
-.yr-features-column h2 {
-    font-size: 26px !important;
-    color: #1a2332 !important;
-    margin-bottom: 25px !important;
-    font-weight: 700 !important;
-    position: relative !important;
-    padding-bottom: 15px !important;
-}
-
-.yr-features-column h2:after {
-    content: '' !important;
-    position: absolute !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    width: 60px !important;
-    height: 4px !important;
-    background: linear-gradient(90deg, #25d366, #1fb855) !important;
-    border-radius: 2px !important;
-}
-
-.yr-feature-list {
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.yr-feature-list li {
-    padding: 12px 0 !important;
-    padding-left: 40px !important;
-    position: relative !important;
-    font-size: 15px !important;
-    line-height: 1.7 !important;
-    color: #555 !important;
-    transition: all 0.2s ease !important;
-    margin: 0 !important;
-}
-
-.yr-feature-list li:hover {
-    color: #1a2332 !important;
-    transform: translateX(5px) !important;
-}
-
-.yr-feature-list li:before {
-    content: "✓" !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 10px !important;
-    width: 28px !important;
-    height: 28px !important;
-    background: linear-gradient(135deg, #25d366, #1fb855) !important;
-    color: #fff !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-weight: bold !important;
-    font-size: 14px !important;
-    box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3) !important;
-}
-
-/* === FAQ SECTION === */
-.yr-faq-section {
-    margin-top: 60px !important;
-    margin-bottom: 40px !important;
-}
-
-.yr-faq-title {
-    text-align: center !important;
-    font-size: 32px !important;
-    color: #1a2332 !important;
-    margin-bottom: 40px !important;
-    font-weight: 700 !important;
-}
-
-.yr-faq-container {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-}
-
-.yr-faq-item {
-    background: #fff !important;
-    margin-bottom: 15px !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
-    transition: all 0.3s ease !important;
-}
-
-.yr-faq-item:hover {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important;
-}
-
-.yr-faq-question {
-    padding: 20px 25px !important;
-    cursor: pointer !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    font-size: 17px !important;
-    font-weight: 600 !important;
-    color: #1a2332 !important;
-    background: #fff !important;
-    transition: all 0.3s ease !important;
-    margin: 0 !important;
-}
-
-.yr-faq-question:hover {
-    background: #f8f9fa !important;
-    color: #25d366 !important;
-}
-
-.yr-faq-question.active {
-    background: #f0f9f4 !important;
-    color: #25d366 !important;
-}
-
-.yr-faq-icon {
-    font-size: 20px !important;
-    font-weight: bold !important;
-    transition: transform 0.3s ease !important;
-    color: #25d366 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.yr-faq-question.active .yr-faq-icon {
-    transform: rotate(45deg) !important;
-}
-
-.yr-faq-answer {
-    max-height: 0 !important;
-    overflow: hidden !important;
-    transition: max-height 0.3s ease, padding 0.3s ease !important;
-    padding: 0 25px !important;
-    color: #666 !important;
-    line-height: 1.7 !important;
-    font-size: 15px !important;
-}
-
-.yr-faq-answer.active {
-    max-height: 500px !important;
-    padding: 15px 25px 20px !important;
-}
-
-.yr-faq-answer p {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
     .yr-yacht-title h1 {
-        font-size: 28px !important;
+        font-size: 36px !important;
+        color: #1a2332 !important;
+        margin: 0 0 10px 0 !important;
+        padding: 0 !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+    }
+
+    .yr-rating {
+        color: #ffa500 !important;
+        font-size: 20px !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* === GALLERY SLIDER === */
+    .yr-gallery-wrapper {
+        margin: 0 0 40px 0 !important;
+        padding: 0 !important;
+    }
+
+    .yr-gallery-row {
+        position: relative !important;
+        overflow: hidden !important;
+        border-radius: 15px !important;
+        box-shadow: 0 15px 60px rgba(0,0,0,0.25) !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .yr-gallery-swiper {
-        height: auto !important;
+        width: 100% !important;
+        height: 400px !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .yr-gallery-swiper .swiper-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .yr-gallery-swiper .swiper-slide {
-        grid-template-columns: 1fr !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        margin: 0 !important;
     }
 
     .yr-gallery-item {
-        height: 250px !important;
+        position: relative !important;
+        overflow: hidden !important;
+        border-radius: 0 !important;
+        height: 400px !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-    .yr-features-section {
-        grid-template-columns: 1fr !important;
+    .yr-gallery-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        transition: transform 0.3s ease !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
     }
 
+    .yr-gallery-item:hover img {
+        transform: scale(1.1) !important;
+    }
+
+    /* Swiper Navigation */
+    .yr-gallery-swiper .swiper-button-next,
+    .yr-gallery-swiper .swiper-button-prev {
+        color: #fff !important;
+        background: rgba(26, 35, 50, 0.8) !important;
+        width: 45px !important;
+        height: 45px !important;
+        border-radius: 50% !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .yr-gallery-swiper .swiper-button-next:hover,
+    .yr-gallery-swiper .swiper-button-prev:hover {
+        background: rgba(26, 35, 50, 1) !important;
+        transform: scale(1.1) !important;
+    }
+
+    .yr-gallery-swiper .swiper-button-next:after,
+    .yr-gallery-swiper .swiper-button-prev:after {
+        font-size: 20px !important;
+        font-weight: bold !important;
+    }
+
+    .yr-gallery-swiper .swiper-pagination-bullet {
+        background: #1a2332 !important;
+        width: 12px !important;
+        height: 12px !important;
+        opacity: 0.5 !important;
+    }
+
+    .yr-gallery-swiper .swiper-pagination-bullet-active {
+        background: #25d366 !important;
+        opacity: 1 !important;
+    }
+
+    /* === PRICE SECTION === */
     .yr-price-section {
-        flex-direction: column !important;
+        display: flex !important;
+        gap: 20px !important;
+        justify-content: center !important;
+        margin: 0 0 30px 0 !important;
+        padding: 0 !important;
+        flex-wrap: wrap !important;
     }
 
+    .yr-price-box {
+        flex: 1 !important;
+        max-width: 500px !important;
+        text-align: center !important;
+        padding: 25px 30px !important;
+        border: none !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important;
+        transition: transform 0.3s ease !important;
+        margin: 0 !important;
+    }
+
+    .yr-price-box:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
+    }
+
+    .yr-old-price {
+        color: #ff0000 !important;
+        font-size: 32px !important;
+        font-weight: bold !important;
+        text-decoration: line-through !important;
+        margin: 0 10px 0 0 !important;
+        padding: 0 !important;
+        display: inline-block !important;
+    }
+
+    .yr-new-price {
+        color: #ff0000 !important;
+        font-size: 32px !important;
+        font-weight: bold !important;
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .yr-price-label {
+        color: #1a2332 !important;
+        font-size: 22px !important;
+        font-weight: 600 !important;
+        display: block !important;
+        margin: 5px 0 0 0 !important;
+        padding: 0 !important;
+    }
+
+    /* === DESCRIPTION === */
+    .yr-description {
+        text-align: center !important;
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+        color: #555 !important;
+        margin: 0 0 30px 0 !important;
+        padding: 30px !important;
+        background: #fff !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+    }
+
+    .yr-description p {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* === CTA BUTTONS === */
     .yr-cta-buttons {
-        flex-direction: column !important;
+        display: flex !important;
+        gap: 20px !important;
+        justify-content: center !important;
+        margin: 0 0 50px 0 !important;
+        padding: 0 !important;
+        flex-wrap: wrap !important;
     }
 
     .yr-btn {
-        width: 100% !important;
+        padding: 18px 60px !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin: 0 !important;
+    }
+
+    .yr-btn-whatsapp {
+        background: #25d366 !important;
+        color: #fff !important;
+    }
+
+    .yr-btn-whatsapp:hover {
+        background: #1fb855 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4) !important;
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+
+    .yr-btn-call {
+        background: #1a2332 !important;
+        color: #fff !important;
+    }
+
+    .yr-btn-call:hover {
+        background: #2d3e50 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 30px rgba(26, 35, 50, 0.4) !important;
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+
+    /* === FEATURES SECTION === */
+    .yr-features-section {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 30px !important;
+        margin: 50px 0 !important;
+        padding: 0 !important;
+    }
+
+    .yr-features-column {
+        background: #fff !important;
+        padding: 35px !important;
+        border-radius: 15px !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+        transition: all 0.3s ease !important;
+        border: 2px solid transparent !important;
+        margin: 0 !important;
+    }
+
+    .yr-features-column:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.15) !important;
+        border-color: #25d366 !important;
+    }
+
+    .yr-features-column h2 {
+        font-size: 26px !important;
+        color: #1a2332 !important;
+        margin: 0 0 25px 0 !important;
+        padding: 0 0 15px 0 !important;
+        font-weight: 700 !important;
+        position: relative !important;
+    }
+
+    .yr-features-column h2:after {
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 60px !important;
+        height: 4px !important;
+        background: linear-gradient(90deg, #25d366, #1fb855) !important;
+        border-radius: 2px !important;
+    }
+
+    .yr-feature-list {
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .yr-feature-list li {
+        padding: 12px 0 12px 40px !important;
+        position: relative !important;
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+        color: #555 !important;
+        transition: all 0.2s ease !important;
+        margin: 0 !important;
+    }
+
+    .yr-feature-list li:hover {
+        color: #1a2332 !important;
+        transform: translateX(5px) !important;
+    }
+
+    .yr-feature-list li:before {
+        content: "✓" !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 10px !important;
+        width: 28px !important;
+        height: 28px !important;
+        background: linear-gradient(135deg, #25d366, #1fb855) !important;
+        color: #fff !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+        box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3) !important;
+    }
+
+    /* === FAQ SECTION === */
+    .yr-faq-section {
+        margin: 60px 0 40px 0 !important;
+        padding: 0 !important;
     }
 
     .yr-faq-title {
-        font-size: 26px !important;
+        text-align: center !important;
+        font-size: 32px !important;
+        color: #1a2332 !important;
+        margin: 0 0 40px 0 !important;
+        padding: 0 !important;
+        font-weight: 700 !important;
+    }
+
+    .yr-faq-container {
+        max-width: 900px !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+
+    .yr-faq-item {
+        background: #fff !important;
+        margin: 0 0 15px 0 !important;
+        padding: 0 !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .yr-faq-item:hover {
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important;
     }
 
     .yr-faq-question {
-        font-size: 15px !important;
-        padding: 15px 20px !important;
+        padding: 20px 25px !important;
+        cursor: pointer !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-size: 17px !important;
+        font-weight: 600 !important;
+        color: #1a2332 !important;
+        background: #fff !important;
+        transition: all 0.3s ease !important;
+        margin: 0 !important;
     }
-}
-</style>
 
-<div class="yr-yacht-container">
+    .yr-faq-question:hover {
+        background: #f8f9fa !important;
+        color: #25d366 !important;
+    }
+
+    .yr-faq-question.active {
+        background: #f0f9f4 !important;
+        color: #25d366 !important;
+    }
+
+    .yr-faq-icon {
+        font-size: 20px !important;
+        font-weight: bold !important;
+        transition: transform 0.3s ease !important;
+        color: #25d366 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .yr-faq-question.active .yr-faq-icon {
+        transform: rotate(45deg) !important;
+    }
+
+    .yr-faq-answer {
+        max-height: 0 !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease, padding 0.3s ease !important;
+        padding: 0 25px !important;
+        color: #666 !important;
+        line-height: 1.7 !important;
+        font-size: 15px !important;
+        margin: 0 !important;
+    }
+
+    .yr-faq-answer.active {
+        max-height: 500px !important;
+        padding: 15px 25px 20px 25px !important;
+    }
+
+    .yr-faq-answer p {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+        .yr-yacht-title h1 {
+            font-size: 28px !important;
+        }
+
+        .yr-gallery-swiper {
+            height: auto !important;
+        }
+
+        .yr-gallery-swiper .swiper-slide {
+            grid-template-columns: 1fr !important;
+        }
+
+        .yr-gallery-item {
+            height: 250px !important;
+        }
+
+        .yr-features-section {
+            grid-template-columns: 1fr !important;
+        }
+
+        .yr-price-section {
+            flex-direction: column !important;
+        }
+
+        .yr-cta-buttons {
+            flex-direction: column !important;
+        }
+
+        .yr-btn {
+            width: 100% !important;
+            justify-content: center !important;
+        }
+
+        .yr-faq-title {
+            font-size: 26px !important;
+        }
+
+        .yr-faq-question {
+            font-size: 15px !important;
+            padding: 15px 20px !important;
+        }
+    }
+    </style>
+</head>
+
+<body <?php body_class(); ?>>
+
+<div class="yr-yacht-single-page">
 
     <!-- Title -->
     <div class="yr-yacht-title">
@@ -651,11 +694,10 @@ while (have_posts()) : the_post();
 
 </div>
 
-</div>
-<!-- END ISOLATED WRAPPER -->
-
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-jQuery(document).ready(function($) {
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize gallery slider
     <?php if (!empty($gallery_ids) && count($gallery_ids) > 0): ?>
     var yrGallerySwiper = new Swiper('.yr-gallery-swiper', {
@@ -678,23 +720,29 @@ jQuery(document).ready(function($) {
     <?php endif; ?>
 
     // FAQ Accordion functionality
-    $('.yr-faq-question').on('click', function() {
-        var $this = $(this);
-        var $faqItem = $this.closest('.yr-faq-item');
-        var $answer = $this.next('.yr-faq-answer');
+    var faqQuestions = document.querySelectorAll('.yr-faq-question');
+    faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+            var faqItem = this.parentElement;
+            var answer = this.nextElementSibling;
 
-        // Close other open items
-        $('.yr-faq-item').not($faqItem).find('.yr-faq-question').removeClass('active');
-        $('.yr-faq-item').not($faqItem).find('.yr-faq-answer').removeClass('active');
+            // Close other open items
+            document.querySelectorAll('.yr-faq-item').forEach(function(item) {
+                if (item !== faqItem) {
+                    item.querySelector('.yr-faq-question').classList.remove('active');
+                    item.querySelector('.yr-faq-answer').classList.remove('active');
+                }
+            });
 
-        // Toggle current item
-        $this.toggleClass('active');
-        $answer.toggleClass('active');
+            // Toggle current item
+            this.classList.toggle('active');
+            answer.classList.toggle('active');
+        });
     });
 });
 </script>
 
-<?php
-endwhile;
+<?php wp_footer(); ?>
 
-get_footer();
+</body>
+</html>
