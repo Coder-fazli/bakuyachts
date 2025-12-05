@@ -8,8 +8,10 @@ get_header();
 while (have_posts()) : the_post();
 
     // Get meta data
-    $gallery = get_post_meta(get_the_ID(), '_yr_yacht_gallery', true);
-    $gallery_ids = !empty($gallery) ? explode(',', $gallery) : array();
+    $gallery_ids = get_post_meta(get_the_ID(), '_yr_yacht_gallery_ids', true);
+    if ( ! is_array( $gallery_ids ) ) {
+        $gallery_ids = array();
+    }
 
     $old_price = get_post_meta(get_the_ID(), '_yr_yacht_old_price', true);
     $new_price = get_post_meta(get_the_ID(), '_yr_yacht_new_price', true);
