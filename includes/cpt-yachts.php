@@ -128,10 +128,11 @@ add_action( 'after_switch_theme', 'yr_yachts_rewrite_flush' );
 function yr_yachts_check_flush() {
 	// Delete the option to force flush after code changes
 	$version = get_option( 'yr_yachts_version', '1.0' );
-	if ( version_compare( $version, '1.2', '<' ) ) {
+	if ( version_compare( $version, '1.3', '<' ) ) {
 		delete_option( 'yr_yachts_permalinks_flushed' );
-		delete_option( 'yr_yachts_languages_fixed' ); // Force language fix
-		update_option( 'yr_yachts_version', '1.2' );
+		delete_option( 'yr_yachts_languages_fixed' );
+		delete_option( 'yr_demo_yachts_created' ); // Force demo recreate with new fields
+		update_option( 'yr_yachts_version', '1.3' );
 	}
 
 	if ( ! get_option( 'yr_yachts_permalinks_flushed' ) ) {
@@ -154,8 +155,9 @@ function yr_yachts_polylang_register_tax( $taxonomies, $is_settings ) {
 }
 add_filter( 'pll_get_taxonomies', 'yr_yachts_polylang_register_tax', 10, 2 );
 
-// Add meta box for yacht details
+// Add meta boxes for yacht
 function yr_yacht_meta_box() {
+	// Basic Details
 	add_meta_box(
 		'yr_yacht_details',
 		__( 'Yacht Details', 'yacht-rental' ),
@@ -163,6 +165,66 @@ function yr_yacht_meta_box() {
 		'cpt_yachts',
 		'normal',
 		'high'
+	);
+
+	// Gallery Slider
+	add_meta_box(
+		'yr_yacht_gallery',
+		__( 'Gallery Slider', 'yacht-rental' ),
+		'yr_yacht_gallery_callback',
+		'cpt_yachts',
+		'normal',
+		'default'
+	);
+
+	// Pricing (Old/New Price)
+	add_meta_box(
+		'yr_yacht_pricing',
+		__( 'Pricing', 'yacht-rental' ),
+		'yr_yacht_pricing_callback',
+		'cpt_yachts',
+		'normal',
+		'default'
+	);
+
+	// Contact (WhatsApp, Phone)
+	add_meta_box(
+		'yr_yacht_contact',
+		__( 'Contact Information', 'yacht-rental' ),
+		'yr_yacht_contact_callback',
+		'cpt_yachts',
+		'normal',
+		'default'
+	);
+
+	// Key Features
+	add_meta_box(
+		'yr_yacht_features',
+		__( 'Key Features', 'yacht-rental' ),
+		'yr_yacht_features_callback',
+		'cpt_yachts',
+		'normal',
+		'default'
+	);
+
+	// We Also Offer
+	add_meta_box(
+		'yr_yacht_offers',
+		__( 'We Also Offer', 'yacht-rental' ),
+		'yr_yacht_offers_callback',
+		'cpt_yachts',
+		'normal',
+		'default'
+	);
+
+	// FAQ
+	add_meta_box(
+		'yr_yacht_faq',
+		__( 'FAQ', 'yacht-rental' ),
+		'yr_yacht_faq_callback',
+		'cpt_yachts',
+		'normal',
+		'default'
 	);
 }
 add_action( 'add_meta_boxes', 'yr_yacht_meta_box' );
@@ -204,6 +266,211 @@ function yr_yacht_meta_box_callback( $post ) {
 	<?php
 }
 
+// Gallery Slider Meta Box
+function yr_yacht_gallery_callback( $post ) {
+	wp_nonce_field( 'yr_yacht_gallery_nonce', 'yr_yacht_gallery_nonce' );
+	$gallery = get_post_meta( $post->ID, '_yr_yacht_gallery', true );
+	$gallery_ids = ! empty( $gallery ) ? explode( ',', $gallery ) : array();
+	?>
+	<div class="yr-gallery-wrap">
+		<div class="yr-gallery-container" id="yr_gallery_container">
+			<?php if ( ! empty( $gallery_ids ) ) : ?>
+				<?php foreach ( $gallery_ids as $image_id ) : ?>
+					<?php $image_url = wp_get_attachment_image_url( $image_id, 'thumbnail' ); ?>
+					<?php if ( $image_url ) : ?>
+						<div class="yr-gallery-item" data-id="<?php echo esc_attr( $image_id ); ?>">
+							<img src="<?php echo esc_url( $image_url ); ?>" />
+							<button type="button" class="yr-remove-image">&times;</button>
+						</div>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</div>
+		<input type="hidden" id="yr_yacht_gallery" name="yr_yacht_gallery" value="<?php echo esc_attr( $gallery ); ?>" />
+		<button type="button" class="button button-primary" id="yr_add_gallery_images"><?php _e( 'Add Images', 'yacht-rental' ); ?></button>
+		<p class="description"><?php _e( 'Add images for the yacht gallery slider. Drag to reorder.', 'yacht-rental' ); ?></p>
+	</div>
+	<style>
+		.yr-gallery-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+		.yr-gallery-item { position: relative; width: 100px; height: 100px; border: 2px solid #ddd; border-radius: 4px; overflow: hidden; cursor: move; }
+		.yr-gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+		.yr-remove-image { position: absolute; top: 3px; right: 3px; background: #dc3232; color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 18px; line-height: 1; }
+		.yr-remove-image:hover { background: #a00; }
+	</style>
+	<script>
+	jQuery(document).ready(function($) {
+		var frame;
+		$('#yr_add_gallery_images').on('click', function(e) {
+			e.preventDefault();
+			if (frame) { frame.open(); return; }
+			frame = wp.media({ title: '<?php _e( 'Select Images', 'yacht-rental' ); ?>', button: { text: '<?php _e( 'Add to Gallery', 'yacht-rental' ); ?>' }, multiple: true });
+			frame.on('select', function() {
+				var selection = frame.state().get('selection');
+				var ids = $('#yr_yacht_gallery').val().split(',').filter(Boolean);
+				selection.map(function(attachment) {
+					attachment = attachment.toJSON();
+					if (ids.indexOf(attachment.id.toString()) === -1) {
+						ids.push(attachment.id);
+						$('#yr_gallery_container').append('<div class="yr-gallery-item" data-id="' + attachment.id + '"><img src="' + attachment.sizes.thumbnail.url + '" /><button type="button" class="yr-remove-image">&times;</button></div>');
+					}
+				});
+				$('#yr_yacht_gallery').val(ids.join(','));
+			});
+			frame.open();
+		});
+		$(document).on('click', '.yr-remove-image', function() {
+			var item = $(this).parent();
+			var id = item.data('id');
+			item.remove();
+			var ids = $('#yr_yacht_gallery').val().split(',').filter(function(val) { return val != id; });
+			$('#yr_yacht_gallery').val(ids.join(','));
+		});
+		$('#yr_gallery_container').sortable({
+			update: function() {
+				var ids = [];
+				$('#yr_gallery_container .yr-gallery-item').each(function() {
+					ids.push($(this).data('id'));
+				});
+				$('#yr_yacht_gallery').val(ids.join(','));
+			}
+		});
+	});
+	</script>
+	<?php
+}
+
+// Pricing Meta Box
+function yr_yacht_pricing_callback( $post ) {
+	wp_nonce_field( 'yr_yacht_pricing_nonce', 'yr_yacht_pricing_nonce' );
+	$old_price = get_post_meta( $post->ID, '_yr_yacht_old_price', true );
+	$new_price = get_post_meta( $post->ID, '_yr_yacht_new_price', true );
+	$price_label = get_post_meta( $post->ID, '_yr_yacht_price_label', true );
+	?>
+	<table class="form-table">
+		<tr>
+			<th><label for="yr_yacht_old_price"><?php _e( 'Old Price', 'yacht-rental' ); ?></label></th>
+			<td><input type="text" id="yr_yacht_old_price" name="yr_yacht_old_price" value="<?php echo esc_attr( $old_price ); ?>" class="regular-text" placeholder="AED 1,500" /></td>
+		</tr>
+		<tr>
+			<th><label for="yr_yacht_new_price"><?php _e( 'New Price', 'yacht-rental' ); ?></label></th>
+			<td><input type="text" id="yr_yacht_new_price" name="yr_yacht_new_price" value="<?php echo esc_attr( $new_price ); ?>" class="regular-text" placeholder="AED 850" /></td>
+		</tr>
+		<tr>
+			<th><label for="yr_yacht_price_label"><?php _e( 'Price Label', 'yacht-rental' ); ?></label></th>
+			<td><input type="text" id="yr_yacht_price_label" name="yr_yacht_price_label" value="<?php echo esc_attr( $price_label ); ?>" class="regular-text" placeholder="per hour" /></td>
+		</tr>
+	</table>
+	<?php
+}
+
+// Contact Info Meta Box
+function yr_yacht_contact_callback( $post ) {
+	wp_nonce_field( 'yr_yacht_contact_nonce', 'yr_yacht_contact_nonce' );
+	$whatsapp = get_post_meta( $post->ID, '_yr_yacht_whatsapp', true );
+	$phone = get_post_meta( $post->ID, '_yr_yacht_phone', true );
+	?>
+	<table class="form-table">
+		<tr>
+			<th><label for="yr_yacht_whatsapp"><?php _e( 'WhatsApp Number', 'yacht-rental' ); ?></label></th>
+			<td><input type="text" id="yr_yacht_whatsapp" name="yr_yacht_whatsapp" value="<?php echo esc_attr( $whatsapp ); ?>" class="regular-text" placeholder="+971501234567" /></td>
+		</tr>
+		<tr>
+			<th><label for="yr_yacht_phone"><?php _e( 'Phone Number', 'yacht-rental' ); ?></label></th>
+			<td><input type="text" id="yr_yacht_phone" name="yr_yacht_phone" value="<?php echo esc_attr( $phone ); ?>" class="regular-text" placeholder="+971501234567" /></td>
+		</tr>
+	</table>
+	<?php
+}
+
+// Key Features Meta Box
+function yr_yacht_features_callback( $post ) {
+	wp_nonce_field( 'yr_yacht_features_nonce', 'yr_yacht_features_nonce' );
+	$features = get_post_meta( $post->ID, '_yr_yacht_features', true );
+	$features = ! empty( $features ) ? $features : array( '' );
+	?>
+	<div class="yr-repeater" id="yr_features_repeater">
+		<?php foreach ( $features as $index => $feature ) : ?>
+			<div class="yr-repeater-item">
+				<input type="text" name="yr_yacht_features[]" value="<?php echo esc_attr( $feature ); ?>" class="large-text" placeholder="<?php _e( 'Feature text', 'yacht-rental' ); ?>" />
+				<button type="button" class="button yr-remove-item"><?php _e( 'Remove', 'yacht-rental' ); ?></button>
+			</div>
+		<?php endforeach; ?>
+	</div>
+	<button type="button" class="button button-primary yr-add-item" data-target="yr_features_repeater"><?php _e( 'Add Feature', 'yacht-rental' ); ?></button>
+	<style>.yr-repeater-item {display: flex; gap: 10px; margin-bottom: 10px;}</style>
+	<script>
+	jQuery(document).ready(function($) {
+		$('.yr-add-item').on('click', function() {
+			var target = $('#' + $(this).data('target'));
+			var item = target.find('.yr-repeater-item:first').clone();
+			item.find('input').val('');
+			target.append(item);
+		});
+		$(document).on('click', '.yr-remove-item', function() {
+			if ($('.yr-repeater-item').length > 1) $(this).parent().remove();
+		});
+	});
+	</script>
+	<?php
+}
+
+// We Also Offer Meta Box
+function yr_yacht_offers_callback( $post ) {
+	wp_nonce_field( 'yr_yacht_offers_nonce', 'yr_yacht_offers_nonce' );
+	$offers = get_post_meta( $post->ID, '_yr_yacht_offers', true );
+	$offers = ! empty( $offers ) ? $offers : array( '' );
+	?>
+	<div class="yr-repeater" id="yr_offers_repeater">
+		<?php foreach ( $offers as $index => $offer ) : ?>
+			<div class="yr-repeater-item">
+				<input type="text" name="yr_yacht_offers[]" value="<?php echo esc_attr( $offer ); ?>" class="large-text" placeholder="<?php _e( 'Offer text', 'yacht-rental' ); ?>" />
+				<button type="button" class="button yr-remove-item"><?php _e( 'Remove', 'yacht-rental' ); ?></button>
+			</div>
+		<?php endforeach; ?>
+	</div>
+	<button type="button" class="button button-primary yr-add-item" data-target="yr_offers_repeater"><?php _e( 'Add Offer', 'yacht-rental' ); ?></button>
+	<?php
+}
+
+// FAQ Meta Box
+function yr_yacht_faq_callback( $post ) {
+	wp_nonce_field( 'yr_yacht_faq_nonce', 'yr_yacht_faq_nonce' );
+	$faq = get_post_meta( $post->ID, '_yr_yacht_faq', true );
+	$faq = ! empty( $faq ) ? $faq : array( array( 'question' => '', 'answer' => '' ) );
+	?>
+	<div class="yr-faq-repeater" id="yr_faq_repeater">
+		<?php foreach ( $faq as $index => $item ) : ?>
+			<div class="yr-faq-item" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
+				<p><strong><?php _e( 'Question', 'yacht-rental' ); ?>:</strong></p>
+				<input type="text" name="yr_yacht_faq[<?php echo $index; ?>][question]" value="<?php echo esc_attr( $item['question'] ); ?>" class="large-text" placeholder="<?php _e( 'Enter question', 'yacht-rental' ); ?>" />
+				<p><strong><?php _e( 'Answer', 'yacht-rental' ); ?>:</strong></p>
+				<textarea name="yr_yacht_faq[<?php echo $index; ?>][answer]" class="large-text" rows="3" placeholder="<?php _e( 'Enter answer', 'yacht-rental' ); ?>"><?php echo esc_textarea( $item['answer'] ); ?></textarea>
+				<button type="button" class="button yr-remove-faq" style="margin-top: 10px;"><?php _e( 'Remove FAQ', 'yacht-rental' ); ?></button>
+			</div>
+		<?php endforeach; ?>
+	</div>
+	<button type="button" class="button button-primary" id="yr_add_faq"><?php _e( 'Add FAQ', 'yacht-rental' ); ?></button>
+	<script>
+	jQuery(document).ready(function($) {
+		var faqIndex = <?php echo count( $faq ); ?>;
+		$('#yr_add_faq').on('click', function() {
+			var html = '<div class="yr-faq-item" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;">';
+			html += '<p><strong>Question:</strong></p>';
+			html += '<input type="text" name="yr_yacht_faq[' + faqIndex + '][question]" class="large-text" placeholder="Enter question" />';
+			html += '<p><strong>Answer:</strong></p>';
+			html += '<textarea name="yr_yacht_faq[' + faqIndex + '][answer]" class="large-text" rows="3" placeholder="Enter answer"></textarea>';
+			html += '<button type="button" class="button yr-remove-faq" style="margin-top: 10px;">Remove FAQ</button></div>';
+			$('#yr_faq_repeater').append(html);
+			faqIndex++;
+		});
+		$(document).on('click', '.yr-remove-faq', function() {
+			if ($('.yr-faq-item').length > 1) $(this).parent().remove();
+		});
+	});
+	</script>
+	<?php
+}
+
 function yr_save_yacht_meta( $post_id ) {
 	if ( ! isset( $_POST['yr_yacht_meta_box_nonce'] ) ) {
 		return;
@@ -218,6 +485,7 @@ function yr_save_yacht_meta( $post_id ) {
 		return;
 	}
 
+	// Basic Details
 	if ( isset( $_POST['yr_yacht_price'] ) ) {
 		update_post_meta( $post_id, '_yr_yacht_price', sanitize_text_field( $_POST['yr_yacht_price'] ) );
 	}
@@ -232,6 +500,56 @@ function yr_save_yacht_meta( $post_id ) {
 	}
 	if ( isset( $_POST['yr_yacht_badge'] ) ) {
 		update_post_meta( $post_id, '_yr_yacht_badge', sanitize_text_field( $_POST['yr_yacht_badge'] ) );
+	}
+
+	// Gallery
+	if ( isset( $_POST['yr_yacht_gallery'] ) ) {
+		update_post_meta( $post_id, '_yr_yacht_gallery', sanitize_text_field( $_POST['yr_yacht_gallery'] ) );
+	}
+
+	// Pricing
+	if ( isset( $_POST['yr_yacht_old_price'] ) ) {
+		update_post_meta( $post_id, '_yr_yacht_old_price', sanitize_text_field( $_POST['yr_yacht_old_price'] ) );
+	}
+	if ( isset( $_POST['yr_yacht_new_price'] ) ) {
+		update_post_meta( $post_id, '_yr_yacht_new_price', sanitize_text_field( $_POST['yr_yacht_new_price'] ) );
+	}
+	if ( isset( $_POST['yr_yacht_price_label'] ) ) {
+		update_post_meta( $post_id, '_yr_yacht_price_label', sanitize_text_field( $_POST['yr_yacht_price_label'] ) );
+	}
+
+	// Contact
+	if ( isset( $_POST['yr_yacht_whatsapp'] ) ) {
+		update_post_meta( $post_id, '_yr_yacht_whatsapp', sanitize_text_field( $_POST['yr_yacht_whatsapp'] ) );
+	}
+	if ( isset( $_POST['yr_yacht_phone'] ) ) {
+		update_post_meta( $post_id, '_yr_yacht_phone', sanitize_text_field( $_POST['yr_yacht_phone'] ) );
+	}
+
+	// Features
+	if ( isset( $_POST['yr_yacht_features'] ) ) {
+		$features = array_map( 'sanitize_text_field', $_POST['yr_yacht_features'] );
+		update_post_meta( $post_id, '_yr_yacht_features', $features );
+	}
+
+	// Offers
+	if ( isset( $_POST['yr_yacht_offers'] ) ) {
+		$offers = array_map( 'sanitize_text_field', $_POST['yr_yacht_offers'] );
+		update_post_meta( $post_id, '_yr_yacht_offers', $offers );
+	}
+
+	// FAQ
+	if ( isset( $_POST['yr_yacht_faq'] ) ) {
+		$faq = array();
+		foreach ( $_POST['yr_yacht_faq'] as $item ) {
+			if ( ! empty( $item['question'] ) || ! empty( $item['answer'] ) ) {
+				$faq[] = array(
+					'question' => sanitize_text_field( $item['question'] ),
+					'answer'   => sanitize_textarea_field( $item['answer'] ),
+				);
+			}
+		}
+		update_post_meta( $post_id, '_yr_yacht_faq', $faq );
 	}
 }
 add_action( 'save_post', 'yr_save_yacht_meta' );
@@ -307,6 +625,60 @@ function yr_create_demo_yachts() {
 
 			if ( ! empty( $yacht_data['badge'] ) ) {
 				update_post_meta( $post_id, '_yr_yacht_badge', $yacht_data['badge'] );
+			}
+
+			// Add demo data for new meta boxes (only for first yacht)
+			if ( $yacht_data['title'] === 'Sky 92ft "LUNA"' ) {
+				// Pricing
+				update_post_meta( $post_id, '_yr_yacht_old_price', 'AED 1,500' );
+				update_post_meta( $post_id, '_yr_yacht_new_price', 'AED 850' );
+				update_post_meta( $post_id, '_yr_yacht_price_label', 'per hour' );
+
+				// Contact
+				update_post_meta( $post_id, '_yr_yacht_whatsapp', '+971501234567' );
+				update_post_meta( $post_id, '_yr_yacht_phone', '+971501234567' );
+
+				// Key Features
+				$features = array(
+					'Price starts from AED 1,500/hr',
+					'Brand: Sky 52 LUNA',
+					'Guests: 15',
+					'Vessel Size: 48 FT',
+					'Staff: 1 Captain, 2 Crew',
+					'Interior: 2 cabins, washroom, kitchen, spacious saloon, dining area',
+					'Exterior: deck area with sittings, lounge, and BBQ setup',
+					'Ideal for: Family Gatherings, Sightseeing, and Birthday Parties',
+				);
+				update_post_meta( $post_id, '_yr_yacht_features', $features );
+
+				// We Also Offer
+				$offers = array(
+					'Unlimited FREE chilled water supply.',
+					'Luxurious glassware and dinnerware.',
+					'Live BBQ Station (you can bring your own meat or cook your catch)',
+					'Alcoholic beverages are allowed on board, but we do not serve them.',
+					'Food: Appetizer, Main Course, and Dessert (*as add-on)',
+					'Themed yacht decor (*as add-on)',
+					'Fishing equipment and water sports equipment (*as add-on)',
+				);
+				update_post_meta( $post_id, '_yr_yacht_offers', $offers );
+
+				// FAQ
+				$faq = array(
+					array(
+						'question' => 'How many people can the yacht accommodate?',
+						'answer'   => 'The Sky 52ft LUNA yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.',
+					),
+					array(
+						'question' => 'What is included in the rental price?',
+						'answer'   => 'The rental includes the yacht with experienced captain and crew, unlimited chilled water, luxurious glassware and dinnerware, and basic amenities. Additional services like catering, decorations, and water sports can be added for an extra fee.',
+					),
+					array(
+						'question' => 'Can we bring our own food and drinks?',
+						'answer'   => 'Yes! You can bring your own food and beverages. The yacht has a BBQ station available, and you\'re welcome to bring your own meat or cook your catch. Alcoholic beverages are allowed on board, though we don\'t serve them.',
+					),
+				);
+				update_post_meta( $post_id, '_yr_yacht_faq', $faq );
 			}
 
 			// Set Polylang language (default language)
