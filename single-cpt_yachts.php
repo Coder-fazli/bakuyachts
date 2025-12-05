@@ -550,7 +550,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     <?php if (!empty($gallery_ids) && count($gallery_ids) > 0): ?>
     <div class="yrsp-gallery-wrapper">
         <div class="yrsp-gallery-row">
-            <div class="swiper yr-gallery-swiper">
+            <div class="swiper yrsp-gallery-swiper">
                 <div class="swiper-wrapper">
                     <?php
                     // Group images by 2 (2 images per slide)
