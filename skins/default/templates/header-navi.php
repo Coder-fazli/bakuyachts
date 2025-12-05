@@ -49,6 +49,7 @@
 					</div>
 				</div><?php
 				if ( yacht_rental_exists_trx_addons() ) {
+					/*
 					// Display cart button
 					ob_start();
 					do_action( 'yacht_rental_action_cart' );
@@ -60,7 +61,13 @@
 							yacht_rental_show_layout( $yacht_rental_action_output );
 							?>
 							</div><?php
-					}					
+					}
+					*/
+					?>
+                    <div class="sc_layouts_item">
+                        <a href="https://wa.me/1234567890" class="sc_layouts_item_link" target="_blank" style="background: #25d366; color: #fff; padding: 8px 15px; border-radius: 5px; text-decoration: none;">WHATSAPP</a>
+                    </div>
+                    <?php
 					?><div class="sc_layouts_item">
 						<?php
 						// Display search field
