@@ -538,10 +538,6 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
             get_template_part( 'skins/default/templates/header-default' );
             ?>
 
-            <div class="page_content_wrap">
-                <div class="content_wrap">
-                    <div class="content">
-
 <div class="yrsp-yacht-container">
 
     <!-- Title -->
@@ -736,10 +732,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </div><!-- .yrsp-yacht-container -->
-
-                    </div><!-- .content -->
-                </div><!-- .content_wrap -->
-            </div><!-- .page_content_wrap -->
 
             <?php
             // Include custom footer (Elementor)
