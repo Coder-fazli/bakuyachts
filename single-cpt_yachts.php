@@ -50,25 +50,33 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     /* === BREADCRUMBS === */
     .yrsp-breadcrumbs {
+        text-align: center !important;
         margin-bottom: 30px !important;
         padding: 0 !important;
-        font-size: 14px !important;
+        font-size: 16px !important;
         color: #666 !important;
     }
 
     .yrsp-breadcrumbs a {
-        color: #1a2332 !important;
+        color: #999 !important;
         text-decoration: none !important;
         transition: color 0.3s ease !important;
+        font-weight: 500 !important;
     }
 
     .yrsp-breadcrumbs a:hover {
-        color: #25d366 !important;
+        color: #1a2332 !important;
     }
 
-    .yrsp-breadcrumbs span {
-        margin: 0 8px !important;
-        color: #999 !important;
+    .yrsp-breadcrumbs .separator {
+        margin: 0 12px !important;
+        color: #d4a853 !important;
+        font-size: 12px !important;
+    }
+
+    .yrsp-breadcrumbs .current {
+        color: #1a2332 !important;
+        font-weight: 600 !important;
     }
 
     /* === TITLE SECTION === */
@@ -566,10 +574,10 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     <!-- Breadcrumbs -->
     <div class="yrsp-breadcrumbs">
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
-        <span>/</span>
-        <a href="<?php echo esc_url( get_post_type_archive_link( 'cpt_yachts' ) ); ?>">Yachts</a>
-        <span>/</span>
-        <span><?php the_title(); ?></span>
+        <span class="separator">◆</span>
+        <a href="<?php echo esc_url( get_post_type_archive_link( 'cpt_yachts' ) ); ?>">Yacht Rental</a>
+        <span class="separator">◆</span>
+        <span class="current"><?php the_title(); ?></span>
     </div>
 
     <!-- Title -->
