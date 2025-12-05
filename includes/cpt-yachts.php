@@ -299,6 +299,15 @@ function yr_yacht_gallery_callback( $post ) {
 		<input type="hidden" id="yr_yacht_gallery" name="yr_yacht_gallery" value="<?php echo esc_attr( $gallery ); ?>" />
 		<button type="button" class="button button-primary" id="yr_add_gallery_images"><?php _e( 'Add Images', 'yacht-rental' ); ?></button>
 		<p class="description"><?php _e( 'Add images for the yacht gallery slider. Drag to reorder.', 'yacht-rental' ); ?></p>
+
+		<!-- Debug: Current gallery value -->
+		<p style="color: #666; font-size: 11px; margin-top: 10px;">
+			<?php if ( ! empty( $gallery ) ) : ?>
+				Current gallery IDs: <?php echo esc_html( $gallery ); ?>
+			<?php else : ?>
+				No images saved yet
+			<?php endif; ?>
+		</p>
 	</div>
 	<style>
 		.yr-gallery-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
@@ -309,41 +318,73 @@ function yr_yacht_gallery_callback( $post ) {
 	</style>
 	<script>
 	jQuery(document).ready(function($) {
+		console.log('YR Gallery: Script loaded');
+
 		var frame;
 		$('#yr_add_gallery_images').on('click', function(e) {
 			e.preventDefault();
-			if (frame) { frame.open(); return; }
-			frame = wp.media({ title: '<?php _e( 'Select Images', 'yacht-rental' ); ?>', button: { text: '<?php _e( 'Add to Gallery', 'yacht-rental' ); ?>' }, multiple: true });
+			console.log('YR Gallery: Add images button clicked');
+
+			if (frame) {
+				frame.open();
+				return;
+			}
+
+			frame = wp.media({
+				title: '<?php _e( 'Select Images', 'yacht-rental' ); ?>',
+				button: { text: '<?php _e( 'Add to Gallery', 'yacht-rental' ); ?>' },
+				multiple: true
+			});
+
 			frame.on('select', function() {
 				var selection = frame.state().get('selection');
 				var ids = $('#yr_yacht_gallery').val().split(',').filter(Boolean);
+				console.log('YR Gallery: Current IDs:', ids);
+
 				selection.map(function(attachment) {
 					attachment = attachment.toJSON();
+					console.log('YR Gallery: Adding image ID:', attachment.id);
+
 					if (ids.indexOf(attachment.id.toString()) === -1) {
 						ids.push(attachment.id);
-						$('#yr_gallery_container').append('<div class="yr-gallery-item" data-id="' + attachment.id + '"><img src="' + attachment.sizes.thumbnail.url + '" /><button type="button" class="yr-remove-image">&times;</button></div>');
+						var thumbnailUrl = attachment.sizes && attachment.sizes.thumbnail ? attachment.sizes.thumbnail.url : attachment.url;
+						$('#yr_gallery_container').append('<div class="yr-gallery-item" data-id="' + attachment.id + '"><img src="' + thumbnailUrl + '" /><button type="button" class="yr-remove-image">&times;</button></div>');
 					}
 				});
+
 				$('#yr_yacht_gallery').val(ids.join(','));
+				console.log('YR Gallery: Updated IDs:', ids.join(','));
 			});
+
 			frame.open();
 		});
+
 		$(document).on('click', '.yr-remove-image', function() {
 			var item = $(this).parent();
 			var id = item.data('id');
+			console.log('YR Gallery: Removing image ID:', id);
+
 			item.remove();
 			var ids = $('#yr_yacht_gallery').val().split(',').filter(function(val) { return val != id; });
 			$('#yr_yacht_gallery').val(ids.join(','));
+			console.log('YR Gallery: Updated IDs after remove:', ids.join(','));
 		});
-		$('#yr_gallery_container').sortable({
-			update: function() {
-				var ids = [];
-				$('#yr_gallery_container .yr-gallery-item').each(function() {
-					ids.push($(this).data('id'));
-				});
-				$('#yr_yacht_gallery').val(ids.join(','));
-			}
-		});
+
+		if (typeof $.fn.sortable !== 'undefined') {
+			$('#yr_gallery_container').sortable({
+				update: function() {
+					var ids = [];
+					$('#yr_gallery_container .yr-gallery-item').each(function() {
+						ids.push($(this).data('id'));
+					});
+					$('#yr_yacht_gallery').val(ids.join(','));
+					console.log('YR Gallery: Updated IDs after sort:', ids.join(','));
+				}
+			});
+			console.log('YR Gallery: Sortable initialized');
+		} else {
+			console.warn('YR Gallery: jQuery UI Sortable not available');
+		}
 	});
 	</script>
 	<?php
@@ -549,7 +590,13 @@ function yr_save_yacht_meta( $post_id ) {
 
 	// Gallery
 	if ( isset( $_POST['yr_yacht_gallery'] ) ) {
-		update_post_meta( $post_id, '_yr_yacht_gallery', sanitize_text_field( $_POST['yr_yacht_gallery'] ) );
+		$gallery_value = sanitize_text_field( $_POST['yr_yacht_gallery'] );
+		update_post_meta( $post_id, '_yr_yacht_gallery', $gallery_value );
+
+		// Debug log
+		error_log( 'YR Gallery Save: Post ID ' . $post_id . ' - Value: ' . $gallery_value );
+	} else {
+		error_log( 'YR Gallery Save: yr_yacht_gallery not set in POST for post ID ' . $post_id );
 	}
 
 	// Pricing
