@@ -1,10 +1,8 @@
 <?php
 /**
- * Single Yacht Template
+ * Single Yacht Template - Standalone (No Theme Wrappers)
  * Based on yacht-single-template.html
  */
-
-get_header();
 
 // Get post data
 if ( have_posts() ) {
@@ -28,11 +26,19 @@ $features = get_post_meta(get_the_ID(), '_yr_yacht_features', true);
 $offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
 $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php the_title(); ?> - <?php bloginfo('name'); ?></title>
 
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
-<style>
+    <?php wp_head(); ?>
+
+    <style>
     /* === GLOBAL RESET === */
     * {
         margin: 0;
@@ -539,6 +545,9 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
         }
     }
     </style>
+</head>
+
+<body <?php body_class(); ?>>
 
 <div class="yr-yacht-single-page">
 
@@ -733,4 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php get_footer(); ?>
+<?php wp_footer(); ?>
+
+</body>
+</html>
