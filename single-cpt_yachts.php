@@ -76,12 +76,12 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
     /* === TITLE SECTION === */
     .yrsp-title {
-        text-align: center !important;
+        text-align: left !important;
         margin-bottom: 30px !important;
     }
 
     .yrsp-title h1 {
-        font-size: 36px !important;
+        font-size: 48px !important;
         color: #1a2332 !important;
         margin: 0 0 10px 0 !important;
         padding: 0 !important;
@@ -298,14 +298,18 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
 
     .yrsp-btn-whatsapp {
-        background: #25d366 !important;
+        background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%) !important;
         color: #fff !important;
+        font-size: 18px !important;
+        padding: 20px 70px !important;
+        border-radius: 50px !important;
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4) !important;
     }
 
     .yrsp-btn-whatsapp:hover {
-        background: #1fb855 !important;
-        transform: translateY(-3px) !important;
-        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4) !important;
+        background: linear-gradient(135deg, #20ba5a 0%, #1ea952 100%) !important;
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5) !important;
         color: #fff !important;
         text-decoration: none !important;
     }
@@ -581,7 +585,7 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     </div>
 
     <!-- Title -->
-    <div class="yrsp-yacht-title">
+    <div class="yrsp-title">
         <h1><?php the_title(); ?></h1>
         <div class="yrsp-rating">★★★★★</div>
     </div>
