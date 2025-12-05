@@ -37,15 +37,38 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     <style>
     /* === YACHT SINGLE CONTAINER === */
     .yrsp-yacht-container {
-        max-width: 1600px !important;
+        max-width: 1200px !important;
         margin: 0 auto !important;
-        padding: 40px 20px !important;
+        padding: 80px 20px 40px 20px !important;
         background: transparent !important;
         box-sizing: border-box !important;
     }
 
     .yrsp-yacht-container * {
         box-sizing: border-box !important;
+    }
+
+    /* === BREADCRUMBS === */
+    .yrsp-breadcrumbs {
+        margin-bottom: 30px !important;
+        padding: 0 !important;
+        font-size: 14px !important;
+        color: #666 !important;
+    }
+
+    .yrsp-breadcrumbs a {
+        color: #1a2332 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+    }
+
+    .yrsp-breadcrumbs a:hover {
+        color: #25d366 !important;
+    }
+
+    .yrsp-breadcrumbs span {
+        margin: 0 8px !important;
+        color: #999 !important;
     }
 
     /* === TITLE SECTION === */
@@ -539,6 +562,15 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
             ?>
 
 <div class="yrsp-yacht-container">
+
+    <!-- Breadcrumbs -->
+    <div class="yrsp-breadcrumbs">
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
+        <span>/</span>
+        <a href="<?php echo esc_url( get_post_type_archive_link( 'cpt_yachts' ) ); ?>">Yachts</a>
+        <span>/</span>
+        <span><?php the_title(); ?></span>
+    </div>
 
     <!-- Title -->
     <div class="yrsp-yacht-title">
