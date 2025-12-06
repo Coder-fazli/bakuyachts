@@ -222,65 +222,58 @@
 }
 
 /* Custom Yachts Archive Styles - Clean Modern */
-/* Completely isolated from ThemeREX Addons - using unique bky-yacht- prefix */
+/* Completely isolated from ThemeREX Addons and body classes - using unique bky-yacht- prefix */
 /* Override page_content_wrap padding for yacht archive */
 .post-type-archive-cpt_yachts .page_content_wrap {
   padding-top: 0 !important;
 }
 
-/* AGGRESSIVE ISOLATION: Prevent ALL ThemeREX Addons body class changes from affecting yacht archive */
-body.trx_addons_page_scrolled .bky-yacht-archive-wrapper,
-body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper,
-body.trx_addons_page_scrolled.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper,
-body[class*="trx_addons"] .bky-yacht-archive-wrapper,
-body[class*="sc_layouts"] .bky-yacht-archive-wrapper {
-  padding-top: 40px !important;
-  padding-bottom: 100px !important;
+/* COMPLETE ISOLATION: Yacht archive is completely independent from body classes and parent containers */
+/* No body class dependencies - works regardless of body state */
+.bky-yacht-archive-wrapper {
+  padding: 40px 0 100px !important;
+  background: #ffffff !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  position: relative !important;
+  isolation: isolate !important;
+  contain: layout style paint !important;
+  will-change: auto !important;
+  margin: 0 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
-  transform: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  min-height: auto !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
-
-/* Prevent any parent container changes from affecting yacht archive */
-.page_content_wrap .bky-yacht-archive-wrapper,
-.content_wrap .bky-yacht-archive-wrapper,
-.content .bky-yacht-archive-wrapper,
-[class*="trx_addons"] .bky-yacht-archive-wrapper,
-[class*="sc_layouts"] .bky-yacht-archive-wrapper {
-  padding: 40px 0 100px !important;
-  margin: 0 !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  transform: none !important;
-}
-
-.bky-yacht-archive-wrapper {
-  padding: 40px 0 100px;
-  background: #ffffff;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  position: relative;
-  isolation: isolate;
-  contain: layout style paint;
-  will-change: auto;
-  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  pointer-events: auto;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+  pointer-events: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  z-index: 1 !important;
+}
+
+/* Force isolation from any parent container - ignore all parent styles */
+.bky-yacht-archive-wrapper,
+* .bky-yacht-archive-wrapper,
+body .bky-yacht-archive-wrapper,
+body[class*="trx_addons"] .bky-yacht-archive-wrapper,
+body[class*="sc_layouts"] .bky-yacht-archive-wrapper,
+.page_content_wrap .bky-yacht-archive-wrapper,
+.content_wrap .bky-yacht-archive-wrapper,
+.content .bky-yacht-archive-wrapper {
+  padding: 40px 0 100px !important;
+  margin: 0 !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
 }
 
 .bky-yacht-archive-container {
