@@ -11,6 +11,14 @@ get_header();
 ?>
 <style>
 /* Yacht Archive Styles - Completely isolated from ThemeREX Addons */
+/* Override any global styles that might hide elements */
+.bky-yacht-archive-wrapper,
+.bky-yacht-archive-wrapper * {
+  display: revert !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 .bky-yacht-archive-wrapper {
   padding: 40px 0 100px !important;
   background: #ffffff !important;
@@ -39,6 +47,13 @@ get_header();
   visibility: visible !important;
   opacity: 1 !important;
   width: 100% !important;
+  min-height: 200px !important;
+}
+
+.bky-yacht-archive-grid > * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .bky-yacht-card {
