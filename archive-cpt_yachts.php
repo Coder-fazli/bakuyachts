@@ -12,33 +12,46 @@ get_header();
 <style>
 /* Yacht Archive Styles - Completely isolated from ThemeREX Addons */
 .bky-yacht-archive-wrapper {
-  padding: 40px 0 100px;
-  background: #ffffff;
-  margin: 0;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
+  padding: 40px 0 100px !important;
+  background: #ffffff !important;
+  margin: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .bky-yacht-archive-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 30px;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 0 30px !important;
+  display: block !important;
+  visibility: visible !important;
 }
 
 .bky-yacht-archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-bottom: 60px;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 40px !important;
+  margin-bottom: 60px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
 }
 
 .bky-yacht-card {
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  position: relative !important;
 }
 
 .bky-yacht-card:hover {
@@ -47,24 +60,31 @@ get_header();
 }
 
 .bky-yacht-card-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .bky-yacht-image {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-  background: #f5f5f5;
+  position: relative !important;
+  overflow: hidden !important;
+  aspect-ratio: 4/3 !important;
+  background: #f5f5f5 !important;
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
 }
 
 .bky-yacht-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.5s ease !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .bky-yacht-card:hover .bky-yacht-image img {
@@ -87,10 +107,12 @@ get_header();
 }
 
 .bky-yacht-content {
-  padding: 28px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  padding: 28px !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .bky-yacht-header {
