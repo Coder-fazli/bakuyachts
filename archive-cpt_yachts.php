@@ -9,14 +9,23 @@
 get_header();
 
 ?>
-<style>
+<style id="bky-yacht-archive-styles">
 /* Yacht Archive Styles - Completely isolated from ThemeREX Addons */
-/* Override any global styles that might hide elements */
+/* CRITICAL: Override ALL possible hiding styles */
 .bky-yacht-archive-wrapper,
-.bky-yacht-archive-wrapper * {
+.bky-yacht-archive-wrapper *,
+.bky-yacht-archive-container,
+.bky-yacht-archive-container *,
+.bky-yacht-archive-grid,
+.bky-yacht-archive-grid *,
+.bky-yacht-card,
+.bky-yacht-card * {
   display: revert !important;
   visibility: visible !important;
   opacity: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
 }
 
 .bky-yacht-archive-wrapper {
