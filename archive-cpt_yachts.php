@@ -9,7 +9,288 @@
 get_header();
 
 ?>
-<div class="bky-yacht-archive-wrapper" data-bky-isolated="true">
+<style>
+/* Yacht Archive Styles - Completely isolated from ThemeREX Addons */
+.bky-yacht-archive-wrapper {
+  padding: 40px 0 100px;
+  background: #ffffff;
+  margin: 0;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bky-yacht-archive-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.bky-yacht-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.bky-yacht-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bky-yacht-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+
+.bky-yacht-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.bky-yacht-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: #f5f5f5;
+}
+
+.bky-yacht-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.bky-yacht-card:hover .bky-yacht-image img {
+  transform: scale(1.05);
+}
+
+.bky-yacht-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #ff6b6b;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 8px;
+  z-index: 10;
+  letter-spacing: 1px;
+}
+
+.bky-yacht-content {
+  padding: 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bky-yacht-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.bky-yacht-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  flex: 1;
+  letter-spacing: -0.02em;
+}
+
+.bky-yacht-title a {
+  color: #0a0a0a;
+  text-decoration: none;
+  transition: color 0.25s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bky-yacht-title a:hover {
+  color: #c89860;
+}
+
+.bky-yacht-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #c89860;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.bky-yacht-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.bky-yacht-spec {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
+  font-weight: 400;
+  background: #f8f8f8;
+  padding: 7px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.bky-yacht-spec svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #888;
+  stroke-width: 2;
+}
+
+.bky-yacht-description {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #6a6a6a;
+  margin-bottom: 24px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bky-yacht-buttons {
+  display: flex;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.bky-yacht-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.bky-yacht-btn svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.bky-yacht-btn-whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+
+.bky-yacht-btn-whatsapp:hover {
+  background: #1ebc59;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.bky-yacht-btn-view {
+  background: #c89860;
+  color: #fff;
+}
+
+.bky-yacht-btn-view:hover {
+  background: #b07a47;
+  box-shadow: 0 4px 12px rgba(200, 152, 96, 0.3);
+}
+
+.bky-yacht-pagination {
+  margin-top: 50px;
+  text-align: center;
+}
+
+@media (max-width: 1199px) {
+  .bky-yacht-archive-container {
+    max-width: 1100px;
+    padding: 0 25px;
+  }
+  .bky-yacht-archive-grid {
+    gap: 35px;
+  }
+  .bky-yacht-title {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 991px) {
+  .bky-yacht-archive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .bky-yacht-title {
+    font-size: 20px;
+  }
+  .bky-yacht-content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .bky-yacht-archive-wrapper {
+    padding: 50px 0 60px;
+  }
+  .bky-yacht-archive-container {
+    padding: 0 20px;
+  }
+  .bky-yacht-archive-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .bky-yacht-content {
+    padding: 22px;
+  }
+  .bky-yacht-title {
+    font-size: 19px;
+  }
+  .bky-yacht-header {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .bky-yacht-price {
+    align-self: flex-start;
+  }
+  .bky-yacht-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bky-yacht-btn {
+    width: 100%;
+  }
+}
+</style>
+
+<div class="bky-yacht-archive-wrapper">
 	<div class="bky-yacht-archive-container">
 
 		<?php if ( have_posts() ) : ?>
@@ -122,110 +403,6 @@ get_header();
 
 	</div>
 </div>
-
-<script>
-(function() {
-	'use strict';
-	// AGGRESSIVE ISOLATION: Completely prevent ThemeREX Addons from affecting yacht archive
-	var yachtWrapper = document.querySelector('.bky-yacht-archive-wrapper');
-	var yachtGrid = document.querySelector('.bky-yacht-archive-grid');
-	
-	if (yachtWrapper) {
-		// Store initial position
-		var initialTop = yachtWrapper.offsetTop;
-		var initialLeft = yachtWrapper.offsetLeft;
-		
-		// Lock all properties aggressively
-		var lockAllProperties = function() {
-			// Lock wrapper
-			yachtWrapper.style.setProperty('position', 'relative', 'important');
-			yachtWrapper.style.setProperty('top', '0', 'important');
-			yachtWrapper.style.setProperty('left', '0', 'important');
-			yachtWrapper.style.setProperty('right', 'auto', 'important');
-			yachtWrapper.style.setProperty('bottom', 'auto', 'important');
-			yachtWrapper.style.setProperty('transform', 'translateZ(0)', 'important');
-			yachtWrapper.style.setProperty('margin', '0', 'important');
-			yachtWrapper.style.setProperty('margin-top', '0', 'important');
-			yachtWrapper.style.setProperty('margin-bottom', '0', 'important');
-			yachtWrapper.style.setProperty('margin-left', '0', 'important');
-			yachtWrapper.style.setProperty('margin-right', '0', 'important');
-			yachtWrapper.style.setProperty('padding', '40px 0 100px', 'important');
-			yachtWrapper.style.setProperty('width', '100%', 'important');
-			yachtWrapper.style.setProperty('box-sizing', 'border-box', 'important');
-			
-			// Lock grid if exists
-			if (yachtGrid) {
-				yachtGrid.style.setProperty('position', 'relative', 'important');
-				yachtGrid.style.setProperty('top', '0', 'important');
-				yachtGrid.style.setProperty('left', '0', 'important');
-				yachtGrid.style.setProperty('transform', 'translateZ(0)', 'important');
-				yachtGrid.style.setProperty('margin-left', '0', 'important');
-				yachtGrid.style.setProperty('margin-right', '0', 'important');
-			}
-		};
-		
-		// Lock immediately
-		lockAllProperties();
-		
-		// Lock on DOM ready
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', lockAllProperties);
-		}
-		
-		// Lock on window load
-		window.addEventListener('load', lockAllProperties);
-		
-		// Lock on every scroll (very aggressive)
-		var scrollTimeout;
-		window.addEventListener('scroll', function() {
-			clearTimeout(scrollTimeout);
-			scrollTimeout = setTimeout(lockAllProperties, 1);
-		}, { passive: true });
-		
-		// Lock on resize
-		window.addEventListener('resize', function() {
-			lockAllProperties();
-		}, { passive: true });
-		
-		// Lock when body classes change
-		var bodyObserver = new MutationObserver(function(mutations) {
-			mutations.forEach(function(mutation) {
-				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-					lockAllProperties();
-				}
-			});
-		});
-		bodyObserver.observe(document.body, {
-			attributes: true,
-			attributeFilter: ['class']
-		});
-		
-		// Lock when wrapper itself changes
-		var wrapperObserver = new MutationObserver(function() {
-			lockAllProperties();
-		});
-		wrapperObserver.observe(yachtWrapper, {
-			attributes: true,
-			attributeFilter: ['style', 'class']
-		});
-		
-		// Lock parent containers
-		var parent = yachtWrapper.parentElement;
-		if (parent) {
-			var parentObserver = new MutationObserver(function() {
-				lockAllProperties();
-			});
-			parentObserver.observe(parent, {
-				attributes: true,
-				attributeFilter: ['style', 'class']
-			});
-		}
-		
-		// Continuous lock (every 100ms) as last resort
-		setInterval(lockAllProperties, 100);
-	}
-})();
-</script>
 
 <?php
 get_footer();
