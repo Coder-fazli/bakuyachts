@@ -1792,7 +1792,7 @@ jQuery( document ).ready( function() {
 		yacht_rental_fix_share_links();
 
 		// Shift top and footer panels when header position is 'Under content'
-		yacht_rental_shift_under_panels();
+		//yacht_rental_shift_under_panels();
 
 		// Show full post reading progress
 		yacht_rental_full_post_reading();
@@ -2363,7 +2363,7 @@ jQuery( document ).ready( function() {
 		yacht_rental_vc_row_fullwidth_to_boxed( cont );
 		yacht_rental_stretch_sidemenu();
 		yacht_rental_resize_video( cont );
-		yacht_rental_shift_under_panels();
+		//yacht_rental_shift_under_panels();
 
 		// Call theme/plugins specific action (if exists)
 		//----------------------------------------------
