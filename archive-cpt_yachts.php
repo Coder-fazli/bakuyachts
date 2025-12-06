@@ -22,22 +22,18 @@ get_header();
 }
 
 .bky-yacht-archive-container {
-  max-width: 1400px !important;
-  margin: 0 auto !important;
-  padding: 0 30px !important;
-  display: block !important;
-  visibility: visible !important;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: block;
 }
 
 .bky-yacht-archive-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 40px !important;
-  margin-bottom: 60px !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  width: 100% !important;
-  min-height: 200px !important;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 60px;
+  width: 100%;
 }
 
 
