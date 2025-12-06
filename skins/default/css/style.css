@@ -18416,8 +18416,14 @@ iframe[name="google_conversion_frame"] {
 }
 .sc_layouts_menu_nav > li > a,
 .sc_layouts_menu_nav > li.menu-item-has-children > a {
-  padding: 0.9em 0.7em;
+  padding: 0.9em 1.2em;
 }
+
+.sc_layouts_menu_nav > li:last-child > ul {
+    left: auto;
+    right: 0;
+}
+
 .sc_layouts_menu_nav > li[class*="icon-"] > a,
 .sc_layouts_menu_nav > li.menu-item-has-children[class*="icon-"] > a {
   padding-left: 2em;
