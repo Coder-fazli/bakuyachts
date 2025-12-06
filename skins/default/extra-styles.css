@@ -223,6 +223,7 @@
 
 /* Custom Yachts Archive Styles - Clean Modern */
 /* Completely isolated from ThemeREX Addons - using unique bky-yacht- prefix */
+/* 🚤 TEST DEPLOYMENT - Visible change to verify push works! 🚤 */
 /* Override page_content_wrap padding for yacht archive */
 .post-type-archive-cpt_yachts .page_content_wrap {
   padding-top: 0 !important;
@@ -247,6 +248,7 @@ body.trx_addons_page_scrolled.trx_addons_scroll_to_top_show .bky-yacht-archive-w
 .bky-yacht-archive-wrapper {
   padding: 40px 0 100px;
   background: #ffffff;
+  border-top: 3px solid #ff00ff; /* TEST: Purple border to verify deployment */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   position: relative;
