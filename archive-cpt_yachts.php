@@ -9,7 +9,7 @@
 get_header();
 
 ?>
-<div class="bky-yacht-archive-wrapper">
+<div class="bky-yacht-archive-wrapper" data-bky-isolated="true">
 	<div class="bky-yacht-archive-container">
 
 		<?php if ( have_posts() ) : ?>
@@ -122,6 +122,50 @@ get_header();
 
 	</div>
 </div>
+
+<script>
+(function() {
+	'use strict';
+	// Prevent ThemeREX Addons from affecting yacht archive
+	var yachtWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+	if (yachtWrapper) {
+		// Lock position on load
+		var lockPosition = function() {
+			var rect = yachtWrapper.getBoundingClientRect();
+			yachtWrapper.style.setProperty('position', 'relative', 'important');
+			yachtWrapper.style.setProperty('top', '0', 'important');
+			yachtWrapper.style.setProperty('left', '0', 'important');
+			yachtWrapper.style.setProperty('transform', 'none', 'important');
+			yachtWrapper.style.setProperty('margin-top', '0', 'important');
+			yachtWrapper.style.setProperty('margin-bottom', '0', 'important');
+		};
+		
+		// Lock on load
+		lockPosition();
+		
+		// Lock on scroll (prevent ThemeREX Addons from moving it)
+		var scrollTimeout;
+		window.addEventListener('scroll', function() {
+			clearTimeout(scrollTimeout);
+			scrollTimeout = setTimeout(lockPosition, 10);
+		}, { passive: true });
+		
+		// Lock when body classes change
+		var observer = new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutation) {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+					lockPosition();
+				}
+			});
+		});
+		
+		observer.observe(document.body, {
+			attributes: true,
+			attributeFilter: ['class']
+		});
+	}
+})();
+</script>
 
 <?php
 get_footer();
