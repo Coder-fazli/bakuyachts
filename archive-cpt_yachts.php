@@ -36,7 +36,15 @@ get_header();
 										<div class="yr_yacht_badge"><?php echo esc_html( $yacht_badge ); ?></div>
 									<?php endif; ?>
 									<a href="<?php the_permalink(); ?>">
-										<?php the_post_thumbnail( 'large' ); ?>
+										<?php 
+										$thumbnail_id = get_post_thumbnail_id();
+										$image_attrs = array(
+											'loading' => 'lazy',
+											'decoding' => 'async',
+											'alt' => get_the_title(),
+										);
+										echo wp_get_attachment_image( $thumbnail_id, 'large', false, $image_attrs );
+										?>
 									</a>
 								</div>
 							<?php endif; ?>
