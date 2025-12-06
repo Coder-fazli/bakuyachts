@@ -126,43 +126,103 @@ get_header();
 <script>
 (function() {
 	'use strict';
-	// Prevent ThemeREX Addons from affecting yacht archive
+	// AGGRESSIVE ISOLATION: Completely prevent ThemeREX Addons from affecting yacht archive
 	var yachtWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+	var yachtGrid = document.querySelector('.bky-yacht-archive-grid');
+	
 	if (yachtWrapper) {
-		// Lock position on load
-		var lockPosition = function() {
-			var rect = yachtWrapper.getBoundingClientRect();
+		// Store initial position
+		var initialTop = yachtWrapper.offsetTop;
+		var initialLeft = yachtWrapper.offsetLeft;
+		
+		// Lock all properties aggressively
+		var lockAllProperties = function() {
+			// Lock wrapper
 			yachtWrapper.style.setProperty('position', 'relative', 'important');
 			yachtWrapper.style.setProperty('top', '0', 'important');
 			yachtWrapper.style.setProperty('left', '0', 'important');
-			yachtWrapper.style.setProperty('transform', 'none', 'important');
+			yachtWrapper.style.setProperty('right', 'auto', 'important');
+			yachtWrapper.style.setProperty('bottom', 'auto', 'important');
+			yachtWrapper.style.setProperty('transform', 'translateZ(0)', 'important');
+			yachtWrapper.style.setProperty('margin', '0', 'important');
 			yachtWrapper.style.setProperty('margin-top', '0', 'important');
 			yachtWrapper.style.setProperty('margin-bottom', '0', 'important');
+			yachtWrapper.style.setProperty('margin-left', '0', 'important');
+			yachtWrapper.style.setProperty('margin-right', '0', 'important');
+			yachtWrapper.style.setProperty('padding', '40px 0 100px', 'important');
+			yachtWrapper.style.setProperty('width', '100%', 'important');
+			yachtWrapper.style.setProperty('box-sizing', 'border-box', 'important');
+			
+			// Lock grid if exists
+			if (yachtGrid) {
+				yachtGrid.style.setProperty('position', 'relative', 'important');
+				yachtGrid.style.setProperty('top', '0', 'important');
+				yachtGrid.style.setProperty('left', '0', 'important');
+				yachtGrid.style.setProperty('transform', 'translateZ(0)', 'important');
+				yachtGrid.style.setProperty('margin-left', '0', 'important');
+				yachtGrid.style.setProperty('margin-right', '0', 'important');
+			}
 		};
 		
-		// Lock on load
-		lockPosition();
+		// Lock immediately
+		lockAllProperties();
 		
-		// Lock on scroll (prevent ThemeREX Addons from moving it)
+		// Lock on DOM ready
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', lockAllProperties);
+		}
+		
+		// Lock on window load
+		window.addEventListener('load', lockAllProperties);
+		
+		// Lock on every scroll (very aggressive)
 		var scrollTimeout;
 		window.addEventListener('scroll', function() {
 			clearTimeout(scrollTimeout);
-			scrollTimeout = setTimeout(lockPosition, 10);
+			scrollTimeout = setTimeout(lockAllProperties, 1);
+		}, { passive: true });
+		
+		// Lock on resize
+		window.addEventListener('resize', function() {
+			lockAllProperties();
 		}, { passive: true });
 		
 		// Lock when body classes change
-		var observer = new MutationObserver(function(mutations) {
+		var bodyObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-					lockPosition();
+					lockAllProperties();
 				}
 			});
 		});
-		
-		observer.observe(document.body, {
+		bodyObserver.observe(document.body, {
 			attributes: true,
 			attributeFilter: ['class']
 		});
+		
+		// Lock when wrapper itself changes
+		var wrapperObserver = new MutationObserver(function() {
+			lockAllProperties();
+		});
+		wrapperObserver.observe(yachtWrapper, {
+			attributes: true,
+			attributeFilter: ['style', 'class']
+		});
+		
+		// Lock parent containers
+		var parent = yachtWrapper.parentElement;
+		if (parent) {
+			var parentObserver = new MutationObserver(function() {
+				lockAllProperties();
+			});
+			parentObserver.observe(parent, {
+				attributes: true,
+				attributeFilter: ['style', 'class']
+			});
+		}
+		
+		// Continuous lock (every 100ms) as last resort
+		setInterval(lockAllProperties, 100);
 	}
 })();
 </script>

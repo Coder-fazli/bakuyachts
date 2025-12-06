@@ -228,16 +228,29 @@
   padding-top: 0 !important;
 }
 
-/* COMPLETE ISOLATION: Yacht archive is completely independent from body classes and parent containers */
-/* No body class dependencies - works regardless of body state */
-.bky-yacht-archive-wrapper {
+/* ULTRA AGGRESSIVE ISOLATION: Yacht archive completely independent from everything */
+/* Override ALL possible parent container styles */
+.bky-yacht-archive-wrapper,
+html .bky-yacht-archive-wrapper,
+body .bky-yacht-archive-wrapper,
+body[class*="trx_addons"] .bky-yacht-archive-wrapper,
+body[class*="sc_layouts"] .bky-yacht-archive-wrapper,
+body.trx_addons_page_scrolled .bky-yacht-archive-wrapper,
+body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper,
+.page_wrap .bky-yacht-archive-wrapper,
+.page_content_wrap .bky-yacht-archive-wrapper,
+.content_wrap .bky-yacht-archive-wrapper,
+.content .bky-yacht-archive-wrapper,
+[class*="trx_addons"] .bky-yacht-archive-wrapper,
+[class*="sc_layouts"] .bky-yacht-archive-wrapper,
+[class*="elementor"] .bky-yacht-archive-wrapper {
   padding: 40px 0 100px !important;
   background: #ffffff !important;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
   position: relative !important;
   isolation: isolate !important;
-  contain: layout style paint !important;
+  contain: layout style paint size !important;
   will-change: auto !important;
   margin: 0 !important;
   margin-top: 0 !important;
@@ -246,8 +259,11 @@
   margin-right: 0 !important;
   top: 0 !important;
   left: 0 !important;
-  right: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
   width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
   box-sizing: border-box !important;
   transform: translateZ(0) !important;
   -webkit-transform: translateZ(0) !important;
@@ -256,24 +272,8 @@
   max-height: none !important;
   overflow: visible !important;
   z-index: 1 !important;
-}
-
-/* Force isolation from any parent container - ignore all parent styles */
-.bky-yacht-archive-wrapper,
-* .bky-yacht-archive-wrapper,
-body .bky-yacht-archive-wrapper,
-body[class*="trx_addons"] .bky-yacht-archive-wrapper,
-body[class*="sc_layouts"] .bky-yacht-archive-wrapper,
-.page_content_wrap .bky-yacht-archive-wrapper,
-.content_wrap .bky-yacht-archive-wrapper,
-.content .bky-yacht-archive-wrapper {
-  padding: 40px 0 100px !important;
-  margin: 0 !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  transform: translateZ(0) !important;
-  -webkit-transform: translateZ(0) !important;
+  float: none !important;
+  clear: both !important;
 }
 
 .bky-yacht-archive-container {
@@ -284,25 +284,33 @@ body[class*="sc_layouts"] .bky-yacht-archive-wrapper,
   isolation: isolate;
 }
 
-.bky-yacht-archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-bottom: 60px;
-  contain: layout style paint;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  position: relative;
-  isolation: isolate;
-  will-change: auto;
+.bky-yacht-archive-grid,
+.bky-yacht-archive-wrapper .bky-yacht-archive-grid,
+* .bky-yacht-archive-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 40px !important;
+  margin-bottom: 60px !important;
+  contain: layout style paint size !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  position: relative !important;
+  isolation: isolate !important;
+  will-change: auto !important;
   top: 0 !important;
   left: 0 !important;
+  right: auto !important;
   width: 100% !important;
+  max-width: none !important;
   box-sizing: border-box !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  clear: both !important;
 }
 
 .bky-yacht-card {
