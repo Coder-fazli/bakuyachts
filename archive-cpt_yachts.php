@@ -104,6 +104,22 @@ body.post-type-archive-cpt_yachts .sc_layouts_title_content {
   padding-bottom: 0 !important;
 }
 
+/* Add dropdown arrows for menu items with submenus */
+body.post-type-archive-cpt_yachts .menu-item-has-children > a:after,
+body.post-type-archive-cpt_yachts .sc_layouts_menu_nav > li.menu-item-has-children > a:after {
+  content: '\f107' !important;
+  font-family: 'fontello' !important;
+  margin-left: 8px;
+  font-size: 0.9em;
+  opacity: 0.7;
+  display: inline-block !important;
+}
+
+/* Show submenu indicator on hover */
+body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
+  opacity: 1;
+}
+
 /* Ensure yacht archive wrapper maintains stable position */
 .bky-yacht-archive-wrapper {
   padding: 0 0 100px;
