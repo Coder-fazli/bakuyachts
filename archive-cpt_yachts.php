@@ -12,6 +12,16 @@ get_header();
 <style id="bky-yacht-archive-styles">
 /* Yacht Archive Styles - Completely isolated from ThemeREX Addons */
 
+/* Prevent trx_addons_page_scrolled class from affecting yacht archive content */
+body.trx_addons_page_scrolled .bky-yacht-archive-wrapper *,
+body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper * {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 /* Force disable scroll-based animations only in the yacht archive content area */
 /* Preserve header/menu functionality by not applying to header elements */
 .bky-yacht-archive-wrapper * {
@@ -26,6 +36,15 @@ get_header();
 .bky-yacht-btn,
 .bky-yacht-title a {
   transition: all 0.3s ease !important;
+}
+
+/* Prevent any scroll-triggered transforms or opacity changes */
+body.post-type-archive-cpt_yachts .bky-yacht-archive-wrapper .bky-yacht-card,
+body.trx_addons_page_scrolled .bky-yacht-archive-wrapper .bky-yacht-card,
+body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper .bky-yacht-card {
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Disable any Elementor animations within yacht archive content only */
@@ -452,6 +471,33 @@ get_header();
 	// Preserve header/menu functionality
 	if (document.body.classList.contains('post-type-archive-cpt_yachts')) {
 
+		// Monitor and prevent scroll-triggered class changes on yacht cards
+		var observer = new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutation) {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+					var target = mutation.target;
+					// If element is inside yacht archive wrapper, force stable state
+					if (target.closest('.bky-yacht-archive-wrapper')) {
+						target.style.transform = 'none';
+						target.style.opacity = '1';
+						target.style.visibility = 'visible';
+					}
+				}
+			});
+		});
+
+		// Start observing yacht archive wrapper
+		window.addEventListener('load', function() {
+			var archiveWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+			if (archiveWrapper) {
+				observer.observe(archiveWrapper, {
+					attributes: true,
+					attributeFilter: ['class', 'style'],
+					subtree: true
+				});
+			}
+		});
+
 		// Remove scroll event listeners that might be causing jumps
 		window.addEventListener('load', function() {
 			// Disable ThemeREX Addons viewport animations only for yacht archive content
@@ -477,6 +523,24 @@ get_header();
 					});
 				}
 			}, 100);
+
+			// Continuously force stable state every 100ms for the first 3 seconds
+			var stabilizeInterval = setInterval(function() {
+				var archiveWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+				if (archiveWrapper) {
+					var allCards = archiveWrapper.querySelectorAll('.bky-yacht-card');
+					allCards.forEach(function(card) {
+						card.style.transform = 'none';
+						card.style.opacity = '1';
+						card.style.visibility = 'visible';
+					});
+				}
+			}, 100);
+
+			// Stop forcing after 3 seconds (page should be stable by then)
+			setTimeout(function() {
+				clearInterval(stabilizeInterval);
+			}, 3000);
 		});
 
 		// Prevent scroll position manipulation caused by animations
