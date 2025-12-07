@@ -1126,19 +1126,43 @@ if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {
 		wp_dequeue_script( 'imagesloaded' );
 		wp_dequeue_script( 'masonry' );
 
-		// Add inline CSS to disable fixed header behavior on yacht archive
-		// This prevents layout shifts when header changes position
+		// Add inline CSS to disable ALL fixed header behaviors on yacht archive
+		// This prevents layout shifts when header changes position/classes during scroll
 		wp_add_inline_style( 'yacht-rental-style', '
-			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed {
+			/* Force header to stay in normal document flow */
+			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed,
+			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed_on,
+			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed_always,
+			body.post-type-archive-cpt_yachts .top_panel_navi {
 				position: relative !important;
 				top: auto !important;
+				left: auto !important;
+				right: auto !important;
 				transform: none !important;
+				transition: none !important;
+				animation: none !important;
+				z-index: auto !important;
 			}
-			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed_on {
-				position: relative !important;
-			}
-			body.post-type-archive-cpt_yachts .admin-bar .sc_layouts_row_fixed {
+
+			/* Prevent any padding/margin changes when fixed class is added */
+			body.post-type-archive-cpt_yachts.admin-bar .sc_layouts_row_fixed,
+			body.post-type-archive-cpt_yachts.admin-bar .sc_layouts_row_fixed_on {
 				top: auto !important;
+				margin-top: 0 !important;
+				padding-top: 0 !important;
+			}
+
+			/* Ensure content area maintains stable position */
+			body.post-type-archive-cpt_yachts .page_content_wrap {
+				margin-top: 0 !important;
+				padding-top: 0 !important;
+				transition: none !important;
+			}
+
+			/* Disable any transforms or transitions on header elements */
+			body.post-type-archive-cpt_yachts .top_panel_navi * {
+				transform: none !important;
+				transition: none !important;
 			}
 		' );
 	}
