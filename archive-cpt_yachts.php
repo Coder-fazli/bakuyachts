@@ -107,12 +107,21 @@ body.post-type-archive-cpt_yachts .sc_layouts_title_content {
 /* Add dropdown arrows for menu items with submenus */
 body.post-type-archive-cpt_yachts .menu-item-has-children > a:after,
 body.post-type-archive-cpt_yachts .sc_layouts_menu_nav > li.menu-item-has-children > a:after {
-  content: '\f107' !important;
+  content: '\e828' !important; /* icon-down from fontello */
   font-family: 'fontello' !important;
-  margin-left: 8px;
-  font-size: 0.9em;
+  margin-left: 6px;
+  font-size: 10px;
   opacity: 0.7;
   display: inline-block !important;
+  vertical-align: middle;
+  font-weight: normal !important;
+  speak: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Show submenu indicator on hover */
