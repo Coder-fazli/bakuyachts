@@ -67,6 +67,18 @@ body.post-type-archive-cpt_yachts {
   overflow-x: hidden;
 }
 
+/* Fix the huge space caused by top_panel full height */
+body.post-type-archive-cpt_yachts .top_panel,
+body.post-type-archive-cpt_yachts .top_panel_default,
+body.post-type-archive-cpt_yachts .header_fullheight,
+body.post-type-archive-cpt_yachts .yacht-rental-full-height {
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 /* Reduce the huge gap between page title and yacht cards */
 body.post-type-archive-cpt_yachts .page_content_wrap {
   padding-top: 0 !important;
@@ -84,6 +96,7 @@ body.post-type-archive-cpt_yachts .sc_layouts_title {
   padding-top: 60px !important;
   padding-bottom: 40px !important;
   min-height: auto !important;
+  height: auto !important;
 }
 
 body.post-type-archive-cpt_yachts .sc_layouts_title_content {
