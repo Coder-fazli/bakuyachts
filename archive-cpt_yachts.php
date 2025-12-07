@@ -473,5 +473,61 @@ body.post-type-archive-cpt_yachts {
 	</div>
 </div>
 
+<script>
+(function() {
+	'use strict';
+
+	// Only run on yacht archive page
+	if (document.body.classList.contains('post-type-archive-cpt_yachts')) {
+
+		// Remove inline styles from header that cause layout shifts
+		function removeHeaderInlineStyles() {
+			var header = document.querySelector('.top_panel_navi');
+			if (header) {
+				// Remove inline top/position styles
+				header.style.removeProperty('top');
+				header.style.removeProperty('position');
+				header.style.removeProperty('transform');
+				header.style.removeProperty('left');
+				header.style.removeProperty('right');
+			}
+		}
+
+		// Watch for inline style changes on header and remove them immediately
+		var observer = new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutation) {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+					if (mutation.target.classList.contains('top_panel_navi') ||
+					    mutation.target.classList.contains('sc_layouts_row_fixed')) {
+						removeHeaderInlineStyles();
+					}
+				}
+			});
+		});
+
+		// Start observing when DOM is ready
+		window.addEventListener('DOMContentLoaded', function() {
+			var header = document.querySelector('.top_panel_navi');
+			if (header) {
+				// Remove any existing inline styles
+				removeHeaderInlineStyles();
+
+				// Watch for future changes
+				observer.observe(header, {
+					attributes: true,
+					attributeFilter: ['style']
+				});
+			}
+		});
+
+		// Backup check - remove inline styles every 100ms for first 2 seconds
+		var cleanupInterval = setInterval(removeHeaderInlineStyles, 100);
+		setTimeout(function() {
+			clearInterval(cleanupInterval);
+		}, 2000);
+	}
+})();
+</script>
+
 <?php
 get_footer();
