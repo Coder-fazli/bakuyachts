@@ -855,3 +855,323 @@ function yr_get_placeholder_image() {
 
 	return false;
 }
+
+/**
+ * Yacht Cards Grid Shortcode
+ *
+ * Usage examples:
+ * [yacht_cards]                                    - Show all yachts
+ * [yacht_cards limit="6"]                          - Show 6 yachts
+ * [yacht_cards limit="3" badge="BEST SELLER"]      - Show 3 yachts with BEST SELLER badge
+ * [yacht_cards columns="4"]                        - Show in 4 columns
+ * [yacht_cards orderby="title" order="ASC"]        - Order by title ascending
+ * [yacht_cards ids="123,456,789"]                  - Show specific yachts by ID
+ */
+function yr_yacht_cards_shortcode( $atts ) {
+	$atts = shortcode_atts( array(
+		'limit'   => -1,          // Number of yachts to show (-1 = all)
+		'columns' => 3,           // Number of columns (1, 2, 3, 4)
+		'orderby' => 'date',      // Order by: date, title, menu_order, rand
+		'order'   => 'DESC',      // ASC or DESC
+		'badge'   => '',          // Filter by badge (e.g., 'BEST SELLER')
+		'ids'     => '',          // Comma-separated yacht IDs to show
+	), $atts, 'yacht_cards' );
+
+	// Query arguments
+	$query_args = array(
+		'post_type'      => 'cpt_yachts',
+		'posts_per_page' => intval( $atts['limit'] ),
+		'orderby'        => sanitize_text_field( $atts['orderby'] ),
+		'order'          => sanitize_text_field( $atts['order'] ),
+		'post_status'    => 'publish',
+	);
+
+	// Filter by specific IDs
+	if ( ! empty( $atts['ids'] ) ) {
+		$ids = array_map( 'intval', explode( ',', $atts['ids'] ) );
+		$query_args['post__in'] = $ids;
+		$query_args['orderby'] = 'post__in';
+	}
+
+	// Filter by badge
+	if ( ! empty( $atts['badge'] ) ) {
+		$query_args['meta_query'] = array(
+			array(
+				'key'   => '_yr_yacht_badge',
+				'value' => sanitize_text_field( $atts['badge'] ),
+			),
+		);
+	}
+
+	$yachts = new WP_Query( $query_args );
+
+	if ( ! $yachts->have_posts() ) {
+		return '<p>' . __( 'No yachts found.', 'yacht-rental' ) . '</p>';
+	}
+
+	// Start output buffering
+	ob_start();
+
+	// Include the same styles from archive template
+	?>
+	<style>
+	.yr-shortcode-wrapper {
+	  padding: 40px 0;
+	  background: #ffffff;
+	}
+	.yr-shortcode-container {
+	  max-width: 1400px;
+	  margin: 0 auto;
+	  padding: 0 20px;
+	}
+	.yr-yacht-grid {
+	  display: grid;
+	  grid-template-columns: repeat(<?php echo intval( $atts['columns'] ); ?>, 1fr);
+	  gap: 30px;
+	  margin-top: 40px;
+	}
+	@media (max-width: 1024px) {
+	  .yr-yacht-grid {
+	    grid-template-columns: repeat(2, 1fr);
+	  }
+	}
+	@media (max-width: 768px) {
+	  .yr-yacht-grid {
+	    grid-template-columns: 1fr;
+	    gap: 20px;
+	  }
+	}
+	.bky-yacht-card {
+	  background: #ffffff;
+	  border-radius: 20px;
+	  overflow: hidden;
+	  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+	  transition: all 0.3s ease;
+	  display: flex;
+	  flex-direction: column;
+	  height: 100%;
+	}
+	.bky-yacht-card:hover {
+	  transform: translateY(-8px);
+	  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+	}
+	.bky-yacht-image {
+	  position: relative;
+	  width: 100%;
+	  height: 280px;
+	  overflow: hidden;
+	}
+	.bky-yacht-image img {
+	  width: 100%;
+	  height: 100%;
+	  object-fit: cover;
+	  transition: transform 0.5s ease;
+	}
+	.bky-yacht-card:hover .bky-yacht-image img {
+	  transform: scale(1.05);
+	}
+	.bky-yacht-badge {
+	  position: absolute;
+	  top: 20px;
+	  left: 20px;
+	  background: #FF6B6B;
+	  color: white;
+	  padding: 8px 20px;
+	  border-radius: 25px;
+	  font-size: 12px;
+	  font-weight: 700;
+	  letter-spacing: 0.5px;
+	  text-transform: uppercase;
+	  z-index: 2;
+	}
+	.bky-yacht-content {
+	  padding: 25px;
+	  flex: 1;
+	  display: flex;
+	  flex-direction: column;
+	}
+	.bky-yacht-header {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: flex-start;
+	  margin-bottom: 20px;
+	  gap: 15px;
+	}
+	.bky-yacht-title {
+	  flex: 1;
+	  min-width: 0;
+	}
+	.bky-yacht-title h3 {
+	  font-size: 22px;
+	  font-weight: 600;
+	  color: #1a1a1a;
+	  margin: 0 0 5px 0;
+	  line-height: 1.3;
+	}
+	.bky-yacht-title h3 a {
+	  color: #1a1a1a;
+	  text-decoration: none;
+	  transition: color 0.3s ease;
+	}
+	.bky-yacht-title h3 a:hover {
+	  color: #C89D4F;
+	}
+	.bky-yacht-price {
+	  font-size: 18px;
+	  font-weight: 700;
+	  color: #C89D4F;
+	  white-space: nowrap;
+	}
+	.bky-yacht-features {
+	  display: flex;
+	  gap: 20px;
+	  margin-bottom: 20px;
+	  flex-wrap: wrap;
+	}
+	.bky-feature-item {
+	  display: flex;
+	  align-items: center;
+	  gap: 8px;
+	  font-size: 14px;
+	  color: #666;
+	}
+	.bky-feature-item svg {
+	  width: 18px;
+	  height: 18px;
+	  fill: #C89D4F;
+	  flex-shrink: 0;
+	}
+	.bky-yacht-description {
+	  color: #666;
+	  font-size: 14px;
+	  line-height: 1.6;
+	  margin-bottom: 25px;
+	  flex: 1;
+	}
+	.bky-yacht-actions {
+	  display: flex;
+	  gap: 12px;
+	  margin-top: auto;
+	}
+	.bky-yacht-btn {
+	  flex: 1;
+	  padding: 14px 24px;
+	  border-radius: 30px;
+	  font-weight: 600;
+	  font-size: 14px;
+	  text-decoration: none;
+	  text-align: center;
+	  transition: all 0.3s ease;
+	  border: none;
+	  cursor: pointer;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 8px;
+	}
+	.bky-yacht-btn-whatsapp {
+	  background: #25D366;
+	  color: white;
+	}
+	.bky-yacht-btn-whatsapp:hover {
+	  background: #1da851;
+	  transform: translateY(-2px);
+	}
+	.bky-yacht-btn-view {
+	  background: #C89D4F;
+	  color: white;
+	}
+	.bky-yacht-btn-view:hover {
+	  background: #b38a3f;
+	  transform: translateY(-2px);
+	}
+	</style>
+
+	<div class="yr-shortcode-wrapper">
+		<div class="yr-shortcode-container">
+			<div class="yr-yacht-grid">
+				<?php
+				while ( $yachts->have_posts() ) : $yachts->the_post();
+					$price  = get_post_meta( get_the_ID(), '_yr_yacht_price', true );
+					$length = get_post_meta( get_the_ID(), '_yr_yacht_length', true );
+					$cabins = get_post_meta( get_the_ID(), '_yr_yacht_cabins', true );
+					$guests = get_post_meta( get_the_ID(), '_yr_yacht_guests', true );
+					$badge  = get_post_meta( get_the_ID(), '_yr_yacht_badge', true );
+					$whatsapp = get_post_meta( get_the_ID(), '_yr_yacht_whatsapp', true );
+					if ( empty( $whatsapp ) ) {
+						$whatsapp = '+971501234567'; // Default WhatsApp
+					}
+					?>
+					<div class="bky-yacht-card">
+						<div class="bky-yacht-image">
+							<?php if ( has_post_thumbnail() ) : ?>
+								<a href="<?php the_permalink(); ?>">
+									<?php the_post_thumbnail( 'large' ); ?>
+								</a>
+							<?php endif; ?>
+							<?php if ( $badge ) : ?>
+								<span class="bky-yacht-badge"><?php echo esc_html( $badge ); ?></span>
+							<?php endif; ?>
+						</div>
+
+						<div class="bky-yacht-content">
+							<div class="bky-yacht-header">
+								<div class="bky-yacht-title">
+									<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+								</div>
+								<?php if ( $price ) : ?>
+									<div class="bky-yacht-price"><?php echo esc_html( $price ); ?></div>
+								<?php endif; ?>
+							</div>
+
+							<div class="bky-yacht-features">
+								<?php if ( $length ) : ?>
+									<div class="bky-feature-item">
+										<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+										<span><?php echo esc_html( $length ); ?></span>
+									</div>
+								<?php endif; ?>
+								<?php if ( $cabins ) : ?>
+									<div class="bky-feature-item">
+										<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h22V7h-4z"/></svg>
+										<span><?php echo esc_html( $cabins . ' ' . __( 'cabins', 'yacht-rental' ) ); ?></span>
+									</div>
+								<?php endif; ?>
+								<?php if ( $guests ) : ?>
+									<div class="bky-feature-item">
+										<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+										<span><?php echo esc_html( $guests . ' ' . __( 'Guests', 'yacht-rental' ) ); ?></span>
+									</div>
+								<?php endif; ?>
+							</div>
+
+							<?php if ( has_excerpt() ) : ?>
+								<div class="bky-yacht-description">
+									<?php echo wp_trim_words( get_the_excerpt(), 20 ); ?>
+								</div>
+							<?php endif; ?>
+
+							<div class="bky-yacht-actions">
+								<a href="https://wa.me/<?php echo esc_attr( str_replace( '+', '', $whatsapp ) ); ?>?text=<?php echo urlencode( 'Hi, I am interested in ' . get_the_title() ); ?>"
+								   class="bky-yacht-btn bky-yacht-btn-whatsapp"
+								   target="_blank">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+									WHATSAPP
+								</a>
+								<a href="<?php the_permalink(); ?>" class="bky-yacht-btn bky-yacht-btn-view">
+									VIEW NOW
+								</a>
+							</div>
+						</div>
+					</div>
+				<?php endwhile; ?>
+			</div>
+		</div>
+	</div>
+	<?php
+
+	wp_reset_postdata();
+
+	return ob_get_clean();
+}
+add_shortcode( 'yacht_cards', 'yr_yacht_cards_shortcode' );
