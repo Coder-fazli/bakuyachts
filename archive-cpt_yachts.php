@@ -477,54 +477,32 @@ body.post-type-archive-cpt_yachts {
 (function() {
 	'use strict';
 
-	// Only run on yacht archive page
+	// Minimal menu functionality for yacht archive page (since we disabled ThemeREX Addons)
 	if (document.body.classList.contains('post-type-archive-cpt_yachts')) {
 
-		// Remove inline styles from header that cause layout shifts
-		function removeHeaderInlineStyles() {
-			var header = document.querySelector('.top_panel_navi');
-			if (header) {
-				// Remove inline top/position styles
-				header.style.removeProperty('top');
-				header.style.removeProperty('position');
-				header.style.removeProperty('transform');
-				header.style.removeProperty('left');
-				header.style.removeProperty('right');
-			}
-		}
+		// Mobile menu toggle
+		document.addEventListener('DOMContentLoaded', function() {
+			var menuToggle = document.querySelector('.menu_mobile_button, .sc_layouts_menu_mobile_button');
+			var mobileMenu = document.querySelector('.menu_mobile, .sc_layouts_menu_mobile');
 
-		// Watch for inline style changes on header and remove them immediately
-		var observer = new MutationObserver(function(mutations) {
-			mutations.forEach(function(mutation) {
-				if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-					if (mutation.target.classList.contains('top_panel_navi') ||
-					    mutation.target.classList.contains('sc_layouts_row_fixed')) {
-						removeHeaderInlineStyles();
+			if (menuToggle && mobileMenu) {
+				menuToggle.addEventListener('click', function(e) {
+					e.preventDefault();
+					mobileMenu.classList.toggle('opened');
+					document.body.classList.toggle('menu_mobile_opened');
+				});
+			}
+
+			// Close mobile menu when clicking outside
+			document.addEventListener('click', function(e) {
+				if (mobileMenu && mobileMenu.classList.contains('opened')) {
+					if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+						mobileMenu.classList.remove('opened');
+						document.body.classList.remove('menu_mobile_opened');
 					}
 				}
 			});
 		});
-
-		// Start observing when DOM is ready
-		window.addEventListener('DOMContentLoaded', function() {
-			var header = document.querySelector('.top_panel_navi');
-			if (header) {
-				// Remove any existing inline styles
-				removeHeaderInlineStyles();
-
-				// Watch for future changes
-				observer.observe(header, {
-					attributes: true,
-					attributeFilter: ['style']
-				});
-			}
-		});
-
-		// Backup check - remove inline styles every 100ms for first 2 seconds
-		var cleanupInterval = setInterval(removeHeaderInlineStyles, 100);
-		setTimeout(function() {
-			clearInterval(cleanupInterval);
-		}, 2000);
 	}
 })();
 </script>

@@ -1106,65 +1106,28 @@ if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {
 			return;
 		}
 
-		// Dequeue only scroll-animation related Elementor scripts
-		// Keep frontend modules for menu/header functionality
+		// COMPLETELY DEQUEUE ThemeREX Addons main script - this is what causes all the problems
+		// The scroll events, fixed header positioning, animations are ALL in this main script
+		wp_dequeue_script( 'trx_addons' );
+
+		// Dequeue Elementor scripts
 		wp_dequeue_script( 'elementor-waypoints' );
+		wp_dequeue_script( 'elementor-frontend' );
 
-		// Dequeue only animation-related Elementor styles
-		// Keep frontend and global styles for header/menu
-		wp_dequeue_style( 'elementor-animations' );
-
-		// Dequeue only animation scripts from ThemeREX Addons
-		// Keep main trx_addons and sc_layouts for header/menu functionality
+		// Dequeue animation scripts
 		wp_dequeue_script( 'trx_addons-animation' );
 		wp_dequeue_script( 'parallax-scroll' );
 
-		// Dequeue only animation styles from ThemeREX Addons
+		// Dequeue animation styles
+		wp_dequeue_style( 'elementor-animations' );
 		wp_dequeue_style( 'trx_addons-animation' );
 
-		// Dequeue masonry and parallax scripts (not needed for yacht archive)
+		// Dequeue masonry and parallax scripts
 		wp_dequeue_script( 'imagesloaded' );
 		wp_dequeue_script( 'masonry' );
 
-		// Add inline CSS to disable ALL fixed header behaviors on yacht archive
-		// This prevents layout shifts when header changes position/classes during scroll
-		wp_add_inline_style( 'yacht-rental-style', '
-			/* Force header to stay in normal document flow */
-			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed,
-			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed_on,
-			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed_always,
-			body.post-type-archive-cpt_yachts .top_panel_navi {
-				position: relative !important;
-				top: auto !important;
-				left: auto !important;
-				right: auto !important;
-				transform: none !important;
-				transition: none !important;
-				animation: none !important;
-				z-index: auto !important;
-			}
-
-			/* Prevent any padding/margin changes when fixed class is added */
-			body.post-type-archive-cpt_yachts.admin-bar .sc_layouts_row_fixed,
-			body.post-type-archive-cpt_yachts.admin-bar .sc_layouts_row_fixed_on {
-				top: auto !important;
-				margin-top: 0 !important;
-				padding-top: 0 !important;
-			}
-
-			/* Ensure content area maintains stable position */
-			body.post-type-archive-cpt_yachts .page_content_wrap {
-				margin-top: 0 !important;
-				padding-top: 0 !important;
-				transition: none !important;
-			}
-
-			/* Disable any transforms or transitions on header elements */
-			body.post-type-archive-cpt_yachts .top_panel_navi * {
-				transform: none !important;
-				transition: none !important;
-			}
-		' );
+		// Keep only the layout styles (CSS) for header to display properly
+		// The styles are separate from the JavaScript behavior
 	}
 }
 
