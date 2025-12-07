@@ -1106,39 +1106,25 @@ if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {
 			return;
 		}
 
-		// Dequeue Elementor scripts that may conflict
-		wp_dequeue_script( 'elementor-frontend-modules' );
+		// Dequeue only scroll-animation related Elementor scripts
+		// Keep frontend modules for menu/header functionality
 		wp_dequeue_script( 'elementor-waypoints' );
-		wp_dequeue_script( 'swiper' );
-		wp_dequeue_script( 'elementor-frontend' );
 
-		// Dequeue Elementor styles
-		wp_dequeue_style( 'elementor-icons' );
+		// Dequeue only animation-related Elementor styles
+		// Keep frontend and global styles for header/menu
 		wp_dequeue_style( 'elementor-animations' );
-		wp_dequeue_style( 'elementor-frontend' );
-		wp_dequeue_style( 'elementor-post' );
-		wp_dequeue_style( 'elementor-global' );
 
-		// Dequeue ThemeREX Addons scripts that may conflict
-		wp_dequeue_script( 'trx_addons' );
-		wp_dequeue_script( 'trx_addons-sc_layouts' );
+		// Dequeue only animation scripts from ThemeREX Addons
+		// Keep main trx_addons and sc_layouts for header/menu functionality
 		wp_dequeue_script( 'trx_addons-animation' );
 		wp_dequeue_script( 'parallax-scroll' );
 
-		// Dequeue ThemeREX Addons styles
-		wp_dequeue_style( 'trx_addons' );
+		// Dequeue only animation styles from ThemeREX Addons
 		wp_dequeue_style( 'trx_addons-animation' );
-		wp_dequeue_style( 'trx_addons-layouts' );
 
-		// Dequeue masonry and parallax scripts
+		// Dequeue masonry and parallax scripts (not needed for yacht archive)
 		wp_dequeue_script( 'imagesloaded' );
 		wp_dequeue_script( 'masonry' );
-
-		// Dequeue any viewport or scroll-related scripts
-		wp_dequeue_script( 'yacht-rental-init' );
-
-		// Re-enqueue only essential theme scripts without animations/parallax
-		wp_enqueue_script( 'yacht-rental-utils', yacht_rental_get_file_url( 'js/utils.js' ), array( 'jquery' ), null, true );
 	}
 }
 

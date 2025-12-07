@@ -12,31 +12,32 @@ get_header();
 <style id="bky-yacht-archive-styles">
 /* Yacht Archive Styles - Completely isolated from ThemeREX Addons */
 
-/* Force disable all scroll-based animations and transitions that cause jumping */
-body.post-type-archive-cpt_yachts * {
+/* Force disable scroll-based animations only in the yacht archive content area */
+/* Preserve header/menu functionality by not applying to header elements */
+.bky-yacht-archive-wrapper * {
   animation: none !important;
   transition: none !important;
   transform: none !important;
 }
 
 /* Allow only specific, controlled transitions on our yacht cards */
-body.post-type-archive-cpt_yachts .bky-yacht-card,
-body.post-type-archive-cpt_yachts .bky-yacht-image img,
-body.post-type-archive-cpt_yachts .bky-yacht-btn,
-body.post-type-archive-cpt_yachts .bky-yacht-title a {
+.bky-yacht-card,
+.bky-yacht-image img,
+.bky-yacht-btn,
+.bky-yacht-title a {
   transition: all 0.3s ease !important;
 }
 
-/* Disable any Elementor animations */
-body.post-type-archive-cpt_yachts .elementor-invisible {
+/* Disable any Elementor animations within yacht archive content only */
+.bky-yacht-archive-wrapper .elementor-invisible {
   opacity: 1 !important;
   visibility: visible !important;
 }
 
-/* Disable ThemeREX animations */
-body.post-type-archive-cpt_yachts [data-animation],
-body.post-type-archive-cpt_yachts .sc_parallax,
-body.post-type-archive-cpt_yachts .parallax_wrap {
+/* Disable ThemeREX animations within yacht archive content only */
+.bky-yacht-archive-wrapper [data-animation],
+.bky-yacht-archive-wrapper .sc_parallax,
+.bky-yacht-archive-wrapper .parallax_wrap {
   animation: none !important;
   transform: none !important;
 }
@@ -447,48 +448,61 @@ body.post-type-archive-cpt_yachts .parallax_wrap {
 (function() {
 	'use strict';
 
-	// Disable scroll-based animations and parallax effects on yacht archive
+	// Disable scroll-based animations and parallax effects only in yacht archive content
+	// Preserve header/menu functionality
 	if (document.body.classList.contains('post-type-archive-cpt_yachts')) {
 
 		// Remove scroll event listeners that might be causing jumps
 		window.addEventListener('load', function() {
-			// Disable Elementor waypoints/viewport animations
-			if (typeof elementorFrontend !== 'undefined') {
-				elementorFrontend.waypoint = function() {};
-			}
-
-			// Disable ThemeREX Addons animations
+			// Disable ThemeREX Addons viewport animations only for yacht archive content
 			if (typeof TRX_ADDONS_STORAGE !== 'undefined') {
+				// Store original value
+				var originalAnimateToViewport = TRX_ADDONS_STORAGE['animate_to_viewport'];
+
+				// Disable only for elements inside yacht archive wrapper
 				TRX_ADDONS_STORAGE['animate_to_viewport'] = false;
 			}
 
-			// Force remove animation classes
+			// Force remove animation classes only from yacht archive content area
 			setTimeout(function() {
-				var animatedElements = document.querySelectorAll('.elementor-invisible, [data-animation], .sc_parallax, .animated');
-				animatedElements.forEach(function(el) {
-					el.classList.remove('elementor-invisible', 'animated', 'fadeIn', 'fadeInUp', 'fadeInDown', 'fadeInLeft', 'fadeInRight');
-					el.removeAttribute('data-animation');
-					el.style.opacity = '1';
-					el.style.visibility = 'visible';
-					el.style.transform = 'none';
-				});
+				var archiveWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+				if (archiveWrapper) {
+					var animatedElements = archiveWrapper.querySelectorAll('.elementor-invisible, [data-animation], .sc_parallax, .animated');
+					animatedElements.forEach(function(el) {
+						el.classList.remove('elementor-invisible', 'animated', 'fadeIn', 'fadeInUp', 'fadeInDown', 'fadeInLeft', 'fadeInRight');
+						el.removeAttribute('data-animation');
+						el.style.opacity = '1';
+						el.style.visibility = 'visible';
+						el.style.transform = 'none';
+					});
+				}
 			}, 100);
 		});
 
-		// Prevent any scroll position manipulation
+		// Prevent scroll position manipulation caused by animations
+		// But allow smooth scrolling for navigation/anchor links
 		var originalScrollTo = window.scrollTo;
 		var lastScrollY = window.scrollY;
-		var scrollJumpThreshold = 10; // pixels
+		var scrollJumpThreshold = 50; // Increased threshold to allow navigation scrolling
+		var allowScrollOverride = false;
+
+		// Allow manual scroll overrides (like clicking nav links)
+		document.addEventListener('click', function(e) {
+			if (e.target.closest('a[href*="#"]')) {
+				allowScrollOverride = true;
+				setTimeout(function() { allowScrollOverride = false; }, 1000);
+			}
+		});
 
 		window.scrollTo = function(x, y) {
-			// Only allow scroll if it's user-initiated (large changes are likely jumps)
-			if (Math.abs(y - lastScrollY) < scrollJumpThreshold || arguments.length === 0) {
+			// Allow scroll if: user-initiated, navigation click, or small change
+			if (allowScrollOverride || Math.abs(y - lastScrollY) < scrollJumpThreshold || arguments.length === 0) {
 				lastScrollY = y;
 				originalScrollTo.apply(window, arguments);
 			}
 		};
 
-		// Smooth scroll behavior
+		// Smooth scroll behavior for better UX
 		document.documentElement.style.scrollBehavior = 'smooth';
 	}
 })();
