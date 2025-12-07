@@ -67,11 +67,36 @@ body.post-type-archive-cpt_yachts {
   overflow-x: hidden;
 }
 
+/* Reduce the huge gap between page title and yacht cards */
+body.post-type-archive-cpt_yachts .page_content_wrap {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+body.post-type-archive-cpt_yachts .content_wrap {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Reduce page header/breadcrumb spacing */
+body.post-type-archive-cpt_yachts .top_panel_title,
+body.post-type-archive-cpt_yachts .sc_layouts_title {
+  padding-top: 60px !important;
+  padding-bottom: 40px !important;
+  min-height: auto !important;
+}
+
+body.post-type-archive-cpt_yachts .sc_layouts_title_content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 /* Ensure yacht archive wrapper maintains stable position */
 .bky-yacht-archive-wrapper {
-  padding: 40px 0 100px;
+  padding: 0 0 100px;
   background: #ffffff;
   margin: 0;
+  margin-top: -60px !important;
   position: relative;
   width: 100%;
   box-sizing: border-box;
