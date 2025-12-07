@@ -1090,6 +1090,58 @@ require_once YACHT_RENTAL_THEME_DIR . 'includes/wp.php';
 // Custom Post Type: Yachts
 require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-yachts.php';
 
+// Dequeue conflicting scripts/styles on yacht archive page
+if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {
+	add_action( 'wp_enqueue_scripts', 'yacht_rental_dequeue_yacht_archive_conflicts', 9999 );
+	/**
+	 * Dequeue conflicting scripts and styles on the yacht archive page
+	 * to prevent scroll jumping and layout conflicts between Elementor,
+	 * ThemeREX Addons, and the custom yacht archive implementation.
+	 *
+	 * Hooks: add_action('wp_enqueue_scripts', 'yacht_rental_dequeue_yacht_archive_conflicts', 9999);
+	 */
+	function yacht_rental_dequeue_yacht_archive_conflicts() {
+		// Only apply on yacht archive page
+		if ( ! is_post_type_archive( 'cpt_yachts' ) ) {
+			return;
+		}
+
+		// Dequeue Elementor scripts that may conflict
+		wp_dequeue_script( 'elementor-frontend-modules' );
+		wp_dequeue_script( 'elementor-waypoints' );
+		wp_dequeue_script( 'swiper' );
+		wp_dequeue_script( 'elementor-frontend' );
+
+		// Dequeue Elementor styles
+		wp_dequeue_style( 'elementor-icons' );
+		wp_dequeue_style( 'elementor-animations' );
+		wp_dequeue_style( 'elementor-frontend' );
+		wp_dequeue_style( 'elementor-post' );
+		wp_dequeue_style( 'elementor-global' );
+
+		// Dequeue ThemeREX Addons scripts that may conflict
+		wp_dequeue_script( 'trx_addons' );
+		wp_dequeue_script( 'trx_addons-sc_layouts' );
+		wp_dequeue_script( 'trx_addons-animation' );
+		wp_dequeue_script( 'parallax-scroll' );
+
+		// Dequeue ThemeREX Addons styles
+		wp_dequeue_style( 'trx_addons' );
+		wp_dequeue_style( 'trx_addons-animation' );
+		wp_dequeue_style( 'trx_addons-layouts' );
+
+		// Dequeue masonry and parallax scripts
+		wp_dequeue_script( 'imagesloaded' );
+		wp_dequeue_script( 'masonry' );
+
+		// Dequeue any viewport or scroll-related scripts
+		wp_dequeue_script( 'yacht-rental-init' );
+
+		// Re-enqueue only essential theme scripts without animations/parallax
+		wp_enqueue_script( 'yacht-rental-utils', yacht_rental_get_file_url( 'js/utils.js' ), array( 'jquery' ), null, true );
+	}
+}
+
 if ( is_admin() ) {
 	require_once YACHT_RENTAL_THEME_DIR . 'includes/tgmpa/class-tgm-plugin-activation.php';
 	require_once YACHT_RENTAL_THEME_DIR . 'includes/admin.php';
