@@ -1011,22 +1011,14 @@ function yr_yacht_cards_shortcode( $atts ) {
 	  display: flex;
 	  flex-direction: column;
 	}
-	.bky-yacht-header {
-	  display: flex;
-	  justify-content: space-between;
-	  align-items: flex-start;
-	  margin-bottom: 20px;
-	  gap: 15px;
-	}
 	.bky-yacht-title {
-	  flex: 1;
-	  min-width: 0;
+	  margin-bottom: 15px;
 	}
 	.bky-yacht-title h3 {
 	  font-size: 22px;
 	  font-weight: 600;
 	  color: #1a1a1a;
-	  margin: 0 0 5px 0;
+	  margin: 0;
 	  line-height: 1.3;
 	}
 	.bky-yacht-title h3 a {
@@ -1036,12 +1028,6 @@ function yr_yacht_cards_shortcode( $atts ) {
 	}
 	.bky-yacht-title h3 a:hover {
 	  color: #C89D4F;
-	}
-	.bky-yacht-price {
-	  font-size: 18px;
-	  font-weight: 700;
-	  color: #C89D4F;
-	  white-space: nowrap;
 	}
 	.bky-yacht-features {
 	  display: flex;
@@ -1136,13 +1122,8 @@ function yr_yacht_cards_shortcode( $atts ) {
 						</div>
 
 						<div class="bky-yacht-content">
-							<div class="bky-yacht-header">
-								<div class="bky-yacht-title">
-									<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-								</div>
-								<?php if ( $price ) : ?>
-									<div class="bky-yacht-price"><?php echo esc_html( $price ); ?></div>
-								<?php endif; ?>
+							<div class="bky-yacht-title">
+								<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 							</div>
 
 							<div class="bky-yacht-features">

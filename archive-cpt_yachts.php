@@ -219,49 +219,27 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 }
 
 .bky-yacht-content {
-  padding: 28px;
+  padding: 25px;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.bky-yacht-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-  gap: 16px;
-}
-
 .bky-yacht-title {
-  margin: 0;
+  margin: 0 0 15px 0;
   font-size: 22px;
   font-weight: 600;
   line-height: 1.3;
-  flex: 1;
-  letter-spacing: -0.02em;
 }
 
 .bky-yacht-title a {
-  color: #0a0a0a;
+  color: #1a1a1a;
   text-decoration: none;
-  transition: color 0.25s ease;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  transition: color 0.3s ease;
 }
 
 .bky-yacht-title a:hover {
-  color: #c89860;
-}
-
-.bky-yacht-price {
-  font-size: 16px;
-  font-weight: 700;
-  color: #c89860;
-  white-space: nowrap;
-  line-height: 1.3;
+  color: #C89D4F;
 }
 
 .bky-yacht-specs {
@@ -404,14 +382,6 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   .bky-yacht-title {
     font-size: 19px;
   }
-  .bky-yacht-header {
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .bky-yacht-price {
-    align-self: flex-start;
-  }
   .bky-yacht-buttons {
     flex-direction: column;
     gap: 10px;
@@ -463,14 +433,9 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 							<?php endif; ?>
 
 							<div class="bky-yacht-content">
-								<div class="bky-yacht-header">
-									<h3 class="bky-yacht-title">
-										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-									</h3>
-									<?php if ( $yacht_price ) : ?>
-										<div class="bky-yacht-price"><?php echo esc_html( $yacht_price ); ?></div>
-									<?php endif; ?>
-								</div>
+								<h3 class="bky-yacht-title">
+									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+								</h3>
 
 								<div class="bky-yacht-specs">
 									<?php if ( $yacht_length ) : ?>
