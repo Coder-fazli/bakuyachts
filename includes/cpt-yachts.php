@@ -860,12 +860,16 @@ function yr_get_placeholder_image() {
  * Yacht Cards Grid Shortcode
  *
  * Usage examples:
- * [yacht_cards]                                    - Show all yachts
+ * [yacht_cards]                                    - Show all yachts (current language)
  * [yacht_cards limit="6"]                          - Show 6 yachts
  * [yacht_cards limit="3" badge="BEST SELLER"]      - Show 3 yachts with BEST SELLER badge
  * [yacht_cards columns="4"]                        - Show in 4 columns
  * [yacht_cards orderby="title" order="ASC"]        - Order by title ascending
  * [yacht_cards ids="123,456,789"]                  - Show specific yachts by ID
+ * [yacht_cards lang="az"]                          - Show yachts in Azerbaijani language
+ * [yacht_cards lang="ru"]                          - Show yachts in Russian language
+ * [yacht_cards lang="en"]                          - Show yachts in English language
+ * [yacht_cards lang="all"]                         - Show yachts from all languages
  */
 function yr_yacht_cards_shortcode( $atts ) {
 	$atts = shortcode_atts( array(
@@ -875,6 +879,7 @@ function yr_yacht_cards_shortcode( $atts ) {
 		'order'   => 'DESC',      // ASC or DESC
 		'badge'   => '',          // Filter by badge (e.g., 'BEST SELLER')
 		'ids'     => '',          // Comma-separated yacht IDs to show
+		'lang'    => '',          // Language code: az, ru, en, or 'all' for all languages (default: current language)
 	), $atts, 'yacht_cards' );
 
 	// Query arguments
@@ -885,6 +890,22 @@ function yr_yacht_cards_shortcode( $atts ) {
 		'order'          => sanitize_text_field( $atts['order'] ),
 		'post_status'    => 'publish',
 	);
+
+	// Polylang language filter
+	if ( function_exists( 'pll_current_language' ) ) {
+		$lang_code = ! empty( $atts['lang'] ) ? sanitize_text_field( $atts['lang'] ) : '';
+
+		if ( $lang_code === 'all' ) {
+			// Show yachts from all languages - disable Polylang filter
+			$query_args['lang'] = '';
+		} elseif ( ! empty( $lang_code ) && in_array( $lang_code, array( 'az', 'ru', 'en' ) ) ) {
+			// Show yachts from specific language
+			$query_args['lang'] = $lang_code;
+		} else {
+			// Default: show yachts from current language
+			$query_args['lang'] = pll_current_language();
+		}
+	}
 
 	// Filter by specific IDs
 	if ( ! empty( $atts['ids'] ) ) {
