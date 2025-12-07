@@ -1125,6 +1125,22 @@ if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {
 		// Dequeue masonry and parallax scripts (not needed for yacht archive)
 		wp_dequeue_script( 'imagesloaded' );
 		wp_dequeue_script( 'masonry' );
+
+		// Add inline CSS to disable fixed header behavior on yacht archive
+		// This prevents layout shifts when header changes position
+		wp_add_inline_style( 'yacht-rental-style', '
+			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed {
+				position: relative !important;
+				top: auto !important;
+				transform: none !important;
+			}
+			body.post-type-archive-cpt_yachts .sc_layouts_row_fixed_on {
+				position: relative !important;
+			}
+			body.post-type-archive-cpt_yachts .admin-bar .sc_layouts_row_fixed {
+				top: auto !important;
+			}
+		' );
 	}
 }
 

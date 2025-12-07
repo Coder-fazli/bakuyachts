@@ -61,6 +61,13 @@ body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper .bky-yacht-card {
   transform: none !important;
 }
 
+/* Prevent layout shifts caused by header changes during scroll */
+body.post-type-archive-cpt_yachts {
+  /* Lock the layout to prevent content jumps when header becomes fixed */
+  overflow-x: hidden;
+}
+
+/* Ensure yacht archive wrapper maintains stable position */
 .bky-yacht-archive-wrapper {
   padding: 40px 0 100px;
   background: #ffffff;
@@ -69,6 +76,9 @@ body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper .bky-yacht-card {
   width: 100%;
   box-sizing: border-box;
   display: block;
+  /* Prevent any layout shifts */
+  will-change: auto;
+  contain: layout style;
 }
 
 .bky-yacht-archive-container {
@@ -471,13 +481,41 @@ body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper .bky-yacht-card {
 	// Preserve header/menu functionality
 	if (document.body.classList.contains('post-type-archive-cpt_yachts')) {
 
-		// Monitor and prevent scroll-triggered class changes on yacht cards
+		// Lock the page layout to prevent shifts when header changes
+		var pageContentTop = 0;
+		var isScrolling = false;
+
+		// Store initial position of yacht archive wrapper
+		window.addEventListener('load', function() {
+			var archiveWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+			if (archiveWrapper) {
+				pageContentTop = archiveWrapper.getBoundingClientRect().top + window.scrollY;
+			}
+		});
+
+		// Monitor and prevent scroll-triggered changes that cause layout shifts
 		var observer = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
-				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-					var target = mutation.target;
-					// If element is inside yacht archive wrapper, force stable state
-					if (target.closest('.bky-yacht-archive-wrapper')) {
+				var target = mutation.target;
+
+				// Prevent layout shifts from header style changes
+				if (target.classList && target.classList.contains('sc_layouts_row_fixed')) {
+					// Don't let header changes affect content position
+					var archiveWrapper = document.querySelector('.bky-yacht-archive-wrapper');
+					if (archiveWrapper && !isScrolling) {
+						var currentTop = archiveWrapper.getBoundingClientRect().top + window.scrollY;
+						if (Math.abs(currentTop - pageContentTop) > 2) {
+							// Content shifted, compensate by adjusting scroll
+							isScrolling = true;
+							window.scrollBy(0, currentTop - pageContentTop);
+							setTimeout(function() { isScrolling = false; }, 50);
+						}
+					}
+				}
+
+				// If element is inside yacht archive wrapper, force stable state
+				if (target.closest && target.closest('.bky-yacht-archive-wrapper')) {
+					if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
 						target.style.transform = 'none';
 						target.style.opacity = '1';
 						target.style.visibility = 'visible';
@@ -486,8 +524,19 @@ body.trx_addons_scroll_to_top_show .bky-yacht-archive-wrapper .bky-yacht-card {
 			});
 		});
 
-		// Start observing yacht archive wrapper
+		// Start observing both header and yacht archive wrapper
 		window.addEventListener('load', function() {
+			// Observe header for style changes
+			var header = document.querySelector('.top_panel_navi');
+			if (header) {
+				observer.observe(header, {
+					attributes: true,
+					attributeFilter: ['class', 'style'],
+					subtree: true
+				});
+			}
+
+			// Observe yacht archive wrapper
 			var archiveWrapper = document.querySelector('.bky-yacht-archive-wrapper');
 			if (archiveWrapper) {
 				observer.observe(archiveWrapper, {
