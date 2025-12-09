@@ -315,23 +315,23 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 }
 
 .bky-yacht-btn-whatsapp {
-  background: #25D366;
+  background: #A62946;
   color: #fff;
 }
 
 .bky-yacht-btn-whatsapp:hover {
-  background: #1ebc59;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  background: #8B1F39;
+  box-shadow: 0 4px 12px rgba(166, 41, 70, 0.3);
 }
 
 .bky-yacht-btn-view {
-  background: #c89860;
+  background: #A62946;
   color: #fff;
 }
 
 .bky-yacht-btn-view:hover {
-  background: #b07a47;
-  box-shadow: 0 4px 12px rgba(200, 152, 96, 0.3);
+  background: #8B1F39;
+  box-shadow: 0 4px 12px rgba(166, 41, 70, 0.3);
 }
 
 .bky-yacht-pagination {

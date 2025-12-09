@@ -1077,20 +1077,22 @@ function yr_yacht_cards_shortcode( $atts ) {
 	  gap: 8px;
 	}
 	.bky-yacht-btn-whatsapp {
-	  background: #25D366;
+	  background: #A62946;
 	  color: white;
 	}
 	.bky-yacht-btn-whatsapp:hover {
-	  background: #1da851;
+	  background: #8B1F39;
 	  transform: translateY(-2px);
+	  box-shadow: 0 4px 12px rgba(166, 41, 70, 0.3);
 	}
 	.bky-yacht-btn-view {
-	  background: #C89D4F;
+	  background: #A62946;
 	  color: white;
 	}
 	.bky-yacht-btn-view:hover {
-	  background: #b38a3f;
+	  background: #8B1F39;
 	  transform: translateY(-2px);
+	  box-shadow: 0 4px 12px rgba(166, 41, 70, 0.3);
 	}
 	</style>
 
