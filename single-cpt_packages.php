@@ -6,11 +6,6 @@
  * @since YACHT RENTAL 1.0
  */
 
-// Force custom header for packages
-add_filter( 'yacht_rental_filter_get_theme_option_header_type', function( $value ) {
-	return 'custom';
-}, 99 );
-
 get_header();
 
 // Get post data
