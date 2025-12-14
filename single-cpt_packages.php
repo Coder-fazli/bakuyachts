@@ -1,15 +1,10 @@
 <?php
 /**
- * Single Package Template
+ * Single Package Template - Standalone Full Width Design
  *
  * @package YACHT RENTAL
  * @since YACHT RENTAL 1.0
  */
-
-// Enqueue Poppins font
-wp_enqueue_style( 'google-font-poppins', 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap', array(), null );
-
-get_header();
 
 // Get post data
 while ( have_posts() ) {
@@ -34,7 +29,14 @@ while ( have_posts() ) {
 		$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
 	}
 	?>
-
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><?php wp_title( '|', true, 'right' ); ?></title>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<?php wp_head(); ?>
 	<style>
 		* {
 			margin: 0;
@@ -411,6 +413,13 @@ while ( have_posts() ) {
 			}
 		}
 	</style>
+</head>
+<body <?php body_class(); ?>>
+	<?php
+	if ( function_exists( 'wp_body_open' ) ) {
+		wp_body_open();
+	}
+	?>
 
 	<!-- Breadcrumb -->
 	<div class="breadcrumb">
@@ -474,60 +483,60 @@ while ( have_posts() ) {
 		</div>
 	</section>
 
-		<!-- FAQ Section -->
-		<?php
-		// Get FAQ from post content or use default FAQs
-		$faq_meta = get_post_meta( get_the_ID(), '_package_faq', true );
+	<!-- FAQ Section -->
+	<?php
+	// Get FAQ from post content or use default FAQs
+	$faq_meta = get_post_meta( get_the_ID(), '_package_faq', true );
 
-		// Default FAQs if none provided
-		if ( empty( $faq_meta ) ) {
-			$faqs = array(
-				array(
-					'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
-					'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'What is included in the package?', 'yacht-rental' ),
-					'answer'   => __( 'Our package includes a 3+ hour luxury yacht cruise, beautiful decorations, personalized cake, red carpet welcome with drinks, water, ice, soft drinks, and optional add-ons like catering, DJ services, and professional photography.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'Can we bring our own food and drinks?', 'yacht-rental' ),
-					'answer'   => __( 'Yes, you\'re welcome to bring your own food and beverages. However, we also offer fine-dining catering from 5-star restaurants as an add-on service to make your celebration even more special.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
-					'answer'   => __( 'Our yacht cruise takes you past Dubai\'s iconic landmarks including the Dubai Marina, Ain Dubai, Palm Jumeirah, Atlantis Hotel, and the stunning Burj Al Arab, offering breathtaking views of Dubai\'s skyline.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
-					'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
-				),
-			);
-		} else {
-			$faqs = maybe_unserialize( $faq_meta );
-		}
+	// Default FAQs if none provided
+	if ( empty( $faq_meta ) ) {
+		$faqs = array(
+			array(
+				'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
+				'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
+			),
+			array(
+				'question' => __( 'What is included in the package?', 'yacht-rental' ),
+				'answer'   => __( 'Our package includes a 3+ hour luxury yacht cruise, beautiful decorations, personalized cake, red carpet welcome with drinks, water, ice, soft drinks, and optional add-ons like catering, DJ services, and professional photography.', 'yacht-rental' ),
+			),
+			array(
+				'question' => __( 'Can we bring our own food and drinks?', 'yacht-rental' ),
+				'answer'   => __( 'Yes, you\'re welcome to bring your own food and beverages. However, we also offer fine-dining catering from 5-star restaurants as an add-on service to make your celebration even more special.', 'yacht-rental' ),
+			),
+			array(
+				'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
+				'answer'   => __( 'Our yacht cruise takes you past Dubai\'s iconic landmarks including the Dubai Marina, Ain Dubai, Palm Jumeirah, Atlantis Hotel, and the stunning Burj Al Arab, offering breathtaking views of Dubai\'s skyline.', 'yacht-rental' ),
+			),
+			array(
+				'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
+				'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
+			),
+		);
+	} else {
+		$faqs = maybe_unserialize( $faq_meta );
+	}
 
-		if ( ! empty( $faqs ) && is_array( $faqs ) ) :
-		?>
-		<section class="faq-section">
-			<div class="container">
-				<h2 class="faq-title"><?php esc_html_e( 'Frequently Asked Questions', 'yacht-rental' ); ?></h2>
-				<div class="faq-container">
-					<?php foreach ( $faqs as $faq ) : ?>
-						<div class="faq-item">
-							<div class="faq-question">
-								<h3><?php echo esc_html( $faq['question'] ); ?></h3>
-								<span class="faq-toggle">+</span>
-							</div>
-							<div class="faq-answer">
-								<p><?php echo esc_html( $faq['answer'] ); ?></p>
-							</div>
+	if ( ! empty( $faqs ) && is_array( $faqs ) ) :
+	?>
+	<section class="faq-section">
+		<div class="container">
+			<h2 class="faq-title"><?php esc_html_e( 'Frequently Asked Questions', 'yacht-rental' ); ?></h2>
+			<div class="faq-container">
+				<?php foreach ( $faqs as $faq ) : ?>
+					<div class="faq-item">
+						<div class="faq-question">
+							<h3><?php echo esc_html( $faq['question'] ); ?></h3>
+							<span class="faq-toggle">+</span>
 						</div>
-					<?php endforeach; ?>
-				</div>
+						<div class="faq-answer">
+							<p><?php echo esc_html( $faq['answer'] ); ?></p>
+						</div>
+					</div>
+				<?php endforeach; ?>
 			</div>
-		</section>
-		<?php endif; ?>
+		</div>
+	</section>
+	<?php endif; ?>
 
 	<script>
 		// FAQ Accordion functionality
@@ -551,7 +560,8 @@ while ( have_posts() ) {
 		});
 	</script>
 
+	<?php wp_footer(); ?>
+</body>
+</html>
 	<?php
 }
-
-get_footer();
