@@ -124,10 +124,33 @@ if ( ! empty( $button_link ) ) {
 
 		.package-image {
 			position: relative;
-			max-height: 500px;
+			min-height: 100%;
 			border-radius: 12px;
 			overflow: hidden;
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+			transition: all 0.4s ease;
+		}
+
+		.package-image:hover {
+			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+			transform: translateY(-5px);
+		}
+
+		.package-image::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, rgba(97, 206, 112, 0.1) 0%, rgba(188, 24, 51, 0.1) 100%);
+			opacity: 0;
+			transition: opacity 0.4s ease;
+			z-index: 1;
+		}
+
+		.package-image:hover::before {
+			opacity: 1;
 		}
 
 		.package-image img {
@@ -136,6 +159,11 @@ if ( ! empty( $button_link ) ) {
 			display: block;
 			object-fit: cover;
 			object-position: center;
+			transition: transform 0.4s ease;
+		}
+
+		.package-image:hover img {
+			transform: scale(1.05);
 		}
 
 		.package-content {
@@ -349,7 +377,8 @@ if ( ! empty( $button_link ) ) {
 			}
 
 			.package-image {
-				max-height: 350px;
+				min-height: 350px;
+				max-height: 500px;
 			}
 		}
 
