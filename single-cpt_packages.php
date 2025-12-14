@@ -124,15 +124,10 @@ if ( ! empty( $button_link ) ) {
 
 		.package-image {
 			position: relative;
+			max-height: 500px;
 			border-radius: 12px;
 			overflow: hidden;
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
-		}
-
-		.package-image:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
 		}
 
 		.package-image img {
@@ -141,18 +136,13 @@ if ( ! empty( $button_link ) ) {
 			display: block;
 			object-fit: cover;
 			object-position: center;
-			transition: transform 0.3s ease;
-		}
-
-		.package-image:hover img {
-			transform: scale(1.05);
 		}
 
 		.package-content {
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
-			padding: 20px;
+			justify-content: flex-start;
+			padding: 30px;
 			background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
 			border-radius: 12px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -187,7 +177,7 @@ if ( ! empty( $button_link ) ) {
 		}
 
 		.features-list li {
-			padding: 8px 0;
+			padding: 4px 0;
 			color: #54595F;
 			font-size: 14px;
 			display: flex;
@@ -199,7 +189,6 @@ if ( ! empty( $button_link ) ) {
 		}
 
 		.features-list li:hover {
-			transform: translateX(5px);
 			color: #050C29;
 		}
 
@@ -231,40 +220,20 @@ if ( ! empty( $button_link ) ) {
 			font-size: 13px;
 			font-weight: 600;
 			text-decoration: none;
-			border-radius: 50px;
-			transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+			border-radius: 4px;
+			transition: all 0.3s ease;
 			border: none;
 			cursor: pointer;
 			text-align: center;
 			letter-spacing: 1px;
 			text-transform: uppercase;
-			position: relative;
-			overflow: hidden;
-			box-shadow: 0 6px 25px rgba(188, 24, 51, 0.35);
+			box-shadow: 0 4px 15px rgba(188, 24, 51, 0.3);
 			margin-top: 10px;
 		}
 
-		.btn-red::before {
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 0;
-			height: 0;
-			border-radius: 50%;
-			background: rgba(255, 255, 255, 0.15);
-			transform: translate(-50%, -50%);
-			transition: width 0.6s, height 0.6s;
-		}
-
-		.btn-red:hover::before {
-			width: 300px;
-			height: 300px;
-		}
-
 		.btn-red:hover {
-			transform: translateY(-3px);
-			box-shadow: 0 7px 20px rgba(188, 24, 51, 0.45);
+			background: linear-gradient(135deg, #D41F3D 0%, #BC1833 100%);
+			box-shadow: 0 6px 20px rgba(188, 24, 51, 0.4);
 		}
 
 		.btn-red::after {
@@ -272,11 +241,6 @@ if ( ! empty( $button_link ) ) {
 			font-size: 16px;
 			transform: rotate(45deg);
 			display: inline-block;
-			transition: transform 0.3s ease;
-		}
-
-		.btn-red:hover::after {
-			transform: rotate(45deg) translateX(3px);
 		}
 
 		/* FAQ Section */
