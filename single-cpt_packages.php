@@ -433,7 +433,7 @@ while ( have_posts() ) {
 				<?php if ( has_excerpt() ) : ?>
 					<p class="page-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
 				<?php endif; ?>
-				<?php if ( has_content() ) : ?>
+				<?php if ( get_the_content() ) : ?>
 					<div class="intro-text">
 						<?php the_content(); ?>
 					</div>
