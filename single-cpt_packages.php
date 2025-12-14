@@ -88,21 +88,21 @@ if ( ! empty( $button_link ) ) {
 			margin-bottom: 15px;
 		}
 
-		.package-header h1 {
-			font-size: 34px;
-			font-weight: 700;
-			color: #050C29;
-			margin-bottom: 8px;
-			line-height: 1.2;
-			letter-spacing: -0.5px;
-		}
-
 		.package-rating {
 			color: #ffa500;
 			font-size: 20px;
 			line-height: 1;
-			margin: 8px 0 12px 0;
+			margin: 0 0 10px 0;
 			padding: 0;
+		}
+
+		.package-header h1 {
+			font-size: 34px;
+			font-weight: 700;
+			color: #050C29;
+			margin-bottom: 12px;
+			line-height: 1.2;
+			letter-spacing: -0.5px;
 		}
 
 		.package-subtitle {
@@ -463,8 +463,8 @@ if ( ! empty( $button_link ) ) {
 				<!-- Main Section -->
 				<section class="package-main-section">
 					<div class="package-header">
-						<h1><?php the_title(); ?></h1>
 						<div class="package-rating">★★★★★</div>
+						<h1><?php the_title(); ?></h1>
 						<?php if ( has_excerpt() ) : ?>
 							<p class="package-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
@@ -508,13 +508,35 @@ if ( ! empty( $button_link ) ) {
 
 				<!-- FAQ Section -->
 				<?php
-				// Get FAQ from custom field
+				// Get FAQ from custom field, or use defaults
 				$faqs = get_post_meta( get_the_ID(), '_package_faq', true );
-				if ( ! is_array( $faqs ) ) {
-					$faqs = array();
+				if ( ! is_array( $faqs ) || empty( $faqs ) ) {
+					// Default FAQs if none are set
+					$faqs = array(
+						array(
+							'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
+							'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
+						),
+						array(
+							'question' => __( 'What is included in the package?', 'yacht-rental' ),
+							'answer'   => __( 'Our package includes a 3+ hour luxury yacht cruise, beautiful decorations, personalized cake, red carpet welcome with drinks, water, ice, soft drinks, and optional add-ons like catering, DJ services, and professional photography.', 'yacht-rental' ),
+						),
+						array(
+							'question' => __( 'Can we bring our own food and drinks?', 'yacht-rental' ),
+							'answer'   => __( 'Yes, you\'re welcome to bring your own food and beverages. However, we also offer fine-dining catering from 5-star restaurants as an add-on service to make your celebration even more special.', 'yacht-rental' ),
+						),
+						array(
+							'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
+							'answer'   => __( 'Our yacht cruise takes you past Baku\'s iconic landmarks including the Baku Boulevard, Flame Towers, Crystal Hall, and the beautiful Caspian Sea coastline, offering breathtaking views of Baku\'s skyline.', 'yacht-rental' ),
+						),
+						array(
+							'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
+							'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
+						),
+					);
 				}
 
-				// Only show FAQ section if there are FAQs
+				// Show FAQ section
 				if ( ! empty( $faqs ) ) :
 				?>
 				<section class="package-faq-section">
