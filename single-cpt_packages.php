@@ -42,8 +42,8 @@ if ( ! empty( $button_link ) ) {
 		.package-container {
 			max-width: 1200px;
 			margin: 0 auto;
-			margin-top: 167px;
-			padding: 0 20px;
+			margin-top: 0;
+			padding: 139px 20px;
 		}
 
 		/* Breadcrumb Styles */
@@ -80,7 +80,7 @@ if ( ! empty( $button_link ) ) {
 		/* Main Section */
 		.package-main-section {
 			background-color: #fff;
-			padding: 15px 0 10px;
+			padding: 12px;
 		}
 
 		.package-header {
@@ -117,17 +117,27 @@ if ( ! empty( $button_link ) ) {
 		.package-section {
 			display: grid;
 			grid-template-columns: 50% 50%;
-			gap: 40px;
-			align-items: stretch;
-			margin-top: 15px;
+			gap: 50px;
+			align-items: center;
+			margin-top: 30px;
+			padding: 40px;
+			background: #ffffff;
+			border-radius: 12px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 		}
 
 		.package-image {
 			position: relative;
-			min-height: 100%;
-			border-radius: 8px;
+			min-height: 450px;
+			border-radius: 12px;
 			overflow: hidden;
-			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+
+		.package-image:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
 		}
 
 		.package-image img {
@@ -136,50 +146,82 @@ if ( ! empty( $button_link ) ) {
 			display: block;
 			object-fit: cover;
 			object-position: center;
+			transition: transform 0.3s ease;
+		}
+
+		.package-image:hover img {
+			transform: scale(1.05);
 		}
 
 		.package-content {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			padding: 0;
+			padding: 20px;
+			background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+			border-radius: 12px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 		}
 
 		.package-content h2 {
-			font-size: 24px;
+			font-size: 28px;
 			font-weight: 700;
 			color: #050C29;
-			margin-bottom: 12px;
+			margin-bottom: 20px;
 			line-height: 1.3;
 			letter-spacing: -0.3px;
+			position: relative;
+			padding-bottom: 15px;
+		}
+
+		.package-content h2::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 60px;
+			height: 3px;
+			background: linear-gradient(90deg, #61CE70 0%, #4FB85E 100%);
+			border-radius: 2px;
 		}
 
 		.features-list {
 			list-style: none;
-			margin-bottom: 15px;
+			margin-bottom: 25px;
+			padding: 0;
 		}
 
 		.features-list li {
-			padding: 3px 0;
+			padding: 8px 0;
 			color: #54595F;
-			font-size: 13px;
+			font-size: 14px;
 			display: flex;
 			align-items: flex-start;
-			gap: 10px;
-			transition: all 0.2s ease;
+			gap: 12px;
+			transition: all 0.3s ease;
+			border-left: 2px solid transparent;
+			padding-left: 0;
 		}
 
 		.features-list li:hover {
-			transform: translateX(3px);
+			transform: translateX(5px);
+			color: #050C29;
 		}
 
 		.features-list li::before {
 			content: "✓";
 			color: #61CE70;
 			font-weight: 700;
-			font-size: 16px;
+			font-size: 18px;
 			flex-shrink: 0;
-			margin-top: 1px;
+			margin-top: 2px;
+			width: 24px;
+			height: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(97, 206, 112, 0.1);
+			border-radius: 50%;
 		}
 
 		/* Buttons */
@@ -190,8 +232,8 @@ if ( ! empty( $button_link ) ) {
 			align-items: center;
 			justify-content: center;
 			gap: 8px;
-			padding: 10px 30px;
-			font-size: 12px;
+			padding: 14px 40px;
+			font-size: 13px;
 			font-weight: 600;
 			text-decoration: none;
 			border-radius: 50px;
@@ -199,11 +241,12 @@ if ( ! empty( $button_link ) ) {
 			border: none;
 			cursor: pointer;
 			text-align: center;
-			letter-spacing: 0.8px;
+			letter-spacing: 1px;
 			text-transform: uppercase;
 			position: relative;
 			overflow: hidden;
-			box-shadow: 0 4px 15px rgba(188, 24, 51, 0.3);
+			box-shadow: 0 6px 25px rgba(188, 24, 51, 0.35);
+			margin-top: 10px;
 		}
 
 		.btn-red::before {
