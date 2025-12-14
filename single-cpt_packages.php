@@ -39,48 +39,42 @@ if ( ! empty( $button_link ) ) {
 
 	<style>
 		/* Package-specific styles */
-		.package-page-wrap {
+		.package-container {
 			max-width: 1200px;
 			margin: 0 auto;
+			margin-top: 167px;
 			padding: 0 20px;
 		}
 
 		/* Breadcrumb Styles */
 		.package-breadcrumb {
-			padding: 8px 0;
-			background: linear-gradient(135deg, #EEF7FD 0%, #E6F3FA 100%);
-			border-bottom: 1px solid rgba(110, 193, 228, 0.1);
-			margin-top: 150px;
+			text-align: center;
+			margin-bottom: 30px;
+			padding: 0;
+			font-size: 16px;
+			color: #666;
 		}
 
-		.breadcrumb-nav {
-			display: flex;
-			align-items: center;
-			gap: 8px;
-			font-size: 12px;
-		}
-
-		.breadcrumb-item {
-			color: #7A7A7A;
+		.package-breadcrumb a {
+			color: #999;
 			text-decoration: none;
-			transition: all 0.3s ease;
-		}
-
-		.breadcrumb-item:hover {
-			color: #6EC1E4;
-		}
-
-		.breadcrumb-item.active {
-			color: #050C29;
+			transition: color 0.3s ease;
 			font-weight: 500;
 		}
 
-		.breadcrumb-separator {
-			width: 5px;
-			height: 5px;
-			background-color: #7A7A7A;
-			border-radius: 50%;
-			opacity: 0.6;
+		.package-breadcrumb a:hover {
+			color: #1a2332;
+		}
+
+		.package-breadcrumb .separator {
+			margin: 0 12px;
+			color: #d4a853;
+			font-size: 12px;
+		}
+
+		.package-breadcrumb .current {
+			color: #1a2332;
+			font-weight: 600;
 		}
 
 		/* Main Section */
@@ -409,22 +403,19 @@ if ( ! empty( $button_link ) ) {
 			get_template_part( 'skins/default/templates/header-default' );
 			?>
 
-			<!-- Breadcrumb -->
-			<div class="package-breadcrumb">
-				<div class="package-page-wrap">
-					<nav class="breadcrumb-nav">
-						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="breadcrumb-item"><?php esc_html_e( 'Home', 'yacht-rental' ); ?></a>
-						<span class="breadcrumb-separator"></span>
-						<a href="<?php echo esc_url( get_post_type_archive_link( 'cpt_packages' ) ); ?>" class="breadcrumb-item"><?php esc_html_e( 'Packages', 'yacht-rental' ); ?></a>
-						<span class="breadcrumb-separator"></span>
-						<span class="breadcrumb-item active"><?php the_title(); ?></span>
-					</nav>
-				</div>
-			</div>
+			<div class="package-container">
 
-			<!-- Main Section -->
-			<section class="package-main-section">
-				<div class="package-page-wrap">
+				<!-- Breadcrumb -->
+				<div class="package-breadcrumb">
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'yacht-rental' ); ?></a>
+					<span class="separator">◆</span>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'cpt_packages' ) ); ?>"><?php esc_html_e( 'Packages', 'yacht-rental' ); ?></a>
+					<span class="separator">◆</span>
+					<span class="current"><?php the_title(); ?></span>
+				</div>
+
+				<!-- Main Section -->
+				<section class="package-main-section">
 					<div class="package-header">
 						<h1><?php the_title(); ?></h1>
 						<?php if ( has_excerpt() ) : ?>
@@ -466,12 +457,11 @@ if ( ! empty( $button_link ) ) {
 							<?php endif; ?>
 						</div>
 					</div>
-				</div>
-			</section>
+				</section>
 
-			<!-- FAQ Section -->
-			<?php
-			$faqs = array(
+				<!-- FAQ Section -->
+				<?php
+				$faqs = array(
 				array(
 					'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
 					'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
@@ -493,9 +483,8 @@ if ( ! empty( $button_link ) ) {
 					'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
 				),
 			);
-			?>
-			<section class="package-faq-section">
-				<div class="package-page-wrap">
+				?>
+				<section class="package-faq-section">
 					<h2 class="faq-title"><?php esc_html_e( 'Frequently Asked Questions', 'yacht-rental' ); ?></h2>
 					<div class="faq-container">
 						<?php foreach ( $faqs as $faq ) : ?>
@@ -510,8 +499,9 @@ if ( ! empty( $button_link ) ) {
 							</div>
 						<?php endforeach; ?>
 					</div>
-				</div>
-			</section>
+				</section>
+
+			</div><!-- .package-container -->
 
 			<?php
 			// Include custom footer (same as yachts)
