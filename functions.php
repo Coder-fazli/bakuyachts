@@ -1090,6 +1090,9 @@ require_once YACHT_RENTAL_THEME_DIR . 'includes/wp.php';
 // Custom Post Type: Yachts
 require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-yachts.php';
 
+// Custom Post Type: Packages
+require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-packages.php';
+
 // Dequeue conflicting scripts/styles on yacht archive page
 if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {
 	add_action( 'wp_enqueue_scripts', 'yacht_rental_dequeue_yacht_archive_conflicts', 9999 );
