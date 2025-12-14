@@ -97,6 +97,14 @@ if ( ! empty( $button_link ) ) {
 			letter-spacing: -0.5px;
 		}
 
+		.package-rating {
+			color: #ffa500;
+			font-size: 20px;
+			line-height: 1;
+			margin: 8px 0 12px 0;
+			padding: 0;
+		}
+
 		.package-subtitle {
 			font-size: 16px;
 			color: #7A7A7A;
@@ -395,6 +403,10 @@ if ( ! empty( $button_link ) ) {
 				font-size: 26px;
 			}
 
+			.package-rating {
+				font-size: 18px;
+			}
+
 			.package-subtitle {
 				font-size: 14px;
 			}
@@ -452,6 +464,7 @@ if ( ! empty( $button_link ) ) {
 				<section class="package-main-section">
 					<div class="package-header">
 						<h1><?php the_title(); ?></h1>
+						<div class="package-rating">★★★★★</div>
 						<?php if ( has_excerpt() ) : ?>
 							<p class="package-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
