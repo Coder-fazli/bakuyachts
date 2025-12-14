@@ -856,7 +856,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'description' => get_the_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 30 ),
         'brand' => array(
             '@type' => 'Organization',
-            'name' => get_bloginfo( 'name' ),
+            'name' => 'Bakuyachts.com',
         ),
     );
 

@@ -18,9 +18,9 @@ if (!is_user_logged_in() || !current_user_can('manage_options')) {
 // Demo packages data
 $packages = array(
     array(
-        'title' => 'Yacht Birthday Party Dubai',
-        'content' => 'Want the coolest yacht birthday party Dubai has to offer? Instead of the regular restaurant celebrations – imagine blowing out candles while cruising past Dubai\'s iconic skyline! Our birthday yacht rental Dubai packages turn your special day into a memory you won\'t forget.',
-        'package_title' => 'Choose Your Birthday Yacht Rental Dubai Package',
+        'title' => 'Yacht Birthday Party Baku',
+        'content' => 'Want the coolest yacht birthday party Baku has to offer? Instead of the regular restaurant celebrations – imagine blowing out candles while cruising past Baku\'s iconic skyline! Our birthday yacht rental Baku packages turn your special day into a memory you won\'t forget.',
+        'package_title' => 'Choose Your Birthday Yacht Rental Baku Package',
         'features' => "Included in a package
 3hr+ luxury yacht cruise
 Yacht beautifully decorated with balloons
@@ -35,8 +35,8 @@ Photographer, videographer, drone shooting",
         'image_url' => 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1200'
     ),
     array(
-        'title' => 'Corporate Event Yacht Rental Dubai',
-        'content' => 'Elevate your corporate events with a luxury yacht experience in Dubai. Perfect for team building, client entertainment, or company celebrations. Impress your guests with stunning views and professional service.',
+        'title' => 'Corporate Event Yacht Rental Baku',
+        'content' => 'Elevate your corporate events with a luxury yacht experience in Baku. Perfect for team building, client entertainment, or company celebrations. Impress your guests with stunning views and professional service.',
         'package_title' => 'Premium Corporate Event Packages',
         'features' => "Included in package
 4hr+ private yacht charter
@@ -53,8 +53,8 @@ Live entertainment or DJ services",
         'image_url' => 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200'
     ),
     array(
-        'title' => 'Marina Parking & Yacht Storage Dubai',
-        'content' => 'Secure, convenient marina parking solutions for yacht owners in Dubai. Premium berth locations with 24/7 security, maintenance services, and easy access to Dubai\'s beautiful waters.',
+        'title' => 'Marina Parking & Yacht Storage Baku',
+        'content' => 'Secure, convenient marina parking solutions for yacht owners in Baku. Premium berth locations with 24/7 security, maintenance services, and easy access to the beautiful Caspian Sea.',
         'package_title' => 'Flexible Marina Parking Solutions',
         'features' => "Included in service
 Secure berth in premium marina location
@@ -72,8 +72,8 @@ Winter storage options",
         'image_url' => 'https://images.unsplash.com/photo-1540946485063-a40da27545f8?q=80&w=1200'
     ),
     array(
-        'title' => 'New Year Party Yacht Dubai',
-        'content' => 'Ring in the New Year with Dubai\'s most spectacular yacht party! Watch the fireworks from the best seat in the house while cruising past iconic landmarks. Create unforgettable memories as you celebrate on the water.',
+        'title' => 'New Year Party Yacht Baku',
+        'content' => 'Ring in the New Year with Baku\'s most spectacular yacht party! Watch the fireworks from the best seat in the house while cruising past iconic landmarks. Create unforgettable memories as you celebrate on the Caspian Sea.',
         'package_title' => 'Exclusive New Year Yacht Celebration',
         'features' => "Included in package
 5hr+ premium yacht charter
@@ -92,8 +92,8 @@ Live band or entertainment",
         'image_url' => 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=1200'
     ),
     array(
-        'title' => 'Romantic Proposal Yacht Package Dubai',
-        'content' => 'Pop the question in the most romantic setting Dubai has to offer. Our proposal packages create the perfect intimate atmosphere for your special moment, complete with stunning sunset views and luxurious touches.',
+        'title' => 'Romantic Proposal Yacht Package Baku',
+        'content' => 'Pop the question in the most romantic setting Baku has to offer. Our proposal packages create the perfect intimate atmosphere for your special moment, complete with stunning Caspian Sea sunset views and luxurious touches.',
         'package_title' => 'Create Your Perfect Proposal Moment',
         'features' => "Included in package
 2-3hr private yacht charter

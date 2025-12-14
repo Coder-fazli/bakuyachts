@@ -481,7 +481,7 @@ if ( ! empty( $button_link ) ) {
 				),
 				array(
 					'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
-					'answer'   => __( 'Our yacht cruise takes you past Dubai\'s iconic landmarks including the Dubai Marina, Ain Dubai, Palm Jumeirah, Atlantis Hotel, and the stunning Burj Al Arab, offering breathtaking views of Dubai\'s skyline.', 'yacht-rental' ),
+					'answer'   => __( 'Our yacht cruise takes you past Baku\'s iconic landmarks including the Baku Boulevard, Flame Towers, Crystal Hall, and the beautiful Caspian Sea coastline, offering breathtaking views of Baku\'s skyline.', 'yacht-rental' ),
 				),
 				array(
 					'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
@@ -575,12 +575,12 @@ if ( ! empty( $button_link ) ) {
 		'description' => get_the_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 30 ),
 		'provider' => array(
 			'@type' => 'Organization',
-			'name' => get_bloginfo( 'name' ),
+			'name' => 'Bakuyachts.com',
 			'url' => home_url( '/' ),
 		),
 		'areaServed' => array(
 			'@type' => 'City',
-			'name' => 'Dubai',
+			'name' => 'Baku',
 		),
 		'serviceType' => 'Yacht Rental Package',
 	);
