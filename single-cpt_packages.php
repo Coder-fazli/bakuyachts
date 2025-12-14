@@ -50,6 +50,7 @@ if ( ! empty( $button_link ) ) {
 			padding: 8px 0;
 			background: linear-gradient(135deg, #EEF7FD 0%, #E6F3FA 100%);
 			border-bottom: 1px solid rgba(110, 193, 228, 0.1);
+			margin-top: 150px;
 		}
 
 		.breadcrumb-nav {
