@@ -1,10 +1,17 @@
 <?php
 /**
- * Single Package Template - Standalone Full Width Design
+ * Single Package Template
  *
  * @package YACHT RENTAL
  * @since YACHT RENTAL 1.0
  */
+
+// Force custom header for packages
+add_filter( 'yacht_rental_filter_get_theme_option_header_type', function( $value ) {
+	return 'custom';
+}, 99 );
+
+get_header();
 
 // Get post data
 while ( have_posts() ) {
@@ -29,42 +36,17 @@ while ( have_posts() ) {
 		$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
 	}
 	?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php wp_title( '|', true, 'right' ); ?></title>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<?php wp_head(); ?>
+
 	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		html {
-			scroll-behavior: smooth;
-		}
-
-		body {
-			font-family: 'Poppins', sans-serif;
-			color: #54595F;
-			background-color: #ffffff;
-			line-height: 1.6;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-		}
-
-		.container {
+		/* Package-specific styles */
+		.package-page-wrap {
 			max-width: 1200px;
 			margin: 0 auto;
 			padding: 0 20px;
 		}
 
 		/* Breadcrumb Styles */
-		.breadcrumb {
+		.package-breadcrumb {
 			padding: 8px 0;
 			background: linear-gradient(135deg, #EEF7FD 0%, #E6F3FA 100%);
 			border-bottom: 1px solid rgba(110, 193, 228, 0.1);
@@ -81,7 +63,6 @@ while ( have_posts() ) {
 			color: #7A7A7A;
 			text-decoration: none;
 			transition: all 0.3s ease;
-			position: relative;
 		}
 
 		.breadcrumb-item:hover {
@@ -102,17 +83,17 @@ while ( have_posts() ) {
 		}
 
 		/* Main Section */
-		.main-section {
+		.package-main-section {
 			background-color: #fff;
 			padding: 15px 0 10px;
 		}
 
-		.page-header {
+		.package-header {
 			text-align: center;
 			margin-bottom: 15px;
 		}
 
-		.page-header h1 {
+		.package-header h1 {
 			font-size: 34px;
 			font-weight: 700;
 			color: #050C29;
@@ -121,7 +102,7 @@ while ( have_posts() ) {
 			letter-spacing: -0.5px;
 		}
 
-		.page-subtitle {
+		.package-subtitle {
 			font-size: 16px;
 			color: #7A7A7A;
 			font-weight: 500;
@@ -129,7 +110,7 @@ while ( have_posts() ) {
 			letter-spacing: 0.3px;
 		}
 
-		.intro-text {
+		.package-intro-text {
 			max-width: 700px;
 			margin: 0 auto;
 			color: #54595F;
@@ -176,13 +157,6 @@ while ( have_posts() ) {
 			margin-bottom: 12px;
 			line-height: 1.3;
 			letter-spacing: -0.3px;
-		}
-
-		.package-intro {
-			color: #54595F;
-			margin-bottom: 12px;
-			font-size: 14px;
-			font-weight: 400;
 		}
 
 		.features-list {
@@ -273,7 +247,7 @@ while ( have_posts() ) {
 		}
 
 		/* FAQ Section */
-		.faq-section {
+		.package-faq-section {
 			background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
 			padding: 15px 0 10px;
 		}
@@ -380,23 +354,23 @@ while ( have_posts() ) {
 		}
 
 		@media (max-width: 576px) {
-			.main-section {
+			.package-main-section {
 				padding: 15px 0 10px;
 			}
 
-			.page-header {
+			.package-header {
 				margin-bottom: 15px;
 			}
 
-			.page-header h1 {
+			.package-header h1 {
 				font-size: 26px;
 			}
 
-			.page-subtitle {
+			.package-subtitle {
 				font-size: 14px;
 			}
 
-			.intro-text {
+			.package-intro-text {
 				font-size: 12px;
 			}
 
@@ -413,17 +387,10 @@ while ( have_posts() ) {
 			}
 		}
 	</style>
-</head>
-<body <?php body_class(); ?>>
-	<?php
-	if ( function_exists( 'wp_body_open' ) ) {
-		wp_body_open();
-	}
-	?>
 
 	<!-- Breadcrumb -->
-	<div class="breadcrumb">
-		<div class="container">
+	<div class="package-breadcrumb">
+		<div class="package-page-wrap">
 			<nav class="breadcrumb-nav">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="breadcrumb-item"><?php esc_html_e( 'Home', 'yacht-rental' ); ?></a>
 				<span class="breadcrumb-separator"></span>
@@ -435,15 +402,15 @@ while ( have_posts() ) {
 	</div>
 
 	<!-- Main Section -->
-	<section class="main-section">
-		<div class="container">
-			<div class="page-header">
+	<section class="package-main-section">
+		<div class="package-page-wrap">
+			<div class="package-header">
 				<h1><?php the_title(); ?></h1>
 				<?php if ( has_excerpt() ) : ?>
-					<p class="page-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
+					<p class="package-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
 				<?php endif; ?>
 				<?php if ( get_the_content() ) : ?>
-					<div class="intro-text">
+					<div class="package-intro-text">
 						<?php the_content(); ?>
 					</div>
 				<?php endif; ?>
@@ -455,8 +422,6 @@ while ( have_posts() ) {
 					<?php
 					if ( has_post_thumbnail() ) {
 						the_post_thumbnail( 'full' );
-					} else {
-						echo '<img src="' . esc_url( YACHT_RENTAL_THEME_URL . 'images/no-image.jpg' ) . '" alt="' . esc_attr( get_the_title() ) . '">';
 					}
 					?>
 				</div>
@@ -485,41 +450,32 @@ while ( have_posts() ) {
 
 	<!-- FAQ Section -->
 	<?php
-	// Get FAQ from post content or use default FAQs
-	$faq_meta = get_post_meta( get_the_ID(), '_package_faq', true );
-
-	// Default FAQs if none provided
-	if ( empty( $faq_meta ) ) {
-		$faqs = array(
-			array(
-				'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
-				'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
-			),
-			array(
-				'question' => __( 'What is included in the package?', 'yacht-rental' ),
-				'answer'   => __( 'Our package includes a 3+ hour luxury yacht cruise, beautiful decorations, personalized cake, red carpet welcome with drinks, water, ice, soft drinks, and optional add-ons like catering, DJ services, and professional photography.', 'yacht-rental' ),
-			),
-			array(
-				'question' => __( 'Can we bring our own food and drinks?', 'yacht-rental' ),
-				'answer'   => __( 'Yes, you\'re welcome to bring your own food and beverages. However, we also offer fine-dining catering from 5-star restaurants as an add-on service to make your celebration even more special.', 'yacht-rental' ),
-			),
-			array(
-				'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
-				'answer'   => __( 'Our yacht cruise takes you past Dubai\'s iconic landmarks including the Dubai Marina, Ain Dubai, Palm Jumeirah, Atlantis Hotel, and the stunning Burj Al Arab, offering breathtaking views of Dubai\'s skyline.', 'yacht-rental' ),
-			),
-			array(
-				'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
-				'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
-			),
-		);
-	} else {
-		$faqs = maybe_unserialize( $faq_meta );
-	}
-
-	if ( ! empty( $faqs ) && is_array( $faqs ) ) :
+	// Default FAQs
+	$faqs = array(
+		array(
+			'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
+			'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
+		),
+		array(
+			'question' => __( 'What is included in the package?', 'yacht-rental' ),
+			'answer'   => __( 'Our package includes a 3+ hour luxury yacht cruise, beautiful decorations, personalized cake, red carpet welcome with drinks, water, ice, soft drinks, and optional add-ons like catering, DJ services, and professional photography.', 'yacht-rental' ),
+		),
+		array(
+			'question' => __( 'Can we bring our own food and drinks?', 'yacht-rental' ),
+			'answer'   => __( 'Yes, you\'re welcome to bring your own food and beverages. However, we also offer fine-dining catering from 5-star restaurants as an add-on service to make your celebration even more special.', 'yacht-rental' ),
+		),
+		array(
+			'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
+			'answer'   => __( 'Our yacht cruise takes you past Dubai\'s iconic landmarks including the Dubai Marina, Ain Dubai, Palm Jumeirah, Atlantis Hotel, and the stunning Burj Al Arab, offering breathtaking views of Dubai\'s skyline.', 'yacht-rental' ),
+		),
+		array(
+			'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
+			'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
+		),
+	);
 	?>
-	<section class="faq-section">
-		<div class="container">
+	<section class="package-faq-section">
+		<div class="package-page-wrap">
 			<h2 class="faq-title"><?php esc_html_e( 'Frequently Asked Questions', 'yacht-rental' ); ?></h2>
 			<div class="faq-container">
 				<?php foreach ( $faqs as $faq ) : ?>
@@ -536,7 +492,6 @@ while ( have_posts() ) {
 			</div>
 		</div>
 	</section>
-	<?php endif; ?>
 
 	<script>
 		// FAQ Accordion functionality
@@ -560,8 +515,7 @@ while ( have_posts() ) {
 		});
 	</script>
 
-	<?php wp_footer(); ?>
-</body>
-</html>
 	<?php
 }
+
+get_footer();
