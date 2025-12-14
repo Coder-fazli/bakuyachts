@@ -245,97 +245,99 @@ if ( ! empty( $button_link ) ) {
 
 		/* FAQ Section */
 		.package-faq-section {
-			background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
-			padding: 15px 0 10px;
+			margin: 60px 0 40px 0;
+			padding: 0;
 		}
 
 		.faq-title {
 			text-align: center;
-			font-size: 24px;
+			font-size: 32px;
+			color: #1a2332;
+			margin: 0 0 40px 0;
+			padding: 0;
 			font-weight: 700;
-			color: #050C29;
-			margin-bottom: 15px;
-			font-family: 'Georgia', serif;
-			letter-spacing: -0.5px;
 		}
 
 		.faq-container {
 			max-width: 900px;
 			margin: 0 auto;
+			padding: 0;
 		}
 
 		.faq-item {
-			background-color: #fff;
-			border-radius: 8px;
+			background: #fff;
+			margin: 0 0 15px 0;
+			padding: 0;
+			border-radius: 12px;
 			overflow: hidden;
-			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-			border: 1px solid #f0f0f0;
-			margin-bottom: 10px;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+			transition: all 0.3s ease;
 		}
 
 		.faq-item:hover {
-			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-			transform: translateY(-2px);
+			box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 		}
 
 		.faq-question {
-			padding: 12px 18px;
+			padding: 20px 25px;
 			cursor: pointer;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			gap: 12px;
-			transition: all 0.3s;
-		}
-
-		.faq-question h3 {
-			font-size: 14px;
+			font-size: 17px;
 			font-weight: 600;
-			color: #61CE70;
+			color: #1a2332;
+			background: #fff;
+			transition: all 0.3s ease;
 			margin: 0;
-			flex: 1;
-			transition: color 0.3s;
 		}
 
-		.faq-item:hover .faq-question h3 {
-			color: #4FB85E;
+		.faq-question span:first-child {
+			flex: 1;
+		}
+
+		.faq-question:hover {
+			background: #f8f9fa;
+			color: #25d366;
+		}
+
+		.faq-question.active {
+			background: #f0f9f4;
+			color: #25d366;
 		}
 
 		.faq-toggle {
-			color: #61CE70;
 			font-size: 20px;
-			font-weight: 300;
-			transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s;
-			flex-shrink: 0;
-			width: 24px;
-			height: 24px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			font-weight: bold;
+			transition: transform 0.3s ease;
+			color: #25d366;
+			margin: 0;
+			padding: 0;
 		}
 
-		.faq-item.active .faq-toggle {
+		.faq-question.active .faq-toggle {
 			transform: rotate(45deg);
-			color: #4FB85E;
 		}
 
 		.faq-answer {
 			max-height: 0;
 			overflow: hidden;
-			transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+			transition: max-height 0.3s ease, padding 0.3s ease;
+			padding: 0 25px;
+			color: #666;
+			line-height: 1.7;
+			font-size: 15px;
+			margin: 0;
 		}
 
-		.faq-item.active .faq-answer {
-			max-height: 350px;
-			padding: 0 18px 12px 18px;
+		.faq-answer.active {
+			max-height: 500px;
+			padding: 15px 25px 20px 25px;
 		}
 
 		.faq-answer p {
-			color: #7A7A7A;
-			font-size: 12.5px;
-			line-height: 1.6;
 			margin: 0;
+			padding: 0;
 		}
 
 		/* Responsive Design */
@@ -492,7 +494,7 @@ if ( ! empty( $button_link ) ) {
 						<?php foreach ( $faqs as $faq ) : ?>
 							<div class="faq-item">
 								<div class="faq-question">
-									<h3><?php echo esc_html( $faq['question'] ); ?></h3>
+									<span><?php echo esc_html( $faq['question'] ); ?></span>
 									<span class="faq-toggle">+</span>
 								</div>
 								<div class="faq-answer">
@@ -516,20 +518,23 @@ if ( ! empty( $button_link ) ) {
 	<script>
 		// FAQ Accordion functionality
 		document.addEventListener('DOMContentLoaded', function() {
-			document.querySelectorAll('.faq-question').forEach(function(question) {
+			var faqQuestions = document.querySelectorAll('.faq-question');
+			faqQuestions.forEach(function(question) {
 				question.addEventListener('click', function() {
-					const faqItem = this.parentElement;
-					const isActive = faqItem.classList.contains('active');
+					var faqItem = this.parentElement;
+					var answer = this.nextElementSibling;
 
-					// Close all FAQ items
+					// Close other open items
 					document.querySelectorAll('.faq-item').forEach(function(item) {
-						item.classList.remove('active');
+						if (item !== faqItem) {
+							item.querySelector('.faq-question').classList.remove('active');
+							item.querySelector('.faq-answer').classList.remove('active');
+						}
 					});
 
-					// Open clicked item if it wasn't active
-					if (!isActive) {
-						faqItem.classList.add('active');
-					}
+					// Toggle current item
+					this.classList.toggle('active');
+					answer.classList.toggle('active');
 				});
 			});
 		});
