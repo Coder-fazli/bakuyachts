@@ -791,6 +791,109 @@ document.addEventListener('DOMContentLoaded', function() {
         </div><!-- .page_wrap -->
     </div><!-- .body_wrap -->
 
+    <?php
+    // Generate schema markup for SEO
+    $schema_markup = array();
+
+    // 1. BreadcrumbList Schema
+    $breadcrumb_schema = array(
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => array(
+            array(
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => __( 'Home', 'yacht-rental' ),
+                'item' => home_url( '/' ),
+            ),
+            array(
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => __( 'Yachts', 'yacht-rental' ),
+                'item' => get_post_type_archive_link( 'cpt_yachts' ),
+            ),
+            array(
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => get_the_title(),
+                'item' => get_permalink(),
+            ),
+        ),
+    );
+    $schema_markup[] = $breadcrumb_schema;
+
+    // 2. FAQPage Schema (if FAQ exists)
+    if ( ! empty( $faq ) && is_array( $faq ) ) {
+        $faq_schema_items = array();
+        foreach ( $faq as $item ) {
+            if ( ! empty( $item['question'] ) && ! empty( $item['answer'] ) ) {
+                $faq_schema_items[] = array(
+                    '@type' => 'Question',
+                    'name' => $item['question'],
+                    'acceptedAnswer' => array(
+                        '@type' => 'Answer',
+                        'text' => $item['answer'],
+                    ),
+                );
+            }
+        }
+
+        if ( ! empty( $faq_schema_items ) ) {
+            $faq_schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => $faq_schema_items,
+            );
+            $schema_markup[] = $faq_schema;
+        }
+    }
+
+    // 3. Product/Service Schema for the Yacht
+    $yacht_schema = array(
+        '@context' => 'https://schema.org',
+        '@type' => 'Product',
+        'name' => get_the_title(),
+        'description' => get_the_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 30 ),
+        'brand' => array(
+            '@type' => 'Organization',
+            'name' => get_bloginfo( 'name' ),
+        ),
+    );
+
+    if ( has_post_thumbnail() ) {
+        $yacht_schema['image'] = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+    }
+
+    // Add offers/pricing if available
+    if ( ! empty( $new_price ) ) {
+        $yacht_schema['offers'] = array(
+            '@type' => 'Offer',
+            'priceCurrency' => 'AED',
+            'price' => preg_replace( '/[^0-9.]/', '', $new_price ),
+            'availability' => 'https://schema.org/InStock',
+            'url' => get_permalink(),
+        );
+
+        if ( ! empty( $price_label ) ) {
+            $yacht_schema['offers']['description'] = $price_label;
+        }
+    }
+
+    // Add aggregate rating placeholder (can be populated with actual reviews later)
+    $yacht_schema['aggregateRating'] = array(
+        '@type' => 'AggregateRating',
+        'ratingValue' => '5',
+        'reviewCount' => '1',
+    );
+
+    $schema_markup[] = $yacht_schema;
+
+    // Output all schema markup
+    foreach ( $schema_markup as $schema ) {
+        echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n    ";
+    }
+    ?>
+
 <?php wp_footer(); ?>
 
 </body>

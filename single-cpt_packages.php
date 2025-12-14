@@ -516,6 +516,94 @@ if ( ! empty( $button_link ) ) {
 		</div><!-- .page_wrap -->
 	</div><!-- .body_wrap -->
 
+	<?php
+	// Generate schema markup for SEO
+	$schema_markup = array();
+
+	// 1. BreadcrumbList Schema
+	$breadcrumb_schema = array(
+		'@context' => 'https://schema.org',
+		'@type' => 'BreadcrumbList',
+		'itemListElement' => array(
+			array(
+				'@type' => 'ListItem',
+				'position' => 1,
+				'name' => __( 'Home', 'yacht-rental' ),
+				'item' => home_url( '/' ),
+			),
+			array(
+				'@type' => 'ListItem',
+				'position' => 2,
+				'name' => __( 'Packages', 'yacht-rental' ),
+				'item' => get_post_type_archive_link( 'cpt_packages' ),
+			),
+			array(
+				'@type' => 'ListItem',
+				'position' => 3,
+				'name' => get_the_title(),
+				'item' => get_permalink(),
+			),
+		),
+	);
+	$schema_markup[] = $breadcrumb_schema;
+
+	// 2. FAQPage Schema
+	$faq_schema_items = array();
+	foreach ( $faqs as $faq ) {
+		$faq_schema_items[] = array(
+			'@type' => 'Question',
+			'name' => $faq['question'],
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text' => $faq['answer'],
+			),
+		);
+	}
+
+	$faq_schema = array(
+		'@context' => 'https://schema.org',
+		'@type' => 'FAQPage',
+		'mainEntity' => $faq_schema_items,
+	);
+	$schema_markup[] = $faq_schema;
+
+	// 3. Service Schema for the Package
+	$service_schema = array(
+		'@context' => 'https://schema.org',
+		'@type' => 'Service',
+		'name' => get_the_title(),
+		'description' => get_the_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 30 ),
+		'provider' => array(
+			'@type' => 'Organization',
+			'name' => get_bloginfo( 'name' ),
+			'url' => home_url( '/' ),
+		),
+		'areaServed' => array(
+			'@type' => 'City',
+			'name' => 'Dubai',
+		),
+		'serviceType' => 'Yacht Rental Package',
+	);
+
+	if ( has_post_thumbnail() ) {
+		$service_schema['image'] = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+	}
+
+	if ( ! empty( $package_features ) ) {
+		$service_schema['offers'] = array(
+			'@type' => 'Offer',
+			'description' => wp_trim_words( $package_features, 50 ),
+		);
+	}
+
+	$schema_markup[] = $service_schema;
+
+	// Output all schema markup
+	foreach ( $schema_markup as $schema ) {
+		echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n\t";
+	}
+	?>
+
 	<script>
 		// FAQ Accordion functionality
 		document.addEventListener('DOMContentLoaded', function() {
