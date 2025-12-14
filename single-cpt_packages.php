@@ -144,7 +144,7 @@ if ( ! empty( $button_link ) ) {
 			justify-content: flex-start;
 			padding: 30px;
 			background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-			border-radius: 12px;
+			border-radius: 0;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 		}
 
@@ -216,29 +216,30 @@ if ( ! empty( $button_link ) ) {
 			align-items: center;
 			justify-content: center;
 			gap: 8px;
-			padding: 14px 40px;
-			font-size: 13px;
-			font-weight: 600;
+			padding: 10px 28px;
+			font-size: 12px;
+			font-weight: 500;
 			text-decoration: none;
-			border-radius: 4px;
+			border-radius: 0;
 			transition: all 0.3s ease;
 			border: none;
 			cursor: pointer;
 			text-align: center;
-			letter-spacing: 1px;
+			letter-spacing: 0.5px;
 			text-transform: uppercase;
-			box-shadow: 0 4px 15px rgba(188, 24, 51, 0.3);
-			margin-top: 10px;
+			box-shadow: 0 2px 8px rgba(188, 24, 51, 0.25);
+			margin-bottom: 20px;
+			margin-top: 0;
 		}
 
 		.btn-red:hover {
 			background: linear-gradient(135deg, #D41F3D 0%, #BC1833 100%);
-			box-shadow: 0 6px 20px rgba(188, 24, 51, 0.4);
+			box-shadow: 0 4px 12px rgba(188, 24, 51, 0.35);
 		}
 
 		.btn-red::after {
 			content: "✈";
-			font-size: 16px;
+			font-size: 14px;
 			transform: rotate(45deg);
 			display: inline-block;
 		}
@@ -446,18 +447,18 @@ if ( ! empty( $button_link ) ) {
 								<h2><?php echo esc_html( $package_title ); ?></h2>
 							<?php endif; ?>
 
+							<?php if ( ! empty( $contact_link ) ) : ?>
+								<a href="<?php echo esc_url( $contact_link ); ?>" class="btn-red" target="_blank" rel="noopener">
+									<?php esc_html_e( 'GET IN TOUCH', 'yacht-rental' ); ?>
+								</a>
+							<?php endif; ?>
+
 							<?php if ( ! empty( $features_array ) ) : ?>
 								<ul class="features-list">
 									<?php foreach ( $features_array as $feature ) : ?>
 										<li><?php echo esc_html( $feature ); ?></li>
 									<?php endforeach; ?>
 								</ul>
-							<?php endif; ?>
-
-							<?php if ( ! empty( $contact_link ) ) : ?>
-								<a href="<?php echo esc_url( $contact_link ); ?>" class="btn-red" target="_blank" rel="noopener">
-									<?php esc_html_e( 'GET IN TOUCH', 'yacht-rental' ); ?>
-								</a>
 							<?php endif; ?>
 						</div>
 					</div>
