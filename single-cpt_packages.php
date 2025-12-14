@@ -142,7 +142,7 @@ if ( ! empty( $button_link ) ) {
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-start;
-			padding: 30px;
+			padding: 30px 30px 20px 30px;
 			background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
 			border-radius: 0;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -172,7 +172,7 @@ if ( ! empty( $button_link ) ) {
 
 		.features-list {
 			list-style: none;
-			margin-bottom: 25px;
+			margin-bottom: 12px;
 			padding: 0;
 		}
 
@@ -228,7 +228,7 @@ if ( ! empty( $button_link ) ) {
 			letter-spacing: 0.5px;
 			text-transform: uppercase;
 			box-shadow: 0 2px 8px rgba(188, 24, 51, 0.25);
-			margin-bottom: 20px;
+			margin-bottom: 0;
 			margin-top: 0;
 		}
 
@@ -447,18 +447,18 @@ if ( ! empty( $button_link ) ) {
 								<h2><?php echo esc_html( $package_title ); ?></h2>
 							<?php endif; ?>
 
-							<?php if ( ! empty( $contact_link ) ) : ?>
-								<a href="<?php echo esc_url( $contact_link ); ?>" class="btn-red" target="_blank" rel="noopener">
-									<?php esc_html_e( 'GET IN TOUCH', 'yacht-rental' ); ?>
-								</a>
-							<?php endif; ?>
-
 							<?php if ( ! empty( $features_array ) ) : ?>
 								<ul class="features-list">
 									<?php foreach ( $features_array as $feature ) : ?>
 										<li><?php echo esc_html( $feature ); ?></li>
 									<?php endforeach; ?>
 								</ul>
+							<?php endif; ?>
+
+							<?php if ( ! empty( $contact_link ) ) : ?>
+								<a href="<?php echo esc_url( $contact_link ); ?>" class="btn-red" target="_blank" rel="noopener">
+									<?php esc_html_e( 'GET IN TOUCH', 'yacht-rental' ); ?>
+								</a>
 							<?php endif; ?>
 						</div>
 					</div>
