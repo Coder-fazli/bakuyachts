@@ -46,8 +46,9 @@ function yr_register_packages_cpt() {
 		'hierarchical'          => false,
 		'public'                => true,
 		'show_ui'               => true,
-		'show_in_menu'          => 'edit.php?post_type=cpt_yachts', // Show under Yachts menu
+		'show_in_menu'          => true,
 		'menu_position'         => 6,
+		'menu_icon'             => 'dashicons-tickets-alt',
 		'show_in_admin_bar'     => true,
 		'show_in_nav_menus'     => true,
 		'can_export'            => true,
