@@ -118,17 +118,12 @@ if ( ! empty( $button_link ) ) {
 			display: grid;
 			grid-template-columns: 50% 50%;
 			gap: 50px;
-			align-items: center;
+			align-items: stretch;
 			margin-top: 30px;
-			padding: 40px;
-			background: #ffffff;
-			border-radius: 12px;
-			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 		}
 
 		.package-image {
 			position: relative;
-			min-height: 450px;
 			border-radius: 12px;
 			overflow: hidden;
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
