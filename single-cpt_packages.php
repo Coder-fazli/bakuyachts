@@ -466,33 +466,20 @@ if ( ! empty( $button_link ) ) {
 
 				<!-- FAQ Section -->
 				<?php
-				$faqs = array(
-				array(
-					'question' => __( 'How many people can the yacht accommodate?', 'yacht-rental' ),
-					'answer'   => __( 'The yacht can comfortably accommodate up to 15 guests. This makes it perfect for family gatherings, birthday parties, and corporate events.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'What is included in the package?', 'yacht-rental' ),
-					'answer'   => __( 'Our package includes a 3+ hour luxury yacht cruise, beautiful decorations, personalized cake, red carpet welcome with drinks, water, ice, soft drinks, and optional add-ons like catering, DJ services, and professional photography.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'Can we bring our own food and drinks?', 'yacht-rental' ),
-					'answer'   => __( 'Yes, you\'re welcome to bring your own food and beverages. However, we also offer fine-dining catering from 5-star restaurants as an add-on service to make your celebration even more special.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'What areas does the yacht cruise cover?', 'yacht-rental' ),
-					'answer'   => __( 'Our yacht cruise takes you past Baku\'s iconic landmarks including the Baku Boulevard, Flame Towers, Crystal Hall, and the beautiful Caspian Sea coastline, offering breathtaking views of Baku\'s skyline.', 'yacht-rental' ),
-				),
-				array(
-					'question' => __( 'How far in advance should we book?', 'yacht-rental' ),
-					'answer'   => __( 'We recommend booking at least 1-2 weeks in advance to ensure availability, especially during peak seasons and weekends. However, we\'ll do our best to accommodate last-minute bookings based on availability.', 'yacht-rental' ),
-				),
-			);
+				// Get FAQ from custom field
+				$faqs = get_post_meta( get_the_ID(), '_package_faq', true );
+				if ( ! is_array( $faqs ) ) {
+					$faqs = array();
+				}
+
+				// Only show FAQ section if there are FAQs
+				if ( ! empty( $faqs ) ) :
 				?>
 				<section class="package-faq-section">
 					<h2 class="faq-title"><?php esc_html_e( 'Frequently Asked Questions', 'yacht-rental' ); ?></h2>
 					<div class="faq-container">
 						<?php foreach ( $faqs as $faq ) : ?>
+							<?php if ( ! empty( $faq['question'] ) && ! empty( $faq['answer'] ) ) : ?>
 							<div class="faq-item">
 								<div class="faq-question">
 									<span><?php echo esc_html( $faq['question'] ); ?></span>
@@ -502,9 +489,11 @@ if ( ! empty( $button_link ) ) {
 									<p><?php echo esc_html( $faq['answer'] ); ?></p>
 								</div>
 							</div>
+							<?php endif; ?>
 						<?php endforeach; ?>
 					</div>
 				</section>
+				<?php endif; ?>
 
 			</div><!-- .package-container -->
 

@@ -864,28 +864,6 @@ document.addEventListener('DOMContentLoaded', function() {
         $yacht_schema['image'] = get_the_post_thumbnail_url( get_the_ID(), 'full' );
     }
 
-    // Add offers/pricing if available
-    if ( ! empty( $new_price ) ) {
-        $yacht_schema['offers'] = array(
-            '@type' => 'Offer',
-            'priceCurrency' => 'AED',
-            'price' => preg_replace( '/[^0-9.]/', '', $new_price ),
-            'availability' => 'https://schema.org/InStock',
-            'url' => get_permalink(),
-        );
-
-        if ( ! empty( $price_label ) ) {
-            $yacht_schema['offers']['description'] = $price_label;
-        }
-    }
-
-    // Add aggregate rating placeholder (can be populated with actual reviews later)
-    $yacht_schema['aggregateRating'] = array(
-        '@type' => 'AggregateRating',
-        'ratingValue' => '5',
-        'reviewCount' => '1',
-    );
-
     $schema_markup[] = $yacht_schema;
 
     // Output all schema markup

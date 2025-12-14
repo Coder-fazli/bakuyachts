@@ -87,6 +87,10 @@ function yr_render_package_meta_box( $post ) {
 	$package_features = get_post_meta( $post->ID, '_package_features', true );
 	$whatsapp_number = get_post_meta( $post->ID, '_whatsapp_number', true );
 	$button_link = get_post_meta( $post->ID, '_button_link', true );
+	$package_faq = get_post_meta( $post->ID, '_package_faq', true );
+	if ( ! is_array( $package_faq ) ) {
+		$package_faq = array();
+	}
 
 	?>
 	<table class="form-table">
@@ -131,6 +135,52 @@ function yr_render_package_meta_box( $post ) {
 			</td>
 		</tr>
 	</table>
+
+	<h3><?php _e( 'Package FAQ', 'yacht-rental' ); ?></h3>
+	<div id="package-faq-container">
+		<?php
+		if ( ! empty( $package_faq ) ) {
+			foreach ( $package_faq as $index => $faq_item ) {
+				?>
+				<div class="faq-item" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; background: #f9f9f9;">
+					<p>
+						<label><strong><?php _e( 'Question', 'yacht-rental' ); ?></strong></label><br/>
+						<input type="text" name="package_faq[<?php echo $index; ?>][question]" value="<?php echo esc_attr( $faq_item['question'] ?? '' ); ?>" class="large-text" />
+					</p>
+					<p>
+						<label><strong><?php _e( 'Answer', 'yacht-rental' ); ?></strong></label><br/>
+						<textarea name="package_faq[<?php echo $index; ?>][answer]" rows="3" class="large-text"><?php echo esc_textarea( $faq_item['answer'] ?? '' ); ?></textarea>
+					</p>
+					<button type="button" class="button remove-faq-item"><?php _e( 'Remove FAQ', 'yacht-rental' ); ?></button>
+				</div>
+				<?php
+			}
+		}
+		?>
+	</div>
+	<button type="button" id="add-faq-item" class="button"><?php _e( 'Add FAQ Item', 'yacht-rental' ); ?></button>
+
+	<script>
+	jQuery(document).ready(function($) {
+		var faqIndex = <?php echo count( $package_faq ); ?>;
+
+		$('#add-faq-item').on('click', function() {
+			var faqHtml = '<div class="faq-item" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; background: #f9f9f9;">' +
+				'<p><label><strong><?php _e( 'Question', 'yacht-rental' ); ?></strong></label><br/>' +
+				'<input type="text" name="package_faq[' + faqIndex + '][question]" value="" class="large-text" /></p>' +
+				'<p><label><strong><?php _e( 'Answer', 'yacht-rental' ); ?></strong></label><br/>' +
+				'<textarea name="package_faq[' + faqIndex + '][answer]" rows="3" class="large-text"></textarea></p>' +
+				'<button type="button" class="button remove-faq-item"><?php _e( 'Remove FAQ', 'yacht-rental' ); ?></button>' +
+				'</div>';
+			$('#package-faq-container').append(faqHtml);
+			faqIndex++;
+		});
+
+		$(document).on('click', '.remove-faq-item', function() {
+			$(this).closest('.faq-item').remove();
+		});
+	});
+	</script>
 	<?php
 }
 
@@ -174,6 +224,22 @@ function yr_save_package_meta_box_data( $post_id ) {
 	// Save button link
 	if ( isset( $_POST['button_link'] ) ) {
 		update_post_meta( $post_id, '_button_link', esc_url_raw( $_POST['button_link'] ) );
+	}
+
+	// Save FAQ
+	if ( isset( $_POST['package_faq'] ) && is_array( $_POST['package_faq'] ) ) {
+		$faq_data = array();
+		foreach ( $_POST['package_faq'] as $faq_item ) {
+			if ( ! empty( $faq_item['question'] ) && ! empty( $faq_item['answer'] ) ) {
+				$faq_data[] = array(
+					'question' => sanitize_text_field( $faq_item['question'] ),
+					'answer'   => sanitize_textarea_field( $faq_item['answer'] ),
+				);
+			}
+		}
+		update_post_meta( $post_id, '_package_faq', $faq_data );
+	} else {
+		delete_post_meta( $post_id, '_package_faq' );
 	}
 }
 add_action( 'save_post_cpt_packages', 'yr_save_package_meta_box_data' );
