@@ -30,31 +30,6 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 <html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
 <head>
     <style>
-    /* Fix mobile menu overflow issues */
-    html, body {
-        overflow-x: hidden !important;
-    }
-
-    /* Ensure mobile menu is clickable and scrollable */
-    .menu_mobile_overlay,
-    .menu_mobile {
-        position: fixed !important;
-        z-index: 99999 !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
-
-    .menu_mobile {
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-    }
-
-    /* Prevent body scroll when mobile menu is open */
-    body.menu_mobile_opened {
-        overflow: hidden !important;
-        position: fixed !important;
-        width: 100% !important;
-    }
-
     /* === YACHT SINGLE CONTAINER === */
     .yrsp-yacht-container {
         max-width: 1200px !important;

@@ -38,31 +38,6 @@ if ( ! empty( $button_link ) ) {
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 	<style>
-		/* Fix mobile menu overflow issues */
-		html, body {
-			overflow-x: hidden !important;
-		}
-
-		/* Ensure mobile menu is clickable and scrollable */
-		.menu_mobile_overlay,
-		.menu_mobile {
-			position: fixed !important;
-			z-index: 99999 !important;
-			-webkit-overflow-scrolling: touch !important;
-		}
-
-		.menu_mobile {
-			overflow-y: auto !important;
-			overflow-x: hidden !important;
-		}
-
-		/* Prevent body scroll when mobile menu is open */
-		body.menu_mobile_opened {
-			overflow: hidden !important;
-			position: fixed !important;
-			width: 100% !important;
-		}
-
 		/* Package-specific styles */
 		.package-container {
 			max-width: 1200px;
