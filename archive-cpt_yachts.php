@@ -6,7 +6,7 @@
  * @since YACHT RENTAL 1.0
  */
 
-get_header();
+get_header('custom');
 
 ?>
 <style id="bky-yacht-archive-styles">

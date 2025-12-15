@@ -29,7 +29,7 @@ if ( ! empty( $button_link ) ) {
 	$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
 }
 
-get_header('custom');
+get_header();
 ?>
 
 <style>
