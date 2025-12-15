@@ -46,11 +46,11 @@ if ( function_exists( 'wp_body_open' ) ) {
 <div class="page_wrap">
 <?php
 // Force default header (not Elementor/custom)
-get_template_part( 'templates/header-default' );
+get_template_part( 'skins/default/templates/header-default' );
 
 // Mobile menu
 if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
-	get_template_part( 'templates/header-navi-mobile' );
+	get_template_part( 'skins/default/templates/header-navi-mobile' );
 }
 ?>
 
