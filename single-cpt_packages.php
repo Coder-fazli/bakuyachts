@@ -51,6 +51,11 @@ if ( 'custom' == $header_type && ! yacht_rental_is_layouts_available() ) {
 	$header_type = 'default';
 }
 get_template_part( "templates/header-" . sanitize_file_name( $header_type ) );
+
+// Mobile menu - must load right after header
+if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
+	get_template_part( 'templates/header-navi-mobile' );
+}
 ?>
 
 <style>
@@ -675,11 +680,4 @@ get_template_part( "templates/header-" . sanitize_file_name( $header_type ) );
 </div><!-- .page_wrap -->
 </div><!-- .body_wrap -->
 
-<?php
-// Mobile menu for burger to work
-if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
-	get_template_part( 'templates/header-navi-mobile' );
-}
-
-get_footer('custom');
-?>
+<?php get_footer('custom'); ?>
