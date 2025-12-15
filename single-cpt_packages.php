@@ -28,34 +28,8 @@ if ( ! empty( $button_link ) ) {
 	$clean_number = preg_replace( '/[^0-9+]/', '', $whatsapp_number );
 	$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
 }
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
-<head>
-	<?php wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
-<?php
-if ( function_exists( 'wp_body_open' ) ) {
-	wp_body_open();
-} else {
-	do_action( 'wp_body_open' );
-}
-?>
-<div class="body_wrap">
-<div class="page_wrap">
-<?php
-// Load the exact same header as archive pages use
-$header_type = yacht_rental_get_theme_option( 'header_type' );
-if ( 'custom' == $header_type && ! yacht_rental_is_layouts_available() ) {
-	$header_type = 'default';
-}
-get_template_part( "templates/header-" . sanitize_file_name( $header_type ) );
 
-// Mobile menu - must load right after header
-if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
-	get_template_part( 'templates/header-navi-mobile' );
-}
+get_header();
 ?>
 
 <style>
@@ -676,8 +650,5 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 	</script>
 
 	</div><!-- .package-container -->
-
-</div><!-- .page_wrap -->
-</div><!-- .body_wrap -->
 
 <?php get_footer('custom'); ?>
