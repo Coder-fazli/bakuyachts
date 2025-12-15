@@ -1,7 +1,6 @@
 <?php
 /**
  * Single Package Template
- * Matches yacht template structure
  *
  * @package YACHT RENTAL
  * @since YACHT RENTAL 1.0
@@ -29,15 +28,11 @@ if ( ! empty( $button_link ) ) {
 	$clean_number = preg_replace( '/[^0-9+]/', '', $whatsapp_number );
 	$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
 }
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-	<style>
+get_header();
+?>
+
+<style>
 		/* Package-specific styles */
 		.package-container {
 			max-width: 1200px;
@@ -429,27 +424,7 @@ if ( ! empty( $button_link ) ) {
 		}
 	</style>
 
-	<?php wp_head(); ?>
-</head>
-
-<body <?php body_class(); ?>>
-	<?php
-	if ( function_exists( 'wp_body_open' ) ) {
-		wp_body_open();
-	} else {
-		do_action( 'wp_body_open' );
-	}
-	?>
-
-	<div class="body_wrap">
-		<div class="page_wrap">
-
-			<?php
-			// Include default header (same as yachts)
-			get_template_part( 'skins/default/templates/header-default' );
-			?>
-
-			<div class="package-container">
+<div class="package-container">
 
 				<!-- Breadcrumb -->
 				<div class="package-breadcrumb">
@@ -559,17 +534,9 @@ if ( ! empty( $button_link ) ) {
 				</section>
 				<?php endif; ?>
 
-			</div><!-- .package-container -->
+		</div><!-- .package-container -->
 
-			<?php
-			// Include custom footer (same as yachts)
-			get_template_part( 'skins/default/templates/footer-custom' );
-			?>
-
-		</div><!-- .page_wrap -->
-	</div><!-- .body_wrap -->
-
-	<?php
+<?php
 	// Generate schema markup for SEO
 	$schema_markup = array();
 
@@ -682,7 +649,4 @@ if ( ! empty( $button_link ) ) {
 		});
 	</script>
 
-	<?php wp_footer(); ?>
-
-</body>
-</html>
+<?php get_footer(); ?>

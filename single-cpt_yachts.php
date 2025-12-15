@@ -25,11 +25,11 @@ $phone = get_post_meta(get_the_ID(), '_yr_yacht_phone', true);
 $features = get_post_meta(get_the_ID(), '_yr_yacht_features', true);
 $offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
 $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
+
+get_header();
 ?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
-<head>
-    <style>
+
+<style>
     /* === YACHT SINGLE CONTAINER === */
     .yrsp-yacht-container {
         max-width: 1200px !important;
@@ -561,28 +561,8 @@ $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
     }
     </style>
 
-    <?php wp_head(); ?>
-
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-</head>
-
-<body <?php body_class(); ?>>
-    <?php
-    if ( function_exists( 'wp_body_open' ) ) {
-        wp_body_open();
-    } else {
-        do_action( 'wp_body_open' );
-    }
-    ?>
-
-    <div class="body_wrap">
-        <div class="page_wrap">
-
-            <?php
-            // Include default header (not Elementor)
-            get_template_part( 'skins/default/templates/header-default' );
-            ?>
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
 <div class="yrsp-yacht-container">
 
@@ -789,15 +769,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </div><!-- .yrsp-yacht-container -->
 
-            <?php
-            // Include custom footer (Elementor)
-            get_template_part( 'skins/default/templates/footer-custom' );
-            ?>
-
-        </div><!-- .page_wrap -->
-    </div><!-- .body_wrap -->
-
-    <?php
+<?php
     // Generate schema markup for SEO
     $schema_markup = array();
 
@@ -878,7 +850,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     ?>
 
-<?php wp_footer(); ?>
-
-</body>
-</html>
+<?php get_footer(); ?>
