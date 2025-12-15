@@ -26,7 +26,7 @@ $features = get_post_meta(get_the_ID(), '_yr_yacht_features', true);
 $offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
 $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
 
-get_header();
+get_header('custom');
 ?>
 
 <style>
@@ -850,4 +850,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     ?>
 
-<?php get_footer(); ?>
+<?php get_footer('custom'); ?>

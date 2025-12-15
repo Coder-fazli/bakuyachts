@@ -29,7 +29,7 @@ if ( ! empty( $button_link ) ) {
 	$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
 }
 
-get_header();
+get_header('custom');
 ?>
 
 <style>
@@ -649,4 +649,4 @@ get_header();
 		});
 	</script>
 
-<?php get_footer(); ?>
+<?php get_footer('custom'); ?>
