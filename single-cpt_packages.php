@@ -408,6 +408,10 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 		}
 
 		@media (max-width: 576px) {
+			.package-container {
+				padding: 80px 20px 20px;
+			}
+
 			.package-main-section {
 				padding: 15px 0 10px;
 			}

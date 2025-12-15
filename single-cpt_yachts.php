@@ -25,8 +25,30 @@ $phone = get_post_meta(get_the_ID(), '_yr_yacht_phone', true);
 $features = get_post_meta(get_the_ID(), '_yr_yacht_features', true);
 $offers = get_post_meta(get_the_ID(), '_yr_yacht_offers', true);
 $faq = get_post_meta(get_the_ID(), '_yr_yacht_faq', true);
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
+<head>
+    <?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php
+if ( function_exists( 'wp_body_open' ) ) {
+    wp_body_open();
+} else {
+    do_action( 'wp_body_open' );
+}
+?>
+<div class="body_wrap">
+<div class="page_wrap">
+<?php
+// Force default header (not Elementor/custom)
+get_template_part( 'skins/default/templates/header-default' );
 
-get_header('custom');
+// Mobile menu
+if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
+    get_template_part( 'skins/default/templates/header-navi-mobile' );
+}
 ?>
 
 <style>
@@ -517,6 +539,10 @@ get_header('custom');
 
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
+        .yrsp-yacht-container {
+            padding: 80px 20px 40px 20px !important;
+        }
+
         .yrsp-yacht-title h1 {
             font-size: 28px !important;
         }
@@ -849,5 +875,8 @@ document.addEventListener('DOMContentLoaded', function() {
         echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n    ";
     }
     ?>
+
+</div><!-- .page_wrap -->
+</div><!-- .body_wrap -->
 
 <?php get_footer('custom'); ?>
