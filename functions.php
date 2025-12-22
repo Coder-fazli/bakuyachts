@@ -298,6 +298,8 @@ if ( ! function_exists( 'yacht_rental_wp_styles_custom' ) ) {
 			wp_enqueue_style( 'yacht-rental-custom', yacht_rental_get_file_url( 'css/__custom-inline.css' ), array(), null );
 			wp_add_inline_style( 'yacht-rental-custom', yacht_rental_customizer_get_css() );
 		}
+		// Polylang language dropdown fix
+		wp_enqueue_style( 'yacht-rental-polylang-fix', yacht_rental_get_file_url( 'css/polylang-fix.css' ), array(), null );
 	}
 }
 
@@ -1092,6 +1094,15 @@ require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-yachts.php';
 
 // Custom Post Type: Packages
 require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-packages.php';
+
+// Custom Post Type: Hero Section
+require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-hero-section.php';
+
+// Custom Post Type: Gallery
+require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-gallery.php';
+
+// Preloader
+require_once YACHT_RENTAL_THEME_DIR . 'includes/preloader.php';
 
 // Dequeue conflicting scripts/styles on yacht archive page
 if ( ! function_exists( 'yacht_rental_dequeue_yacht_archive_conflicts' ) ) {

@@ -1,0 +1,33 @@
+/* Fix Polylang language dropdown positioning */
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu {
+    left: auto !important;
+    right: 0 !important;
+    min-width: auto !important;
+    padding: 10px 0 !important;
+}
+
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu > li,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu > li {
+    padding: 0 15px !important;
+}
+
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu > li > a,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu > li > a {
+    padding: 5px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* Position dropdown directly under the flag */
+.sc_layouts_menu_nav > li.menu-item-language,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher {
+    position: relative !important;
+}
+
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu {
+    top: 100% !important;
+    margin-top: 0 !important;
+}
