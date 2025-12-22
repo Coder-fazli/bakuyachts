@@ -16,6 +16,8 @@ $package_title = get_post_meta( get_the_ID(), '_package_title', true );
 $package_features = get_post_meta( get_the_ID(), '_package_features', true );
 $whatsapp_number = get_post_meta( get_the_ID(), '_whatsapp_number', true );
 $button_link = get_post_meta( get_the_ID(), '_button_link', true );
+$head_description = get_post_meta( get_the_ID(), '_package_head_description', true );
+$bottom_description = get_post_meta( get_the_ID(), '_package_bottom_description', true );
 
 // Convert features textarea to array
 $features_array = array_filter( array_map( 'trim', explode( "\n", $package_features ) ) );
@@ -151,21 +153,65 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 			overflow: hidden;
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 			transition: all 0.4s ease;
+			height: 500px;
 		}
 
-		.package-description {
-			background: #f8f9fa;
-			padding: 25px 30px;
-			border-radius: 12px;
-			border-left: 4px solid #61CE70;
-			margin-top: 40px;
+		/* Head Description - after hero header */
+		.package-head-description {
+			max-width: 900px;
+			margin: 0 auto 30px;
+			text-align: center;
 		}
 
-		.package-description p {
-			margin: 0;
+		.package-head-description p {
+			margin: 0 0 15px;
 			color: #54595F;
-			font-size: 15px;
-			line-height: 1.7;
+			font-size: 16px;
+			line-height: 1.8;
+		}
+
+		.package-head-description p:last-child {
+			margin-bottom: 0;
+		}
+
+		/* Bottom Description - after package section */
+		.package-bottom-description {
+			margin-top: 50px;
+			padding: 0;
+		}
+
+		.package-bottom-description p {
+			margin: 0 0 18px;
+			color: #54595F;
+			font-size: 16px;
+			line-height: 1.8;
+		}
+
+		.package-bottom-description p:last-child {
+			margin-bottom: 0;
+		}
+
+		.package-bottom-description h2,
+		.package-bottom-description h3,
+		.package-bottom-description h4 {
+			color: #050C29;
+			margin: 25px 0 15px;
+		}
+
+		.package-bottom-description ul,
+		.package-bottom-description ol {
+			margin: 0 0 18px 20px;
+			color: #54595F;
+			line-height: 1.8;
+		}
+
+		.package-bottom-description a {
+			color: #61CE70;
+			text-decoration: underline;
+		}
+
+		.package-bottom-description a:hover {
+			color: #4FB85E;
 		}
 
 		.package-image:hover {
@@ -418,13 +464,15 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 			}
 
 			.package-image {
-				min-height: 350px;
-				max-height: 500px;
+				height: 400px;
 			}
 
-			.package-description {
-				padding: 15px 20px;
-				margin-top: 30px;
+			.package-head-description {
+				margin-bottom: 25px;
+			}
+
+			.package-bottom-description {
+				margin-top: 40px;
 			}
 		}
 
@@ -453,13 +501,24 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 				font-size: 14px;
 			}
 
-			.package-description {
-				padding: 12px 15px;
-				margin-top: 20px;
+			.package-image {
+				height: 300px;
 			}
 
-			.package-description p {
-				font-size: 13px;
+			.package-head-description {
+				margin-bottom: 20px;
+			}
+
+			.package-head-description p {
+				font-size: 14px;
+			}
+
+			.package-bottom-description {
+				margin-top: 30px;
+			}
+
+			.package-bottom-description p {
+				font-size: 14px;
 			}
 
 			.package-content h2 {
@@ -497,6 +556,12 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 						<?php endif; ?>
 					</div>
 
+					<?php if ( ! empty( $head_description ) ) : ?>
+						<div class="package-head-description">
+							<?php echo wp_kses_post( $head_description ); ?>
+						</div>
+					<?php endif; ?>
+
 					<!-- Package Section -->
 					<div class="package-section">
 						<div class="package-image-wrapper">
@@ -529,9 +594,9 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 						</div>
 					</div>
 
-					<?php if ( get_the_content() ) : ?>
-						<div class="package-description">
-							<?php the_content(); ?>
+					<?php if ( ! empty( $bottom_description ) ) : ?>
+						<div class="package-bottom-description">
+							<?php echo wp_kses_post( $bottom_description ); ?>
 						</div>
 					<?php endif; ?>
 				</section>

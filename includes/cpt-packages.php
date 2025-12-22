@@ -88,11 +88,28 @@ function yr_render_package_meta_box( $post ) {
 	$whatsapp_number = get_post_meta( $post->ID, '_whatsapp_number', true );
 	$button_link = get_post_meta( $post->ID, '_button_link', true );
 	$package_faq = get_post_meta( $post->ID, '_package_faq', true );
+	$head_description = get_post_meta( $post->ID, '_package_head_description', true );
+	$bottom_description = get_post_meta( $post->ID, '_package_bottom_description', true );
 	if ( ! is_array( $package_faq ) ) {
 		$package_faq = array();
 	}
 
 	?>
+	<!-- Head Description Editor -->
+	<h3 style="margin-top: 0;"><?php _e( 'Head Description', 'yacht-rental' ); ?></h3>
+	<p class="description" style="margin-bottom: 10px;"><?php _e( 'This content appears at the top of the page, right after the title and rating. Use for introductory text.', 'yacht-rental' ); ?></p>
+	<?php
+	wp_editor( $head_description, 'package_head_description', array(
+		'textarea_name' => 'package_head_description',
+		'textarea_rows' => 6,
+		'media_buttons' => true,
+		'teeny'         => false,
+		'quicktags'     => true,
+	) );
+	?>
+
+	<hr style="margin: 30px 0;" />
+
 	<table class="form-table">
 		<tr>
 			<th><label for="package_title"><?php _e( 'Package Title', 'yacht-rental' ); ?></label></th>
@@ -181,7 +198,20 @@ function yr_render_package_meta_box( $post ) {
 		});
 	});
 	</script>
+
+	<hr style="margin: 30px 0;" />
+
+	<!-- Bottom Description Editor -->
+	<h3><?php _e( 'Bottom Description', 'yacht-rental' ); ?></h3>
+	<p class="description" style="margin-bottom: 10px;"><?php _e( 'This content appears at the bottom of the page, after the package features section. Use for additional details, terms, or any extra information.', 'yacht-rental' ); ?></p>
 	<?php
+	wp_editor( $bottom_description, 'package_bottom_description', array(
+		'textarea_name' => 'package_bottom_description',
+		'textarea_rows' => 8,
+		'media_buttons' => true,
+		'teeny'         => false,
+		'quicktags'     => true,
+	) );
 }
 
 // Save package meta box data
@@ -204,6 +234,16 @@ function yr_save_package_meta_box_data( $post_id ) {
 	// Check permissions
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
+	}
+
+	// Save head description
+	if ( isset( $_POST['package_head_description'] ) ) {
+		update_post_meta( $post_id, '_package_head_description', wp_kses_post( $_POST['package_head_description'] ) );
+	}
+
+	// Save bottom description
+	if ( isset( $_POST['package_bottom_description'] ) ) {
+		update_post_meta( $post_id, '_package_bottom_description', wp_kses_post( $_POST['package_bottom_description'] ) );
 	}
 
 	// Save package title
