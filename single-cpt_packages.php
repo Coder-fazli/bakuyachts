@@ -130,30 +130,41 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 			letter-spacing: 0.3px;
 		}
 
-		.package-intro-text {
-			max-width: 700px;
-			margin: 0 auto;
-			color: #54595F;
-			font-size: 14px;
-			line-height: 1.6;
-		}
-
 		/* Package Section */
 		.package-section {
 			display: grid;
 			grid-template-columns: 50% 50%;
 			gap: 50px;
-			align-items: stretch;
+			align-items: start;
 			margin-top: 30px;
+		}
+
+		.package-image-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
 		}
 
 		.package-image {
 			position: relative;
-			min-height: 100%;
 			border-radius: 12px;
 			overflow: hidden;
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 			transition: all 0.4s ease;
+		}
+
+		.package-description {
+			background: #f8f9fa;
+			padding: 20px 25px;
+			border-radius: 12px;
+			border-left: 4px solid #61CE70;
+		}
+
+		.package-description p {
+			margin: 0;
+			color: #54595F;
+			font-size: 15px;
+			line-height: 1.7;
 		}
 
 		.package-image:hover {
@@ -401,9 +412,17 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 				gap: 25px;
 			}
 
+			.package-image-wrapper {
+				gap: 15px;
+			}
+
 			.package-image {
 				min-height: 350px;
 				max-height: 500px;
+			}
+
+			.package-description {
+				padding: 15px 20px;
 			}
 		}
 
@@ -432,8 +451,12 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 				font-size: 14px;
 			}
 
-			.package-intro-text {
-				font-size: 12px;
+			.package-description {
+				padding: 12px 15px;
+			}
+
+			.package-description p {
+				font-size: 13px;
 			}
 
 			.package-content h2 {
@@ -469,21 +492,23 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 						<?php if ( has_excerpt() ) : ?>
 							<p class="package-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
-						<?php if ( get_the_content() ) : ?>
-							<div class="package-intro-text">
-								<?php the_content(); ?>
-							</div>
-						<?php endif; ?>
 					</div>
 
 					<!-- Package Section -->
 					<div class="package-section">
-						<div class="package-image">
-							<?php
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail( 'full' );
-							}
-							?>
+						<div class="package-image-wrapper">
+							<div class="package-image">
+								<?php
+								if ( has_post_thumbnail() ) {
+									the_post_thumbnail( 'full' );
+								}
+								?>
+							</div>
+							<?php if ( get_the_content() ) : ?>
+								<div class="package-description">
+									<?php the_content(); ?>
+								</div>
+							<?php endif; ?>
 						</div>
 						<div class="package-content">
 							<?php if ( ! empty( $package_title ) ) : ?>
