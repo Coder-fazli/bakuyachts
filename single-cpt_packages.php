@@ -155,9 +155,10 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 
 		.package-description {
 			background: #f8f9fa;
-			padding: 20px 25px;
+			padding: 25px 30px;
 			border-radius: 12px;
 			border-left: 4px solid #61CE70;
+			margin-top: 40px;
 		}
 
 		.package-description p {
@@ -423,6 +424,7 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 
 			.package-description {
 				padding: 15px 20px;
+				margin-top: 30px;
 			}
 		}
 
@@ -453,6 +455,7 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 
 			.package-description {
 				padding: 12px 15px;
+				margin-top: 20px;
 			}
 
 			.package-description p {
@@ -504,11 +507,6 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 								}
 								?>
 							</div>
-							<?php if ( get_the_content() ) : ?>
-								<div class="package-description">
-									<?php the_content(); ?>
-								</div>
-							<?php endif; ?>
 						</div>
 						<div class="package-content">
 							<?php if ( ! empty( $package_title ) ) : ?>
@@ -530,6 +528,12 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 							<?php endif; ?>
 						</div>
 					</div>
+
+					<?php if ( get_the_content() ) : ?>
+						<div class="package-description">
+							<?php the_content(); ?>
+						</div>
+					<?php endif; ?>
 				</section>
 
 				<!-- FAQ Section -->
