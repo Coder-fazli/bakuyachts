@@ -22,14 +22,8 @@ $bottom_description = get_post_meta( get_the_ID(), '_package_bottom_description'
 // Convert features textarea to array
 $features_array = array_filter( array_map( 'trim', explode( "\n", $package_features ) ) );
 
-// Generate button link
-$contact_link = '';
-if ( ! empty( $button_link ) ) {
-	$contact_link = esc_url( $button_link );
-} elseif ( ! empty( $whatsapp_number ) ) {
-	$clean_number = preg_replace( '/[^0-9+]/', '', $whatsapp_number );
-	$contact_link = 'https://wa.me/' . ltrim( $clean_number, '+' );
-}
+// Generate button link - always use the main WhatsApp number
+$contact_link = 'https://wa.me/994704043700?text=' . urlencode( 'Hi, I am interested in the ' . get_the_title() . ' package' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js<?php echo ' scheme_' . esc_attr( yacht_rental_get_theme_option( 'color_scheme' ) ); ?>">
@@ -132,30 +126,6 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 			letter-spacing: 0.3px;
 		}
 
-		/* Package Section */
-		.package-section {
-			display: grid;
-			grid-template-columns: 50% 50%;
-			gap: 50px;
-			align-items: start;
-			margin-top: 30px;
-		}
-
-		.package-image-wrapper {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-		}
-
-		.package-image {
-			position: relative;
-			border-radius: 12px;
-			overflow: hidden;
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-			transition: all 0.4s ease;
-			height: 500px;
-		}
-
 		/* Head Description - after hero header */
 		.package-head-description {
 			max-width: 900px;
@@ -212,6 +182,24 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 
 		.package-bottom-description a:hover {
 			color: #4FB85E;
+		}
+
+		/* Package Section */
+		.package-section {
+			display: grid;
+			grid-template-columns: 50% 50%;
+			gap: 50px;
+			align-items: stretch;
+			margin-top: 30px;
+		}
+
+		.package-image {
+			position: relative;
+			height: 500px;
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+			transition: all 0.4s ease;
 		}
 
 		.package-image:hover {
@@ -459,10 +447,6 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 				gap: 25px;
 			}
 
-			.package-image-wrapper {
-				gap: 15px;
-			}
-
 			.package-image {
 				height: 400px;
 			}
@@ -564,14 +548,12 @@ if ( apply_filters( 'yacht_rental_filter_use_navi_mobile', true ) ) {
 
 					<!-- Package Section -->
 					<div class="package-section">
-						<div class="package-image-wrapper">
-							<div class="package-image">
-								<?php
-								if ( has_post_thumbnail() ) {
-									the_post_thumbnail( 'full' );
-								}
-								?>
-							</div>
+						<div class="package-image">
+							<?php
+							if ( has_post_thumbnail() ) {
+								the_post_thumbnail( 'full' );
+							}
+							?>
 						</div>
 						<div class="package-content">
 							<?php if ( ! empty( $package_title ) ) : ?>

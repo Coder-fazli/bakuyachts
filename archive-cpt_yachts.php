@@ -145,29 +145,32 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 }
 
 .bky-yacht-archive-container {
-  max-width: 1400px;
+  max-width: 1600px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 40px;
   display: block;
+  box-sizing: border-box;
 }
 
 .bky-yacht-archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
   margin-bottom: 60px;
   width: 100%;
 }
 
-
 .bky-yacht-card {
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 280px;
+  max-width: calc(33.333% - 20px);
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: block;
-  width: 100%;
   position: relative;
 }
 
@@ -235,11 +238,10 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 .bky-yacht-title a {
   color: #1a1a1a;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .bky-yacht-title a:hover {
-  color: #C89D4F;
+  color: #1a1a1a;
 }
 
 .bky-yacht-specs {
@@ -268,7 +270,9 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-  color: #888;
+  color: #C89D4F;
+  fill: #C89D4F;
+  stroke: #C89D4F;
   stroke-width: 2;
 }
 
@@ -296,7 +300,7 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 22px;
+  padding: 12px 18px;
   text-align: center;
   font-size: 13px;
   font-weight: 600;
@@ -306,6 +310,9 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   transition: all 0.25s ease;
   letter-spacing: 0.5px;
   border: none;
+  white-space: nowrap;
+  min-height: 46px;
+  box-sizing: border-box;
 }
 
 .bky-yacht-btn svg {
@@ -320,8 +327,9 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 }
 
 .bky-yacht-btn-whatsapp:hover {
-  background: #1ebc59;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  background: #25D366;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .bky-yacht-btn-view {
@@ -330,8 +338,9 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 }
 
 .bky-yacht-btn-view:hover {
-  background: #8B1F39;
-  box-shadow: 0 4px 12px rgba(166, 41, 70, 0.3);
+  background: #A62946;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .bky-yacht-pagination {
@@ -339,23 +348,118 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   text-align: center;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1500px) {
+  .bky-yacht-btn {
+    padding: 12px 14px;
+    font-size: 12px;
+    gap: 6px;
+    min-height: 44px;
+  }
+  .bky-yacht-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* 14" displays (1200px - 1450px) - Force 3 columns */
+@media (max-width: 1450px) and (min-width: 992px) {
   .bky-yacht-archive-container {
-    max-width: 1100px;
     padding: 0 25px;
   }
   .bky-yacht-archive-grid {
-    gap: 35px;
+    gap: 20px;
+  }
+  .bky-yacht-card {
+    flex: 1 1 calc(33.333% - 14px);
+    min-width: 0;
+    max-width: calc(33.333% - 14px);
+  }
+  .bky-yacht-content {
+    padding: 20px;
   }
   .bky-yacht-title {
-    font-size: 21px;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .bky-yacht-specs {
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
+  .bky-yacht-spec {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  .bky-yacht-description {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  .bky-yacht-btn {
+    padding: 10px 10px;
+    font-size: 10px;
+    gap: 4px;
+    min-height: 40px;
+  }
+  .bky-yacht-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .bky-yacht-archive-container {
+    padding: 0 20px;
+  }
+  .bky-yacht-archive-grid {
+    gap: 15px;
+  }
+  .bky-yacht-card {
+    flex: 1 1 calc(33.333% - 10px);
+    min-width: 0;
+    max-width: calc(33.333% - 10px);
+  }
+  .bky-yacht-content {
+    padding: 18px;
+  }
+  .bky-yacht-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .bky-yacht-specs {
+    gap: 6px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+  .bky-yacht-spec {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  .bky-yacht-description {
+    font-size: 13px;
+    margin-bottom: 15px;
+    -webkit-line-clamp: 2;
+  }
+  .bky-yacht-btn {
+    padding: 8px 8px;
+    font-size: 9px;
+    gap: 3px;
+    min-height: 36px;
+    letter-spacing: 0.2px;
+  }
+  .bky-yacht-btn svg {
+    width: 12px;
+    height: 12px;
   }
 }
 
 @media (max-width: 991px) {
+  .bky-yacht-card {
+    flex: 1 1 calc(50% - 15px);
+    min-width: 300px;
+    max-width: calc(50% - 15px);
+  }
   .bky-yacht-archive-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    gap: 25px;
   }
   .bky-yacht-title {
     font-size: 20px;
@@ -363,17 +467,33 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   .bky-yacht-content {
     padding: 24px;
   }
+  .bky-yacht-btn {
+    padding: 11px 10px;
+    font-size: 10px;
+    gap: 4px;
+    min-height: 40px;
+  }
+  .bky-yacht-btn svg {
+    width: 13px;
+    height: 13px;
+  }
 }
 
 @media (max-width: 767px) {
   .bky-yacht-archive-wrapper {
     padding: 50px 0 60px;
+    margin-left: 0 !important;
+    width: 100% !important;
   }
   .bky-yacht-archive-container {
     padding: 0 20px;
   }
+  .bky-yacht-card {
+    flex: 1 1 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
   .bky-yacht-archive-grid {
-    grid-template-columns: 1fr;
     gap: 24px;
   }
   .bky-yacht-content {
@@ -388,6 +508,14 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
   }
   .bky-yacht-btn {
     width: 100%;
+    padding: 12px 20px;
+    font-size: 13px;
+    min-height: 46px;
+    gap: 8px;
+  }
+  .bky-yacht-btn svg {
+    width: 16px;
+    height: 16px;
   }
 }
 </style>
@@ -467,7 +595,7 @@ body.post-type-archive-cpt_yachts .menu-item-has-children:hover > a:after {
 								<?php endif; ?>
 
 								<div class="bky-yacht-buttons">
-									<a href="<?php echo esc_url( 'https://wa.me/' ); ?>" class="bky-yacht-btn bky-yacht-btn-whatsapp" target="_blank">
+									<a href="https://wa.me/994704043700?text=<?php echo urlencode( 'Hi, I am interested in ' . get_the_title() ); ?>" class="bky-yacht-btn bky-yacht-btn-whatsapp" target="_blank">
 										<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 										WHATSAPP
 									</a>

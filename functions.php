@@ -1095,7 +1095,7 @@ require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-yachts.php';
 // Custom Post Type: Packages
 require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-packages.php';
 
-// Custom Post Type: Hero Section
+// Custom Post Type: Hero Sections
 require_once YACHT_RENTAL_THEME_DIR . 'includes/cpt-hero-section.php';
 
 // Custom Post Type: Gallery
@@ -1202,5 +1202,311 @@ if ( ! function_exists( 'yacht_rental_load_required_plugins' ) ) {
 				}
 			}
 		}
+	}
+}
+
+//-------------------------------------------------------
+//-- Mobile Header Height Reduction
+//-------------------------------------------------------
+
+if ( ! function_exists( 'yacht_rental_mobile_header_styles' ) ) {
+	add_action( 'wp_head', 'yacht_rental_mobile_header_styles', 100 );
+
+	function yacht_rental_mobile_header_styles() {
+		?>
+		<style id="yacht-rental-mobile-header-styles">
+			/* Header padding */
+			.top_panel_navi.sc_layouts_row {
+				padding-top: 15px !important;
+				padding-bottom: 15px !important;
+			}
+
+			/* Reduce header height on mobile */
+			@media (max-width: 767px) {
+				.top_panel_navi.sc_layouts_row {
+					padding-top: 10px !important;
+					padding-bottom: 10px !important;
+				}
+
+				.top_panel,
+				.sc_layouts_row {
+					padding-top: 8px !important;
+					padding-bottom: 8px !important;
+				}
+				.sc_layouts_row_type_normal {
+					padding-top: 10px !important;
+					padding-bottom: 10px !important;
+				}
+				.sc_layouts_row_type_compact {
+					padding-top: 6px !important;
+					padding-bottom: 6px !important;
+				}
+				.sc_layouts_logo img,
+				.custom-logo-link img {
+					max-height: 40px !important;
+				}
+				.sc_layouts_row .elementor-widget-wrap {
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_menu_mobile_button .sc_layouts_item_icon {
+					font-size: 20px !important;
+				}
+
+				/* Align header columns vertically */
+				.sc_layouts_row .elementor-container,
+				.sc_layouts_row .elementor-row {
+					align-items: center !important;
+				}
+				.sc_layouts_row .elementor-column {
+					display: flex !important;
+					align-items: center !important;
+				}
+				.sc_layouts_row .elementor-column-wrap,
+				.sc_layouts_row .elementor-widget-wrap {
+					display: flex !important;
+					align-items: center !important;
+					width: 100% !important;
+				}
+
+				/* Fix right column vertical position */
+				.sc_layouts_column_align_right {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .elementor-column-wrap,
+				.sc_layouts_column_align_right .elementor-widget-wrap {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-element {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .sc_layouts_item,
+				.sc_layouts_column_align_right .sc_socials,
+				.sc_layouts_column_align_right .sc_layouts_menu_mobile_button {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+
+				/* Move WhatsApp button before burger menu */
+				.sc_layouts_column_align_right .elementor-widget-wrap {
+					flex-direction: row !important;
+					flex-wrap: nowrap !important;
+					justify-content: flex-end !important;
+				}
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-element {
+					width: auto !important;
+					flex-shrink: 0 !important;
+				}
+				/* WhatsApp/social buttons come first */
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-widget-trx_sc_socials,
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-widget-trx_sc_button {
+					order: 1 !important;
+					margin-right: 10px !important;
+				}
+				/* Burger menu comes last */
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-widget-trx_sc_layouts_menu {
+					order: 10 !important;
+					margin-right: 0 !important;
+				}
+			}
+
+			/* Tablet adjustments */
+			@media (max-width: 1023px) and (min-width: 768px) {
+				.top_panel,
+				.sc_layouts_row {
+					padding-top: 10px !important;
+					padding-bottom: 10px !important;
+				}
+				.sc_layouts_logo img,
+				.custom-logo-link img {
+					max-height: 50px !important;
+				}
+
+				/* Align header columns vertically */
+				.sc_layouts_row .elementor-container,
+				.sc_layouts_row .elementor-row {
+					align-items: center !important;
+				}
+				.sc_layouts_row .elementor-column {
+					display: flex !important;
+					align-items: center !important;
+				}
+				.sc_layouts_row .elementor-column-wrap,
+				.sc_layouts_row .elementor-widget-wrap {
+					display: flex !important;
+					align-items: center !important;
+				}
+
+				/* Fix right column vertical position */
+				.sc_layouts_column_align_right {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .elementor-column-wrap,
+				.sc_layouts_column_align_right .elementor-widget-wrap {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-element {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .sc_layouts_item,
+				.sc_layouts_column_align_right .sc_socials,
+				.sc_layouts_column_align_right .sc_layouts_menu_mobile_button {
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding-top: 0 !important;
+					padding-bottom: 0 !important;
+				}
+
+				/* Move WhatsApp button before burger menu on tablet */
+				.sc_layouts_column_align_right .elementor-widget-wrap {
+					flex-direction: row !important;
+					flex-wrap: nowrap !important;
+					justify-content: flex-end !important;
+					width: 100% !important;
+				}
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-element {
+					width: auto !important;
+					flex-shrink: 0 !important;
+					margin-bottom: 0 !important;
+				}
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-widget-trx_sc_socials,
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-widget-trx_sc_button {
+					order: 1 !important;
+					margin-right: 15px !important;
+				}
+				.sc_layouts_column_align_right .elementor-widget-wrap > .elementor-widget-trx_sc_layouts_menu {
+					order: 10 !important;
+					margin-right: 0 !important;
+				}
+			}
+
+			/* WhatsApp button styling - desktop */
+			.top_panel_navi .sc_layouts_column_align_right > .sc_layouts_item {
+				display: inline-block !important;
+				vertical-align: middle !important;
+			}
+
+			.top_panel_navi .yr-whatsapp-btn,
+			.top_panel_navi .sc_layouts_item_link[href*="wa.me"] {
+				display: inline-flex !important;
+				align-items: center !important;
+				vertical-align: middle !important;
+				background: #25d366 !important;
+				color: #fff !important;
+				padding: 12px 24px !important;
+				border-radius: 8px !important;
+				text-decoration: none !important;
+				font-weight: 600 !important;
+				font-size: 14px !important;
+				box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4) !important;
+				transition: all 0.3s ease !important;
+			}
+
+			.top_panel_navi .yr-whatsapp-btn:hover,
+			.top_panel_navi .sc_layouts_item_link[href*="wa.me"]:hover {
+				background: #1da851 !important;
+				box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5) !important;
+				transform: translateY(-2px) !important;
+			}
+
+			/* Hide burger on desktop */
+			@media (min-width: 1024px) {
+				.top_panel_navi .sc_layouts_menu_mobile_button {
+					display: none !important;
+				}
+			}
+
+			@media (max-width: 1023px) {
+				/* Show burger and keep WhatsApp side by side on tablet/mobile */
+				.top_panel_navi .sc_layouts_column_align_right > .sc_layouts_item {
+					display: inline-block !important;
+					vertical-align: middle !important;
+					margin-left: 8px !important;
+				}
+
+				.top_panel_navi .sc_layouts_menu_mobile_button {
+					display: inline-block !important;
+					vertical-align: middle !important;
+				}
+
+				/* Smaller WhatsApp button */
+				.top_panel_navi .yr-whatsapp-btn,
+				.top_panel_navi .sc_layouts_item_link[href*="wa.me"] {
+					padding: 8px 14px !important;
+					font-size: 12px !important;
+					box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3) !important;
+				}
+			}
+
+			@media (max-width: 480px) {
+				/* Even smaller on very small screens */
+				.top_panel_navi .yr-whatsapp-btn,
+				.top_panel_navi .sc_layouts_item_link[href*="wa.me"] {
+					padding: 6px 10px !important;
+					font-size: 11px !important;
+					box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3) !important;
+				}
+
+				.top_panel_navi .sc_layouts_column_align_right > .sc_layouts_item {
+					margin-left: 5px !important;
+				}
+			}
+		</style>
+		<?php
+	}
+}
+
+//-------------------------------------------------------
+//-- Google Tag Manager
+//-------------------------------------------------------
+
+// GTM Script in Head
+if ( ! function_exists( 'yacht_rental_gtm_head' ) ) {
+	add_action( 'wp_head', 'yacht_rental_gtm_head', 1 );
+
+	function yacht_rental_gtm_head() {
+		?>
+		<!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-PH2FSDL2');</script>
+		<!-- End Google Tag Manager -->
+		<?php
+	}
+}
+
+// GTM Noscript in Body
+if ( ! function_exists( 'yacht_rental_gtm_body' ) ) {
+	add_action( 'wp_body_open', 'yacht_rental_gtm_body', 1 );
+
+	function yacht_rental_gtm_body() {
+		?>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PH2FSDL2"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<?php
 	}
 }

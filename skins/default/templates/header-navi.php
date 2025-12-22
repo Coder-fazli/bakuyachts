@@ -65,22 +65,9 @@
 					*/
 					?>
                     <div class="sc_layouts_item">
-                        <a href="https://wa.me/1234567890" class="sc_layouts_item_link" target="_blank" style="background: #25d366; color: #fff; padding: 8px 15px; border-radius: 5px; text-decoration: none;">WHATSAPP</a>
+                        <a href="https://wa.me/994704043700" class="sc_layouts_item_link yr-whatsapp-btn" target="_blank">WHATSAPP</a>
                     </div>
                     <?php
-					?><div class="sc_layouts_item">
-						<?php
-						// Display search field
-						do_action(
-							'yacht_rental_action_search',
-							array(
-								'style' => 'fullscreen',
-								'class' => 'header_search',
-								'ajax'  => false
-							)
-						);
-						?>
-					</div><?php
 				}
 				?>
 			</div>
