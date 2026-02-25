@@ -17,7 +17,7 @@ if ( ! is_array( $service_faq ) ) $service_faq = array();
 
 $features = array();
 if ( ! empty( $features_raw ) ) {
-	$features = array_filter( array_map( 'trim', explode( "\n", $features_raw ) ) );
+	$features = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', $features_raw ) ) );
 }
 
 $default_btn    = function_exists( 'pll__' ) ? pll__( 'GET IN TOUCH' ) : __( 'GET IN TOUCH', 'yacht-rental' );

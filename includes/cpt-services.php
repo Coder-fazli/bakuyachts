@@ -70,6 +70,58 @@ function yr_services_polylang( $post_types, $is_settings ) {
 }
 
 // =====================================================
+// LANGUAGE-SPECIFIC SLUGS
+// =====================================================
+function yr_services_slug_for_lang( $lang = null ) {
+	if ( $lang === null && function_exists( 'pll_current_language' ) ) {
+		$lang = pll_current_language();
+	}
+	$slugs = array(
+		'az' => 'xidmetler',
+		'en' => 'services',
+		'ru' => 'uslugi',
+	);
+	return isset( $slugs[ $lang ] ) ? $slugs[ $lang ] : 'xidmetler';
+}
+
+// Extra rewrite rules so /services/ and /uslugi/ also resolve
+add_action( 'init', 'yr_services_extra_rewrite_rules', 11 );
+function yr_services_extra_rewrite_rules() {
+	foreach ( array( 'services', 'uslugi' ) as $slug ) {
+		add_rewrite_rule( '^' . $slug . '/?$', 'index.php?post_type=bky_services', 'top' );
+		add_rewrite_rule( '^' . $slug . '/([^/]+)/?$', 'index.php?bky_services=$matches[1]', 'top' );
+	}
+}
+
+// One-time flush after adding new rules
+add_action( 'admin_init', 'yr_services_flush_rules' );
+function yr_services_flush_rules() {
+	if ( ! get_option( 'yr_services_rewrite_flushed_v1' ) ) {
+		flush_rewrite_rules();
+		update_option( 'yr_services_rewrite_flushed_v1', true );
+	}
+}
+
+// Swap slug in archive URL based on active language
+add_filter( 'post_type_archive_link', 'yr_services_archive_link', 10, 2 );
+function yr_services_archive_link( $link, $post_type ) {
+	if ( $post_type !== 'bky_services' ) return $link;
+	$slug = yr_services_slug_for_lang();
+	if ( $slug === 'xidmetler' ) return $link;
+	return preg_replace( '#/xidmetler/#', '/' . $slug . '/', $link );
+}
+
+// Swap slug in single-post permalinks based on post's language
+add_filter( 'post_type_link', 'yr_services_post_link', 10, 2 );
+function yr_services_post_link( $link, $post ) {
+	if ( ! isset( $post->post_type ) || $post->post_type !== 'bky_services' ) return $link;
+	$lang = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $post->ID ) : null;
+	$slug = yr_services_slug_for_lang( $lang );
+	if ( $slug === 'xidmetler' ) return $link;
+	return preg_replace( '#/xidmetler/#', '/' . $slug . '/', $link );
+}
+
+// =====================================================
 // META BOXES
 // =====================================================
 add_action( 'add_meta_boxes', 'yr_add_service_meta_boxes' );
