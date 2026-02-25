@@ -75,12 +75,12 @@ function yr_kill_trx_services() {
 	unregister_post_type( 'cpt_services' );
 }
 
-// Flush rewrite rules on both frontend and admin until confirmed
-add_action( 'init', 'yr_services_flush_rules_v2', 9999 );
-function yr_services_flush_rules_v2() {
-	if ( ! get_option( 'yr_services_rewrite_flushed_v2' ) ) {
+// Force flush after cpt_services removal + slug change
+add_action( 'init', 'yr_services_flush_rules_v3', 9999 );
+function yr_services_flush_rules_v3() {
+	if ( ! get_option( 'yr_services_rewrite_flushed_v3' ) ) {
 		flush_rewrite_rules();
-		update_option( 'yr_services_rewrite_flushed_v2', true );
+		update_option( 'yr_services_rewrite_flushed_v3', true );
 	}
 }
 
