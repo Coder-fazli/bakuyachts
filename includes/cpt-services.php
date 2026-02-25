@@ -55,7 +55,7 @@ function yr_register_services_cpt() {
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
 		'show_in_rest'        => true,
-		'rewrite'             => array( 'slug' => 'services', 'with_front' => false ),
+		'rewrite'             => array( 'slug' => 'xidmetler', 'with_front' => false ),
 	);
 
 	register_post_type( 'cpt_services', $args );
