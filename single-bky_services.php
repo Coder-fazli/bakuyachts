@@ -23,6 +23,9 @@ if ( ! empty( $features_raw ) ) {
 $default_btn    = function_exists( 'pll__' ) ? pll__( 'GET IN TOUCH' ) : __( 'GET IN TOUCH', 'yacht-rental' );
 $btn_label      = ! empty( $contact_btn_text ) ? $contact_btn_text : $default_btn;
 $whatsapp_label = function_exists( 'pll__' ) ? pll__( 'WHATSAPP' ) : __( 'WHATSAPP', 'yacht-rental' );
+$whats_included = function_exists( 'pll__' ) ? pll__( "What's included" ) : __( "What's included", 'yacht-rental' );
+$about_heading  = function_exists( 'pll__' ) ? pll__( 'About This Service' ) : __( 'About This Service', 'yacht-rental' );
+$faq_heading    = function_exists( 'pll__' ) ? pll__( 'Frequently Asked Questions' ) : __( 'Frequently Asked Questions', 'yacht-rental' );
 
 get_header();
 ?>
@@ -56,7 +59,7 @@ get_header();
 
 			<?php if ( ! empty( $features ) ) : ?>
 			<div class="service-features">
-				<h3><?php _e( 'What\'s included', 'yacht-rental' ); ?></h3>
+				<h3><?php echo esc_html( $whats_included ); ?></h3>
 				<ul class="service-features-list">
 					<?php foreach ( $features as $feature ) : ?>
 					<li><?php echo esc_html( $feature ); ?></li>
@@ -80,7 +83,7 @@ get_header();
 
 	<?php if ( ! empty( $bottom_description ) ) : ?>
 	<div class="service-bottom-section">
-		<h2><?php _e( 'About This Service', 'yacht-rental' ); ?></h2>
+		<h2><?php echo esc_html( $about_heading ); ?></h2>
 		<div class="service-accent-line"></div>
 		<div class="service-bottom-content"><?php echo wp_kses_post( $bottom_description ); ?></div>
 	</div>
@@ -88,7 +91,7 @@ get_header();
 
 	<?php if ( ! empty( $service_faq ) ) : ?>
 	<div class="service-faq-section">
-		<h2><?php _e( 'Frequently Asked Questions', 'yacht-rental' ); ?></h2>
+		<h2><?php echo esc_html( $faq_heading ); ?></h2>
 		<div class="service-accent-line"></div>
 
 		<?php foreach ( $service_faq as $faq ) :

@@ -1072,6 +1072,9 @@ function yr_register_polylang_strings() {
 		pll_register_string( 'get_in_touch_btn', 'GET IN TOUCH', 'yacht-rental' );
 		pll_register_string( 'whatsapp_btn', 'WHATSAPP', 'yacht-rental' );
 		pll_register_string( 'view_details_btn', 'VIEW DETAILS', 'yacht-rental' );
+		pll_register_string( 'service_whats_included', "What's included", 'yacht-rental' );
+		pll_register_string( 'service_about_heading', 'About This Service', 'yacht-rental' );
+		pll_register_string( 'service_faq_heading', 'Frequently Asked Questions', 'yacht-rental' );
 	}
 }
 add_action( 'init', 'yr_register_polylang_strings' );
