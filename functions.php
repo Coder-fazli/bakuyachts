@@ -1260,6 +1260,15 @@ function yr_services_admin_head() {
 	$screen = get_current_screen();
 	if ( ! $screen || $screen->id !== 'edit-bky_services' ) return;
 	echo '<style>
+		/* Remove hover overlay/shadow the theme adds on CPT list rows */
+		#the-list .type-bky_services:hover { box-shadow: none !important; }
+		#the-list .type-bky_services:hover::before,
+		#the-list .type-bky_services:hover::after { display: none !important; content: none !important; opacity: 0 !important; }
+		#the-list .type-bky_services td:hover::before,
+		#the-list .type-bky_services td:hover::after,
+		#the-list .type-bky_services td::before,
+		#the-list .type-bky_services td::after { display: none !important; content: none !important; opacity: 0 !important; pointer-events: none !important; }
+		/* Fix row positioning and cursor */
 		#the-list .type-bky_services { transform: none !important; }
 		#the-list .type-bky_services td,
 		#the-list .type-bky_services th { position: static !important; transform: none !important; }
