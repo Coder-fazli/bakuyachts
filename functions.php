@@ -1195,6 +1195,18 @@ function yr_force_default_header_position( $classes ) {
 add_filter( 'body_class', 'yr_force_default_header_position', 20 );
 
 /**
+ * Add 'expand_content' body class on services pages so the theme's own
+ * rule body.body_style_wide:not(.expand_content) ... does NOT apply,
+ * removing the CSS variable width constraint from div.content.
+ */
+add_filter( 'body_class', function( $classes ) {
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
+		$classes[] = 'expand_content';
+	}
+	return $classes;
+}, 20 );
+
+/**
  * Remove the big top padding on CPT pages.
  * The theme adds page_content_wrap_custom_header_margin class and inline
  * padding-top for the custom layout header height, but we use header-default
@@ -1230,25 +1242,6 @@ function yr_remove_custom_header_margin_on_cpts() {
 		</style>';
 	}
 
-	// Services-specific: override the theme's content-width CSS variable constraint
-	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
-		echo '<style>
-			body.body_style_wide [class*="content_wrap"].content,
-			body.body_style_boxed [class*="content_wrap"].content,
-			body.body_style_wide:not(.expand_content) [class*="content_wrap"].content {
-				width: 100% !important;
-				max-width: 100% !important;
-				padding-left: 0 !important;
-				padding-right: 0 !important;
-			}
-			[class*="content_wrap"].content {
-				width: 100% !important;
-				max-width: 100% !important;
-				padding-left: 0 !important;
-				padding-right: 0 !important;
-			}
-		</style>';
-	}
 }
 add_action( 'wp_head', 'yr_remove_custom_header_margin_on_cpts', 9999 );
 
