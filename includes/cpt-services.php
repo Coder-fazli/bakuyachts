@@ -69,19 +69,14 @@ function yr_services_polylang( $post_types, $is_settings ) {
 	return $post_types;
 }
 
-// Move TRX Addons' cpt_services off /services/ so our slug wins
-add_action( 'init', 'yr_displace_trx_services_slug', 999 );
-function yr_displace_trx_services_slug() {
-	global $wp_post_types;
-	if ( isset( $wp_post_types['cpt_services'] ) ) {
-		$wp_post_types['cpt_services']->rewrite      = array( 'slug' => 'trx-services', 'with_front' => false );
-		$wp_post_types['cpt_services']->has_archive  = false;
-		$wp_post_types['cpt_services']->publicly_queryable = false;
-	}
+// Completely unregister TRX Addons' cpt_services post type
+add_action( 'init', 'yr_kill_trx_services', 999 );
+function yr_kill_trx_services() {
+	unregister_post_type( 'cpt_services' );
 }
 
-// One-time flush after slug change
-add_action( 'admin_init', 'yr_services_flush_rules_v2' );
+// Flush rewrite rules on both frontend and admin until confirmed
+add_action( 'init', 'yr_services_flush_rules_v2', 9999 );
 function yr_services_flush_rules_v2() {
 	if ( ! get_option( 'yr_services_rewrite_flushed_v2' ) ) {
 		flush_rewrite_rules();
