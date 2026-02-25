@@ -75,12 +75,12 @@ function yr_kill_trx_services() {
 	unregister_post_type( 'cpt_services' );
 }
 
-// Force flush after cpt_services removal + slug change
-add_action( 'init', 'yr_services_flush_rules_v3', 9999 );
-function yr_services_flush_rules_v3() {
-	if ( ! get_option( 'yr_services_rewrite_flushed_v3' ) ) {
-		flush_rewrite_rules();
-		update_option( 'yr_services_rewrite_flushed_v3', true );
+// Force flush on wp_loaded (after all CPTs registered) until confirmed
+add_action( 'wp_loaded', 'yr_services_flush_rules_v4' );
+function yr_services_flush_rules_v4() {
+	if ( ! get_option( 'yr_services_rewrite_flushed_v4' ) ) {
+		flush_rewrite_rules( true );
+		update_option( 'yr_services_rewrite_flushed_v4', true );
 	}
 }
 
