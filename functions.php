@@ -1270,6 +1270,29 @@ function yr_services_admin_head() {
 add_action( 'admin_head', 'yr_services_admin_head' );
 
 // =====================================================
+// REDIRECT THEME'S cpt_services → OUR bky_services
+// =====================================================
+// The theme/TRX Addons registers cpt_services with slug /services/.
+// We redirect that URL (and individual posts) to our bky_services pages.
+add_action( 'template_redirect', 'yr_redirect_theme_services' );
+function yr_redirect_theme_services() {
+	if ( is_post_type_archive( 'cpt_services' ) ) {
+		$dest = get_post_type_archive_link( 'bky_services' );
+		if ( $dest ) {
+			wp_redirect( $dest, 301 );
+			exit;
+		}
+	}
+	if ( is_singular( 'cpt_services' ) ) {
+		$dest = get_post_type_archive_link( 'bky_services' );
+		if ( $dest ) {
+			wp_redirect( $dest, 301 );
+			exit;
+		}
+	}
+}
+
+// =====================================================
 // ABOUT PAGE ROUTING
 // =====================================================
 
