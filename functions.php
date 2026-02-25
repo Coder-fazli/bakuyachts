@@ -1098,7 +1098,7 @@ function yr_translate_yachts_labels( $labels ) {
 // =====================================================
 // TRANSLATE SERVICES CPT BREADCRUMB LABEL PER LANGUAGE
 // =====================================================
-add_filter( 'post_type_labels_cpt_services', 'yr_translate_services_labels' );
+add_filter( 'post_type_labels_bky_services', 'yr_translate_services_labels' );
 function yr_translate_services_labels( $labels ) {
 	if ( ! function_exists( 'pll_current_language' ) ) {
 		return $labels;
@@ -1150,7 +1150,7 @@ function yr_force_default_header_template( $template ) {
 	}
 
 	// Services archive and single
-	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
 		$force_default = true;
 	}
 
@@ -1179,7 +1179,7 @@ function yr_force_default_header_position( $classes ) {
 	if ( is_post_type_archive( 'cpt_yachts' ) || is_singular( 'cpt_yachts' ) ) {
 		$force = true;
 	}
-	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
 		$force = true;
 	}
 
@@ -1212,7 +1212,7 @@ function yr_remove_custom_header_margin_on_cpts() {
 	if ( is_post_type_archive( 'cpt_yachts' ) || is_singular( 'cpt_yachts' ) ) {
 		$force = true;
 	}
-	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
 		$force = true;
 	}
 

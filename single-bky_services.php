@@ -33,7 +33,7 @@ get_header();
 	<div class="service-breadcrumbs">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php _e( 'Home', 'yacht-rental' ); ?></a>
 		<span class="sep">◆</span>
-		<a href="<?php echo esc_url( get_post_type_archive_link( 'cpt_services' ) ); ?>"><?php _e( 'Services', 'yacht-rental' ); ?></a>
+		<a href="<?php echo esc_url( get_post_type_archive_link( 'bky_services' ) ); ?>"><?php _e( 'Services', 'yacht-rental' ); ?></a>
 		<span class="sep">◆</span>
 		<?php the_title(); ?>
 	</div>

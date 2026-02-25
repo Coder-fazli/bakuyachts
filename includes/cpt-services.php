@@ -58,14 +58,14 @@ function yr_register_services_cpt() {
 		'rewrite'             => array( 'slug' => 'xidmetler', 'with_front' => false ),
 	);
 
-	register_post_type( 'cpt_services', $args );
+	register_post_type( 'bky_services', $args );
 }
 add_action( 'init', 'yr_register_services_cpt', 0 );
 
 // Polylang support
 add_filter( 'pll_get_post_types', 'yr_services_polylang', 10, 2 );
 function yr_services_polylang( $post_types, $is_settings ) {
-	$post_types['cpt_services'] = 'cpt_services';
+	$post_types['bky_services'] = 'bky_services';
 	return $post_types;
 }
 
@@ -78,7 +78,7 @@ function yr_add_service_meta_boxes() {
 		'service_details',
 		__( 'Service Details', 'yacht-rental' ),
 		'yr_render_service_meta_box',
-		'cpt_services',
+		'bky_services',
 		'normal',
 		'high'
 	);
@@ -198,7 +198,7 @@ function yr_render_service_meta_box( $post ) {
 // =====================================================
 // SAVE META BOX
 // =====================================================
-add_action( 'save_post_cpt_services', 'yr_save_service_meta' );
+add_action( 'save_post_bky_services', 'yr_save_service_meta' );
 function yr_save_service_meta( $post_id ) {
 	if ( ! isset( $_POST['yr_service_meta_box_nonce'] ) ||
 		 ! wp_verify_nonce( $_POST['yr_service_meta_box_nonce'], 'yr_service_meta_box' ) ) {
@@ -244,7 +244,7 @@ function yr_save_service_meta( $post_id ) {
 // =====================================================
 // ADMIN COLUMNS
 // =====================================================
-add_filter( 'manage_cpt_services_posts_columns', 'yr_service_columns' );
+add_filter( 'manage_bky_services_posts_columns', 'yr_service_columns' );
 function yr_service_columns( $columns ) {
 	$new = array();
 	foreach ( $columns as $key => $val ) {
@@ -256,7 +256,7 @@ function yr_service_columns( $columns ) {
 	return $new;
 }
 
-add_action( 'manage_cpt_services_posts_custom_column', 'yr_service_column_content', 10, 2 );
+add_action( 'manage_bky_services_posts_custom_column', 'yr_service_column_content', 10, 2 );
 function yr_service_column_content( $column, $post_id ) {
 	if ( $column === 'service_icon' ) {
 		$icon = get_post_meta( $post_id, '_service_icon', true );
@@ -269,7 +269,7 @@ function yr_service_column_content( $column, $post_id ) {
 // =====================================================
 add_action( 'wp_enqueue_scripts', 'yr_enqueue_services_assets' );
 function yr_enqueue_services_assets() {
-	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
 		wp_enqueue_style(
 			'yr-services',
 			get_stylesheet_directory_uri() . '/css/services.css',
