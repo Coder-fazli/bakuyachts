@@ -259,16 +259,20 @@ function yr_save_service_meta( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
-	$fields = array(
-		'service_icon'              => '_service_icon',
-		'service_contact_link'      => '_service_contact_link',
-		'service_contact_btn_text'  => '_service_contact_btn_text',
-		'service_features'          => '_service_features',
+	$text_fields = array(
+		'service_icon'             => '_service_icon',
+		'service_contact_link'     => '_service_contact_link',
+		'service_contact_btn_text' => '_service_contact_btn_text',
 	);
-	foreach ( $fields as $post_key => $meta_key ) {
+	foreach ( $text_fields as $post_key => $meta_key ) {
 		if ( isset( $_POST[ $post_key ] ) ) {
 			update_post_meta( $post_id, $meta_key, sanitize_text_field( $_POST[ $post_key ] ) );
 		}
+	}
+
+	// Features: use sanitize_textarea_field to preserve newlines
+	if ( isset( $_POST['service_features'] ) ) {
+		update_post_meta( $post_id, '_service_features', sanitize_textarea_field( $_POST['service_features'] ) );
 	}
 
 	// wp_editor fields (allow HTML)
