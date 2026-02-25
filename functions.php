@@ -1260,47 +1260,18 @@ function yr_services_admin_head() {
 	$screen = get_current_screen();
 	if ( ! $screen || $screen->id !== 'edit-bky_services' ) return;
 	echo '<style>
-		/* Kill any TRX Addons dialog/overlay elements on this page */
-		.trx_addons_icon_selector,
-		.trx_addons_popup,
-		.trx_addons_popup_overlay,
-		.sc_layouts_popup_overlay,
-		[class*="trx_addons"][class*="overlay"],
-		[class*="trx_addons"][class*="popup"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
-		/* Remove any overlay from dialog body classes TRX adds */
-		body.dialog-body::before,
-		body.dialog-body::after,
-		body.dialog-container::before,
-		body.dialog-container::after { display: none !important; content: none !important; }
-		body.dialog-body, body.dialog-container { overflow: auto !important; }
-		/* Normal row behaviour */
-		#the-list .type-bky_services .row-actions a { cursor: pointer !important; pointer-events: auto !important; }
+		/* Neutralise TRX dialog overlay CSS without touching JS */
+		body.post-type-bky_services.dialog-body,
+		body.post-type-bky_services.dialog-container { overflow: auto !important; }
+		body.post-type-bky_services.dialog-body::before,
+		body.post-type-bky_services.dialog-body::after,
+		body.post-type-bky_services.dialog-container::before,
+		body.post-type-bky_services.dialog-container::after { display: none !important; content: none !important; }
+		body.post-type-bky_services .trx_addons_popup_overlay,
+		body.post-type-bky_services .sc_layouts_popup_overlay { display: none !important; }
 	</style>';
 }
 add_action( 'admin_head', 'yr_services_admin_head' );
-
-/**
- * JS: strip the TRX Addons dialog body-classes on the services list screen
- * and watch for them being re-added (TRX adds them dynamically via JS).
- */
-function yr_services_admin_footer() {
-	$screen = get_current_screen();
-	if ( ! $screen || $screen->id !== 'edit-bky_services' ) return;
-	?>
-	<script>
-	(function() {
-		var bad = ['dialog-body','dialog-buttons-body','dialog-container','dialog-buttons-container'];
-		function stripClasses() {
-			bad.forEach(function(c){ document.body.classList.remove(c); });
-		}
-		stripClasses();
-		var obs = new MutationObserver(stripClasses);
-		obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-	})();
-	</script>
-	<?php
-}
-add_action( 'admin_footer', 'yr_services_admin_footer' );
 
 // =====================================================
 // ABOUT PAGE ROUTING
