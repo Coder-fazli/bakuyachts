@@ -11,18 +11,8 @@ get_header();
 
 <div class="bky-services-wrapper">
 
-	<div class="bky-services-header">
-		<h1><?php post_type_archive_title(); ?></h1>
-		<?php
-		$archive_desc = get_the_archive_description();
-		if ( $archive_desc ) :
-		?>
-		<p><?php echo wp_kses_post( $archive_desc ); ?></p>
-		<?php endif; ?>
-		<div class="bky-header-line"></div>
-	</div>
 
-	<?php if ( have_posts() ) : ?>
+<?php if ( have_posts() ) : ?>
 
 	<div class="bky-services-grid">
 
