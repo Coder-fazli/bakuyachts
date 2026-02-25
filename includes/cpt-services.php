@@ -75,7 +75,22 @@ function yr_kill_trx_services() {
 	unregister_post_type( 'cpt_services' );
 }
 
-// Force flush on wp_loaded (after all CPTs registered) until confirmed
+// Intercept old rewrite rules that still point to cpt_services
+// and redirect them to bky_services — works without a permalink flush
+add_filter( 'request', 'yr_reroute_cpt_services_request' );
+function yr_reroute_cpt_services_request( $qv ) {
+	if ( isset( $qv['post_type'] ) && $qv['post_type'] === 'cpt_services' ) {
+		$qv['post_type'] = 'bky_services';
+	}
+	if ( isset( $qv['cpt_services'] ) ) {
+		$qv['bky_services'] = $qv['cpt_services'];
+		$qv['post_type']    = 'bky_services';
+		unset( $qv['cpt_services'] );
+	}
+	return $qv;
+}
+
+// Flush rewrite rules properly on wp_loaded
 add_action( 'wp_loaded', 'yr_services_flush_rules_v4' );
 function yr_services_flush_rules_v4() {
 	if ( ! get_option( 'yr_services_rewrite_flushed_v4' ) ) {
