@@ -1229,8 +1229,45 @@ function yr_remove_custom_header_margin_on_cpts() {
 			}
 		</style>';
 	}
+
+	// Services-specific: override the theme's content-width CSS variable constraint
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
+		echo '<style>
+			body.body_style_wide [class*="content_wrap"].content,
+			body.body_style_boxed [class*="content_wrap"].content,
+			body.body_style_wide:not(.expand_content) [class*="content_wrap"].content {
+				width: 100% !important;
+				max-width: 100% !important;
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+			}
+			[class*="content_wrap"].content {
+				width: 100% !important;
+				max-width: 100% !important;
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+			}
+		</style>';
+	}
 }
 add_action( 'wp_head', 'yr_remove_custom_header_margin_on_cpts', 9999 );
+
+/**
+ * Fix cursor/click-area issue on services admin list screen.
+ * The theme may apply transforms or z-index that shift the row-actions area.
+ */
+function yr_services_admin_head() {
+	$screen = get_current_screen();
+	if ( ! $screen || $screen->id !== 'edit-bky_services' ) return;
+	echo '<style>
+		#the-list .type-bky_services { transform: none !important; }
+		#the-list .type-bky_services td,
+		#the-list .type-bky_services th { position: static !important; transform: none !important; }
+		#the-list .type-bky_services .row-actions { position: static !important; }
+		#the-list .type-bky_services .row-actions a { cursor: pointer !important; pointer-events: auto !important; }
+	</style>';
+}
+add_action( 'admin_head', 'yr_services_admin_head' );
 
 // =====================================================
 // ABOUT PAGE ROUTING
