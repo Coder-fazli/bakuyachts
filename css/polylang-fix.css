@@ -1,0 +1,138 @@
+/* Fix Polylang language dropdown positioning */
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu {
+    left: auto !important;
+    right: 0 !important;
+    min-width: auto !important;
+    padding: 10px 0 !important;
+}
+
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu > li,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu > li {
+    padding: 0 15px !important;
+}
+
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu > li > a,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu > li > a {
+    padding: 5px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* Position dropdown directly under the flag */
+.sc_layouts_menu_nav > li.menu-item-language,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher {
+    position: relative !important;
+}
+
+.sc_layouts_menu_nav > li.menu-item-language > ul.sub-menu,
+.sc_layouts_menu_nav > li.menu-item-pll-switcher > ul.sub-menu {
+    top: 100% !important;
+    margin-top: 0 !important;
+}
+
+/* Custom Language Switcher */
+.yr-lang-switcher-wrap {
+    margin-left: 15px;
+}
+
+.yr-lang-switcher {
+    position: relative;
+    display: inline-block;
+}
+
+.yr-lang-current {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    font-family: inherit;
+    color: inherit;
+}
+
+.yr-lang-flag {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.yr-lang-code {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.yr-lang-arrow {
+    width: 10px;
+    height: 6px;
+    transition: transform 0.2s ease;
+}
+
+.yr-lang-switcher:hover .yr-lang-arrow,
+.yr-lang-switcher.active .yr-lang-arrow {
+    transform: rotate(180deg);
+}
+
+.yr-lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    padding: 8px 0;
+    min-width: 100px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    z-index: 9999;
+}
+
+.yr-lang-switcher:hover .yr-lang-dropdown,
+.yr-lang-switcher.active .yr-lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.yr-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.15s ease;
+}
+
+.yr-lang-option:hover {
+    background: #f5f5f5;
+}
+
+.yr-lang-option .yr-lang-flag {
+    width: 20px;
+    height: 14px;
+}
+
+.yr-lang-option .yr-lang-code {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .yr-lang-switcher-wrap {
+        margin-left: 10px;
+    }
+
+    .yr-lang-dropdown {
+        right: -10px;
+    }
+}
