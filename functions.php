@@ -59,6 +59,9 @@ require_once YR_CHILD_DIR . 'includes/cpt-slider.php';
 // Custom Post Type: Partners
 require_once YR_CHILD_DIR . 'includes/cpt-partners.php';
 
+// Custom Post Type: Services
+require_once YR_CHILD_DIR . 'includes/cpt-services.php';
+
 // Custom Meta Boxes: About Page (now handled via 'about' CPT)
 require_once YR_CHILD_DIR . 'includes/cpt-about-meta.php';
 
@@ -1093,6 +1096,25 @@ function yr_translate_yachts_labels( $labels ) {
 }
 
 // =====================================================
+// TRANSLATE SERVICES CPT BREADCRUMB LABEL PER LANGUAGE
+// =====================================================
+add_filter( 'post_type_labels_cpt_services', 'yr_translate_services_labels' );
+function yr_translate_services_labels( $labels ) {
+	if ( ! function_exists( 'pll_current_language' ) ) {
+		return $labels;
+	}
+	$lang = pll_current_language();
+	if ( $lang === 'az' ) {
+		$labels->name      = 'Xidmətlər';
+		$labels->all_items = 'Xidmətlər';
+	} elseif ( $lang === 'ru' ) {
+		$labels->name      = 'Услуги';
+		$labels->all_items = 'Услуги';
+	}
+	return $labels;
+}
+
+// =====================================================
 // FORCE DEFAULT HEADER ON ALL CUSTOM CPT PAGES
 // =====================================================
 
@@ -1127,6 +1149,11 @@ function yr_force_default_header_template( $template ) {
 		$force_default = true;
 	}
 
+	// Services archive and single
+	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
+		$force_default = true;
+	}
+
 	if ( $force_default ) {
 		return 'templates/header-default';
 	}
@@ -1150,6 +1177,9 @@ function yr_force_default_header_position( $classes ) {
 		$force = true;
 	}
 	if ( is_post_type_archive( 'cpt_yachts' ) || is_singular( 'cpt_yachts' ) ) {
+		$force = true;
+	}
+	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
 		$force = true;
 	}
 
@@ -1180,6 +1210,9 @@ function yr_remove_custom_header_margin_on_cpts() {
 		$force = true;
 	}
 	if ( is_post_type_archive( 'cpt_yachts' ) || is_singular( 'cpt_yachts' ) ) {
+		$force = true;
+	}
+	if ( is_post_type_archive( 'cpt_services' ) || is_singular( 'cpt_services' ) ) {
 		$force = true;
 	}
 
