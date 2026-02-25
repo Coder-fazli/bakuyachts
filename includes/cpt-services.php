@@ -75,28 +75,13 @@ function yr_kill_trx_services() {
 	unregister_post_type( 'cpt_services' );
 }
 
-// Intercept old rewrite rules that still point to cpt_services
-// and redirect them to bky_services — works without a permalink flush
-add_filter( 'request', 'yr_reroute_cpt_services_request' );
-function yr_reroute_cpt_services_request( $qv ) {
-	if ( isset( $qv['post_type'] ) && $qv['post_type'] === 'cpt_services' ) {
-		$qv['post_type'] = 'bky_services';
-	}
-	if ( isset( $qv['cpt_services'] ) ) {
-		$qv['bky_services'] = $qv['cpt_services'];
-		$qv['post_type']    = 'bky_services';
-		unset( $qv['cpt_services'] );
-	}
-	return $qv;
-}
-
-// Flush rewrite rules properly on wp_loaded
-add_action( 'wp_loaded', 'yr_services_flush_rules_v4' );
-function yr_services_flush_rules_v4() {
-	if ( ! get_option( 'yr_services_rewrite_flushed_v4' ) ) {
-		flush_rewrite_rules( true );
-		update_option( 'yr_services_rewrite_flushed_v4', true );
-	}
+// Add explicit rewrite rules for /services/ on every request.
+// When extra_rules_top is non-empty, WordPress regenerates all rewrite
+// rules on the same request — no manual flush needed.
+add_action( 'init', 'yr_services_rewrite_rules', 1 );
+function yr_services_rewrite_rules() {
+	add_rewrite_rule( '^services/?$', 'index.php?post_type=bky_services', 'top' );
+	add_rewrite_rule( '^services/([^/]+)/?$', 'index.php?bky_services=$matches[1]', 'top' );
 }
 
 // =====================================================
