@@ -1260,6 +1260,20 @@ function yr_remove_custom_header_margin_on_cpts() {
 		</style>';
 	}
 
+	// Fix: WPO Minify caches old services.css which sets width:100% on ALL .content_wrap.
+	// Counter it here (inline style bypasses WPO cache) by resetting the header's content_wrap.
+	if ( is_post_type_archive( 'bky_services' ) || is_singular( 'bky_services' ) ) {
+		echo '<style>
+			.top_panel_navi .content_wrap,
+			.top_panel .content_wrap {
+				max-width: unset !important;
+				width: unset !important;
+				padding-left: unset !important;
+				padding-right: unset !important;
+			}
+		</style>';
+	}
+
 }
 add_action( 'wp_head', 'yr_remove_custom_header_margin_on_cpts', 9999 );
 
