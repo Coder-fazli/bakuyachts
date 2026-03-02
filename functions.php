@@ -1266,10 +1266,10 @@ function yr_remove_custom_header_margin_on_cpts() {
 		echo '<style>
 			.top_panel_navi .content_wrap,
 			.top_panel .content_wrap {
-				max-width: unset !important;
-				width: unset !important;
-				padding-left: unset !important;
-				padding-right: unset !important;
+				max-width: var(--theme_var-page) !important;
+				width: var(--theme_var-page) !important;
+				padding-left: 0 !important;
+				padding-right: 0 !important;
 			}
 		</style>';
 	}
