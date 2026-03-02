@@ -975,6 +975,7 @@ function yr_get_archive_title( $type = 'yachts', $field = 'title' ) {
         if ( $type === 'yachts' && $field === 'title' ) $value = __( 'All Yachts', 'yacht-rental' );
         elseif ( $type === 'packages' && $field === 'title' ) $value = __( 'Our Packages', 'yacht-rental' );
         elseif ( $type === 'packages' && $field === 'subtitle' ) $value = __( 'Choose from our exclusive yacht rental packages', 'yacht-rental' );
+        elseif ( $type === 'services' && $field === 'title' ) $value = __( 'Our Services', 'yacht-rental' );
     }
     return $value;
 }
@@ -986,6 +987,9 @@ function yr_archive_seo_title( $title ) {
         if ( ! empty( $custom ) ) return $custom;
     } elseif ( is_post_type_archive( 'cpt_packages' ) ) {
         $custom = yr_get_archive_title( 'packages', 'meta_title' );
+        if ( ! empty( $custom ) ) return $custom;
+    } elseif ( is_post_type_archive( 'bky_services' ) ) {
+        $custom = yr_get_archive_title( 'services', 'meta_title' );
         if ( ! empty( $custom ) ) return $custom;
     }
     return $title;
@@ -1007,6 +1011,12 @@ function yr_archive_seo_title_parts( $title_parts ) {
             $title_parts['title'] = $custom;
             unset( $title_parts['site'] );
         }
+    } elseif ( is_post_type_archive( 'bky_services' ) ) {
+        $custom = yr_get_archive_title( 'services', 'meta_title' );
+        if ( ! empty( $custom ) ) {
+            $title_parts['title'] = $custom;
+            unset( $title_parts['site'] );
+        }
     }
     return $title_parts;
 }
@@ -1019,6 +1029,9 @@ function yr_archive_seo_description( $desc ) {
         if ( ! empty( $custom ) ) return $custom;
     } elseif ( is_post_type_archive( 'cpt_packages' ) ) {
         $custom = yr_get_archive_title( 'packages', 'meta_desc' );
+        if ( ! empty( $custom ) ) return $custom;
+    } elseif ( is_post_type_archive( 'bky_services' ) ) {
+        $custom = yr_get_archive_title( 'services', 'meta_desc' );
         if ( ! empty( $custom ) ) return $custom;
     }
     return $desc;
@@ -1033,6 +1046,8 @@ function yr_archive_meta_description_fallback() {
             $desc = yr_get_archive_title( 'yachts', 'meta_desc' );
         } elseif ( is_post_type_archive( 'cpt_packages' ) ) {
             $desc = yr_get_archive_title( 'packages', 'meta_desc' );
+        } elseif ( is_post_type_archive( 'bky_services' ) ) {
+            $desc = yr_get_archive_title( 'services', 'meta_desc' );
         }
         if ( ! empty( $desc ) ) {
             echo '<meta name="description" content="' . esc_attr( $desc ) . '" />' . "\n";

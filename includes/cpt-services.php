@@ -85,6 +85,68 @@ function yr_services_rewrite_rules() {
 }
 
 // =====================================================
+// ARCHIVE SEO SETTINGS PAGE
+// =====================================================
+add_action( 'admin_menu', 'yr_services_archive_seo_menu' );
+function yr_services_archive_seo_menu() {
+	add_submenu_page(
+		'edit.php?post_type=bky_services',
+		__( 'Archive SEO', 'yacht-rental' ),
+		__( 'Archive SEO', 'yacht-rental' ),
+		'manage_options',
+		'yr-services-archive-seo',
+		'yr_services_archive_seo_page'
+	);
+}
+
+function yr_services_archive_seo_page() {
+	$languages = array( 'en' => 'English' );
+	if ( function_exists( 'pll_languages_list' ) ) {
+		$pll_languages = pll_languages_list( array( 'fields' => 'slug' ) );
+		$languages     = array();
+		foreach ( $pll_languages as $lang ) {
+			$lang_name = strtoupper( $lang );
+			if ( function_exists( 'PLL' ) && isset( PLL()->model ) ) {
+				$lang_obj = PLL()->model->get_language( $lang );
+				if ( $lang_obj ) $lang_name = $lang_obj->name;
+			}
+			$languages[ $lang ] = $lang_name;
+		}
+	}
+
+	if ( isset( $_POST['yr_services_seo_save'] ) && check_admin_referer( 'yr_services_seo_nonce' ) ) {
+		foreach ( $languages as $lang_code => $lang_name ) {
+			update_option( "yr_services_archive_meta_title_{$lang_code}", sanitize_text_field( $_POST["yr_services_meta_title_{$lang_code}"] ?? '' ) );
+			update_option( "yr_services_archive_meta_desc_{$lang_code}", sanitize_textarea_field( $_POST["yr_services_meta_desc_{$lang_code}"] ?? '' ) );
+		}
+		echo '<div class="notice notice-success is-dismissible"><p>' . __( 'SEO settings saved.', 'yacht-rental' ) . '</p></div>';
+	}
+	?>
+	<div class="wrap">
+		<h1><?php _e( 'Services Archive — SEO Settings', 'yacht-rental' ); ?></h1>
+		<p class="description"><?php _e( 'Set the meta title and meta description for the Services archive page. These override Rank Math for each language.', 'yacht-rental' ); ?></p>
+		<form method="post">
+			<?php wp_nonce_field( 'yr_services_seo_nonce' ); ?>
+			<?php foreach ( $languages as $lang_code => $lang_name ) : ?>
+				<h2 style="margin-top:25px;padding-top:15px;border-top:1px solid #ccc;"><?php echo esc_html( $lang_name ); ?> (<?php echo strtoupper( esc_html( $lang_code ) ); ?>)</h2>
+				<table class="form-table">
+					<tr>
+						<th><label><?php _e( 'Meta Title', 'yacht-rental' ); ?></label></th>
+						<td><input type="text" name="yr_services_meta_title_<?php echo esc_attr( $lang_code ); ?>" value="<?php echo esc_attr( get_option( "yr_services_archive_meta_title_{$lang_code}", '' ) ); ?>" class="large-text" placeholder="<?php esc_attr_e( 'Services | Baku Yachts', 'yacht-rental' ); ?>" /></td>
+					</tr>
+					<tr>
+						<th><label><?php _e( 'Meta Description', 'yacht-rental' ); ?></label></th>
+						<td><textarea name="yr_services_meta_desc_<?php echo esc_attr( $lang_code ); ?>" class="large-text" rows="3" placeholder="<?php esc_attr_e( 'Explore our yacht rental services in Baku...', 'yacht-rental' ); ?>"><?php echo esc_textarea( get_option( "yr_services_archive_meta_desc_{$lang_code}", '' ) ); ?></textarea></td>
+					</tr>
+				</table>
+			<?php endforeach; ?>
+			<p class="submit"><input type="submit" name="yr_services_seo_save" class="button button-primary" value="<?php _e( 'Save SEO Settings', 'yacht-rental' ); ?>" /></p>
+		</form>
+	</div>
+	<?php
+}
+
+// =====================================================
 // META BOXES
 // =====================================================
 add_action( 'add_meta_boxes', 'yr_add_service_meta_boxes' );
