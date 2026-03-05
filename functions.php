@@ -1395,6 +1395,22 @@ function yr_about_polylang_switcher_urls( $url, $slug, $locale ) {
 }
 add_filter( 'pll_the_language_link', 'yr_about_polylang_switcher_urls', 10, 3 );
 
+// Fix "View Post" link in admin for About CPT — always point to /about/ page
+function yr_about_post_type_link( $url, $post ) {
+    if ( ! $post || get_post_type( $post ) !== 'about' ) {
+        return $url;
+    }
+    if ( function_exists( 'pll_get_post_language' ) ) {
+        $lang         = pll_get_post_language( $post->ID, 'slug' );
+        $default_lang = pll_default_language( 'slug' );
+        if ( $lang && $lang !== $default_lang ) {
+            return home_url( '/' . $lang . '/about/' );
+        }
+    }
+    return home_url( '/about/' );
+}
+add_filter( 'post_type_link', 'yr_about_post_type_link', 10, 2 );
+
 // =====================================================
 // FONTS & MISC
 // =====================================================
