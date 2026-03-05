@@ -54,6 +54,16 @@ function yacht_rental_about_shortcode() {
     if ( empty( $stats_concierge_label ) ) $stats_concierge_label = __( 'VIP Concierge', 'yacht-rental' );
     $hero_image = has_post_thumbnail() ? get_the_post_thumbnail_url( $about_id, 'large' ) : 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop';
 
+    // Founder Section
+    $founder_image_id  = get_post_meta( $about_id, '_yr_founder_image_id', true );
+    $founder_image_url = $founder_image_id ? wp_get_attachment_image_url( $founder_image_id, 'large' ) : '';
+    $founder_image_alt = $founder_image_id ? get_post_meta( $founder_image_id, '_wp_attachment_image_alt', true ) : '';
+    $founder_subtitle  = get_post_meta( $about_id, '_yr_founder_subtitle', true );
+    $founder_title     = get_post_meta( $about_id, '_yr_founder_title', true );
+    $founder_text      = get_post_meta( $about_id, '_yr_founder_text', true );
+    $founder_name      = get_post_meta( $about_id, '_yr_founder_name', true );
+    $founder_role      = get_post_meta( $about_id, '_yr_founder_role', true );
+
     // Reviews
     $reviews_title = get_post_meta( $about_id, '_yr_reviews_title', true );
     if ( empty( $reviews_title ) ) {
@@ -322,6 +332,59 @@ function yacht_rental_about_shortcode() {
             </div>
         </div>
     </section>
+
+    <?php if ( $founder_title || $founder_image_url ) : ?>
+    <!-- Founder Section -->
+    <section class="yr-founder-section" style="padding:100px 0; background:#fff; overflow:hidden;">
+        <div class="container-wide" style="display:flex; align-items:stretch; gap:80px;">
+
+            <?php if ( $founder_image_url ) : ?>
+            <div style="flex:0 0 420px; max-width:420px; position:relative;">
+                <div style="position:absolute; top:30px; left:-20px; width:100%; height:100%; border:2px solid #c9a96e; border-radius:4px; z-index:0;"></div>
+                <img src="<?php echo esc_url( $founder_image_url ); ?>" alt="<?php echo esc_attr( $founder_image_alt ?: $founder_name ); ?>"
+                    style="position:relative; z-index:1; width:100%; height:100%; object-fit:cover; object-position:top center; border-radius:4px; min-height:560px; display:block;">
+            </div>
+            <?php endif; ?>
+
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:20px 0;">
+                <?php if ( $founder_subtitle ) : ?>
+                    <span style="font-size:13px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#c9a96e; margin-bottom:16px; display:block;"><?php echo esc_html( $founder_subtitle ); ?></span>
+                <?php endif; ?>
+
+                <?php if ( $founder_title ) : ?>
+                    <h2 style="font-size:clamp(28px,3.5vw,46px); font-weight:700; line-height:1.15; color:#0a0a0a; margin:0 0 28px;"><?php echo esc_html( $founder_title ); ?></h2>
+                <?php endif; ?>
+
+                <?php if ( $founder_text ) : ?>
+                    <div style="font-size:16px; line-height:1.85; color:#555; margin-bottom:40px;"><?php echo wp_kses_post( wpautop( $founder_text ) ); ?></div>
+                <?php endif; ?>
+
+                <?php if ( $founder_name || $founder_role ) : ?>
+                <div style="display:flex; align-items:center; gap:16px; padding-top:32px; border-top:1px solid #e8e8e8;">
+                    <div style="width:40px; height:2px; background:#c9a96e; flex-shrink:0;"></div>
+                    <div>
+                        <?php if ( $founder_name ) : ?>
+                            <p style="font-size:18px; font-weight:700; color:#0a0a0a; margin:0; line-height:1.3;"><?php echo esc_html( $founder_name ); ?></p>
+                        <?php endif; ?>
+                        <?php if ( $founder_role ) : ?>
+                            <p style="font-size:13px; color:#888; letter-spacing:1px; text-transform:uppercase; margin:4px 0 0;"><?php echo esc_html( $founder_role ); ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </section>
+    <style>
+    @media (max-width: 768px) {
+        .yr-founder-section .container-wide { flex-direction: column !important; gap: 40px !important; }
+        .yr-founder-section .container-wide > div:first-child { flex: none !important; max-width: 100% !important; }
+        .yr-founder-section .container-wide > div:first-child > div { display: none !important; }
+        .yr-founder-section .container-wide > div:first-child img { min-height: 380px !important; }
+    }
+    </style>
+    <?php endif; ?>
 
     <!-- Partners Logo Carousel -->
     <?php echo do_shortcode( '[partners_slider]' ); ?>

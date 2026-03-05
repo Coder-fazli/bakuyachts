@@ -57,7 +57,6 @@ require_once YR_CHILD_DIR . 'includes/cpt-gallery.php';
 require_once YR_CHILD_DIR . 'includes/cpt-slider.php';
 
 // Custom Post Type: Partners
-require_once YR_CHILD_DIR . 'includes/cpt-founder.php';
 require_once YR_CHILD_DIR . 'includes/cpt-partners.php';
 
 // Custom Post Type: Services

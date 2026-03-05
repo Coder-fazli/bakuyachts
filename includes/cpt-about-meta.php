@@ -34,6 +34,15 @@ function yr_about_cpt_meta_boxes() {
     );
 
     add_meta_box(
+        'yr_about_founder_section',
+        __( 'Founder Section', 'yacht-rental' ),
+        'yr_about_founder_callback',
+        'about',
+        'normal',
+        'default'
+    );
+
+    add_meta_box(
         'yr_about_reviews_section',
         __( 'Reviews Section (Voyager Stories)', 'yacht-rental' ),
         'yr_about_reviews_callback',
@@ -100,6 +109,90 @@ function yr_about_hero_callback( $post ) {
             <td><input type="text" id="yr_stats_concierge_label" name="yr_stats_concierge_label" value="<?php echo esc_attr( $stats_concierge_label ); ?>" class="regular-text" placeholder="VIP Concierge" /></td>
         </tr>
     </table>
+    <?php
+}
+
+/**
+ * Founder Section Callback
+ */
+function yr_about_founder_callback( $post ) {
+    $image_id  = get_post_meta( $post->ID, '_yr_founder_image_id', true );
+    $image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'large' ) : '';
+    $subtitle  = get_post_meta( $post->ID, '_yr_founder_subtitle', true );
+    $title     = get_post_meta( $post->ID, '_yr_founder_title', true );
+    $text      = get_post_meta( $post->ID, '_yr_founder_text', true );
+    $name      = get_post_meta( $post->ID, '_yr_founder_name', true );
+    $role      = get_post_meta( $post->ID, '_yr_founder_role', true );
+    ?>
+    <p class="description"><?php _e( 'Displayed right after the hero section on the About page. Image on the left, content on the right.', 'yacht-rental' ); ?></p>
+    <input type="hidden" id="yr-founder-image-id" name="yr_founder_image_id" value="<?php echo esc_attr( $image_id ); ?>">
+
+    <table class="form-table">
+        <tr>
+            <th><label><?php _e( 'Founder Image', 'yacht-rental' ); ?></label></th>
+            <td>
+                <div id="yr-founder-image-preview" style="margin-bottom:10px;">
+                    <?php if ( $image_url ) : ?>
+                        <img src="<?php echo esc_url( $image_url ); ?>" style="max-height:250px; width:auto; display:block; border-radius:6px;">
+                    <?php endif; ?>
+                </div>
+                <button type="button" id="yr-upload-founder-image" class="button"><?php _e( 'Upload / Change Image', 'yacht-rental' ); ?></button>
+                <button type="button" id="yr-remove-founder-image" class="button" style="margin-left:8px;<?php echo $image_id ? '' : 'display:none;'; ?>"><?php _e( 'Remove', 'yacht-rental' ); ?></button>
+                <p class="description"><?php _e( 'Recommended: tall/portrait image (e.g. 600×800px).', 'yacht-rental' ); ?></p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="yr_founder_subtitle"><?php _e( 'Subtitle (above title)', 'yacht-rental' ); ?></label></th>
+            <td><input type="text" id="yr_founder_subtitle" name="yr_founder_subtitle" value="<?php echo esc_attr( $subtitle ); ?>" class="large-text" placeholder="e.g. About the Founder"></td>
+        </tr>
+        <tr>
+            <th><label for="yr_founder_title"><?php _e( 'Title', 'yacht-rental' ); ?></label></th>
+            <td><input type="text" id="yr_founder_title" name="yr_founder_title" value="<?php echo esc_attr( $title ); ?>" class="large-text" placeholder="e.g. Passion for the Sea"></td>
+        </tr>
+        <tr>
+            <th><label for="yr_founder_text"><?php _e( 'Description', 'yacht-rental' ); ?></label></th>
+            <td><textarea id="yr_founder_text" name="yr_founder_text" rows="6" class="large-text"><?php echo esc_textarea( $text ); ?></textarea></td>
+        </tr>
+        <tr>
+            <th><label for="yr_founder_name"><?php _e( 'Founder Name', 'yacht-rental' ); ?></label></th>
+            <td><input type="text" id="yr_founder_name" name="yr_founder_name" value="<?php echo esc_attr( $name ); ?>" class="regular-text" placeholder="e.g. Anar Mammadov"></td>
+        </tr>
+        <tr>
+            <th><label for="yr_founder_role"><?php _e( 'Role / Title', 'yacht-rental' ); ?></label></th>
+            <td><input type="text" id="yr_founder_role" name="yr_founder_role" value="<?php echo esc_attr( $role ); ?>" class="regular-text" placeholder="e.g. Founder & CEO"></td>
+        </tr>
+    </table>
+
+    <script>
+    jQuery(document).ready(function($) {
+        var founderFrame;
+
+        $('#yr-upload-founder-image').on('click', function(e) {
+            e.preventDefault();
+            if (founderFrame) { founderFrame.open(); return; }
+            founderFrame = wp.media({
+                title: '<?php echo esc_js( __( 'Select Founder Image', 'yacht-rental' ) ); ?>',
+                button: { text: '<?php echo esc_js( __( 'Use This Image', 'yacht-rental' ) ); ?>' },
+                multiple: false,
+                library: { type: 'image' }
+            });
+            founderFrame.on('select', function() {
+                var attachment = founderFrame.state().get('selection').first().toJSON();
+                $('#yr-founder-image-id').val(attachment.id);
+                var url = attachment.sizes && attachment.sizes.large ? attachment.sizes.large.url : attachment.url;
+                $('#yr-founder-image-preview').html('<img src="' + url + '" style="max-height:250px; width:auto; display:block; border-radius:6px;">');
+                $('#yr-remove-founder-image').show();
+            });
+            founderFrame.open();
+        });
+
+        $('#yr-remove-founder-image').on('click', function() {
+            $('#yr-founder-image-id').val('');
+            $('#yr-founder-image-preview').html('');
+            $(this).hide();
+        });
+    });
+    </script>
     <?php
 }
 
@@ -314,6 +407,14 @@ function yr_save_about_cpt_meta( $post_id ) {
     if ( isset( $_POST['yr_stats_concierge_label'] ) ) {
         update_post_meta( $post_id, '_yr_stats_concierge_label', sanitize_text_field( $_POST['yr_stats_concierge_label'] ) );
     }
+
+    // Founder fields
+    update_post_meta( $post_id, '_yr_founder_image_id', intval( $_POST['yr_founder_image_id'] ?? 0 ) );
+    update_post_meta( $post_id, '_yr_founder_subtitle', sanitize_text_field( $_POST['yr_founder_subtitle'] ?? '' ) );
+    update_post_meta( $post_id, '_yr_founder_title', sanitize_text_field( $_POST['yr_founder_title'] ?? '' ) );
+    update_post_meta( $post_id, '_yr_founder_text', wp_kses_post( $_POST['yr_founder_text'] ?? '' ) );
+    update_post_meta( $post_id, '_yr_founder_name', sanitize_text_field( $_POST['yr_founder_name'] ?? '' ) );
+    update_post_meta( $post_id, '_yr_founder_role', sanitize_text_field( $_POST['yr_founder_role'] ?? '' ) );
 
     // Reviews
     if ( isset( $_POST['yr_reviews_title'] ) ) {
