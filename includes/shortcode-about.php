@@ -21,6 +21,16 @@ function yacht_rental_about_shortcode() {
     // Add language filter if Polylang is active
     if ( function_exists( 'pll_current_language' ) ) {
         $current_lang = pll_current_language();
+
+        // pll_current_language() can return false during REST/AJAX/cache builds.
+        // Fall back to detecting language from the request URI.
+        if ( ! $current_lang ) {
+            $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
+            if ( preg_match( '#^/([a-z]{2})/#', $request_uri, $matches ) ) {
+                $current_lang = $matches[1];
+            }
+        }
+
         if ( $current_lang ) {
             $query_args['lang'] = $current_lang;
         }
