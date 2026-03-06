@@ -99,7 +99,7 @@ function yr_register_yacht_category_taxonomy() {
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
 		'show_in_rest'               => true,
-		'rewrite'                    => array( 'slug' => 'yachts/category', 'with_front' => false, 'hierarchical' => true ),
+		'rewrite'                    => array( 'slug' => 'yacht-category', 'with_front' => false, 'hierarchical' => true ),
 	);
 
 	register_taxonomy( 'yr_yacht_category', array( 'cpt_yachts' ), $args );
