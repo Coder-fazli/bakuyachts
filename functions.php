@@ -755,11 +755,32 @@ if ( ! function_exists( 'yr_polylang_archive_translation_url' ) ) {
 	add_filter( 'pll_translation_url', 'yr_polylang_archive_translation_url', 10, 2 );
 
 	function yr_polylang_archive_translation_url( $url, $lang ) {
-		if ( ! is_post_type_archive( array( 'cpt_yachts', 'cpt_packages' ) ) ) {
+		if ( ! function_exists( 'pll_home_url' ) ) {
 			return $url;
 		}
 
-		if ( ! function_exists( 'pll_home_url' ) ) {
+		// Handle yr_yacht_category taxonomy archive
+		if ( is_tax( 'yr_yacht_category' ) ) {
+			$term = get_queried_object();
+
+			if ( $term && function_exists( 'pll_get_term' ) ) {
+				$translated_term_id = pll_get_term( $term->term_id, $lang );
+
+				if ( $translated_term_id ) {
+					$translated_term = get_term( $translated_term_id, 'yr_yacht_category' );
+					if ( $translated_term && ! is_wp_error( $translated_term ) ) {
+						return get_term_link( $translated_term );
+					}
+				}
+			}
+
+			// No translation found — fall back to yachts archive in target language
+			$home_url = pll_home_url( $lang );
+			return trailingslashit( $home_url ) . 'yachts/';
+		}
+
+		// Handle CPT post type archives
+		if ( ! is_post_type_archive( array( 'cpt_yachts', 'cpt_packages' ) ) ) {
 			return $url;
 		}
 
