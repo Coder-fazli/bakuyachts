@@ -1014,12 +1014,13 @@ function yr_get_placeholder_image() {
  */
 function yr_yacht_cards_shortcode( $atts ) {
 	$atts = shortcode_atts( array(
-		'limit'   => -1,          // Number of yachts to show (-1 = all)
-		'columns' => 3,           // Number of columns (1, 2, 3, 4)
-		'orderby' => 'date',      // Order by: date, title, menu_order, rand
-		'order'   => 'DESC',      // ASC or DESC
-		'ids'     => '',          // Comma-separated yacht IDs to show
-		'lang'    => '',          // Language code: az, ru, en, or 'all' for all languages (default: current language)
+		'limit'    => -1,         // Number of yachts to show (-1 = all)
+		'columns'  => 3,          // Number of columns (1, 2, 3, 4)
+		'orderby'  => 'date',     // Order by: date, title, menu_order, rand
+		'order'    => 'DESC',     // ASC or DESC
+		'ids'      => '',         // Comma-separated yacht IDs to show
+		'lang'     => '',         // Language code: az, ru, en, or 'all' for all languages (default: current language)
+		'category' => '',         // Category slug(s), comma-separated e.g. "yacht-for-selling"
 	), $atts, 'yacht_cards' );
 
 	// Query arguments
@@ -1045,6 +1046,17 @@ function yr_yacht_cards_shortcode( $atts ) {
 			// Default: show yachts from current language
 			$query_args['lang'] = pll_current_language();
 		}
+	}
+
+	// Filter by category slug(s)
+	if ( ! empty( $atts['category'] ) ) {
+		$query_args['tax_query'] = array(
+			array(
+				'taxonomy' => 'yr_yacht_category',
+				'field'    => 'slug',
+				'terms'    => array_map( 'trim', explode( ',', $atts['category'] ) ),
+			),
+		);
 	}
 
 	// Filter by specific IDs
